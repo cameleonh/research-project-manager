@@ -1,0 +1,154 @@
+---
+name: research-project-manager
+description: Use when the user wants to create, organize, migrate, review, or update multiple research paper project folders using Markdown files, including PROJECT_DASHBOARD.md, README.md, WBS.md, START_HERE.md, RESEARCH_LOG.md, DECISIONS.md, and FILES.md.
+---
+
+# Research Project Manager
+
+## Overview
+
+Use this skill to keep several research or paper projects recoverable across interruptions. The goal is to preserve each project's current stage, last work, next first action, important decisions, and key file locations without creating a heavy project-management system.
+
+## Default Paths
+
+If the user has not given another root, assume:
+
+- Project system root: `C:\Users\honey\Documents\New project`
+- Template folder: `C:\Users\honey\Documents\New project\research_project_template`
+- Portfolio dashboard: `C:\Users\honey\Documents\New project\PROJECT_DASHBOARD.md`
+- User guide: `C:\Users\honey\Documents\New project\PROJECT_MANAGEMENT_GUIDE.md`
+
+Verify paths before editing. Work with the user's current files; do not overwrite research content unless explicitly asked.
+
+## File Roles
+
+| File | Role |
+|---|---|
+| `PROJECT_DASHBOARD.md` | Portfolio view across all research projects |
+| `README.md` | Stable project basics and current paper stage |
+| `WBS.md` | Paper-stage map and task status |
+| `START_HERE.md` | The first screen to restart work within 5 minutes |
+| `RESEARCH_LOG.md` | Date-based record of actual work performed |
+| `DECISIONS.md` | Important decisions, reasons, alternatives, and revisit conditions |
+| `FILES.md` | Key file locations only, not a complete file inventory |
+
+## Managed Files
+
+The skill manages this Markdown project system:
+
+- `PROJECT_DASHBOARD.md` for the portfolio view
+- `README.md` for project basics
+- `WBS.md` for paper-stage tracking
+- `START_HERE.md` for the next first action
+- `RESEARCH_LOG.md` for session history
+- `DECISIONS.md` for important decisions
+- `FILES.md` for key file locations
+
+## Supported Tasks
+
+Support these recurring operations:
+
+- Creating a new research paper project from the template
+- Migrating messy notes or long work logs into the structure
+- Updating daily work logs
+- Deciding the next first action
+- Updating the project dashboard
+- Keeping the system lightweight and avoiding unnecessary new files
+
+## Operating Rules
+
+- Keep the system lightweight. Prefer updating existing files over adding new files.
+- Preserve the language and labels already used in the user's template files.
+- Do not put detailed daily logs in `WBS.md`; keep them in `RESEARCH_LOG.md`.
+- Do not bury the next first action only in `RESEARCH_LOG.md`; copy the actionable next step into `START_HERE.md`.
+- Use `PROJECT_DASHBOARD.md` for the many-project overview, not for detailed project notes.
+- Use `START_HERE.md` as the restart document. It should fit on one short screen when possible.
+- Store actual research content in the user's project files, never inside this skill.
+- The skill should contain only operating rules and procedures, not project data.
+
+## Vocabulary
+
+Use the exact project statuses, WBS statuses, and paper stages that appear in the user's existing Markdown files. If the template exists, read the relevant headings and table options from:
+
+- `PROJECT_DASHBOARD.md`
+- `README.md`
+- `WBS.md`
+
+Do not invent a larger status taxonomy unless the user asks.
+
+## New Project Workflow
+
+When creating a new paper project:
+
+1. Confirm or infer a short project name and target parent folder.
+2. Copy `research_project_template` into the target project folder.
+3. Rename the copied folder using a clear pattern such as `YYYY_short_project_name`.
+4. Update `README.md` with the project basics and current paper stage.
+5. Update `WBS.md` with the current active stage and next action.
+6. Update `START_HERE.md` with one immediately executable next first action.
+7. Add one row to `PROJECT_DASHBOARD.md`.
+
+If details are missing, make a conservative placeholder instead of blocking, unless the missing detail affects file location or risks overwriting existing work.
+
+## Migrating Messy Notes
+
+When the user provides a long work log, old memo, or scattered notes:
+
+1. Extract project identity, current stage, last work, next action, blockers, decisions, and file paths.
+2. Put stable project facts in `README.md`.
+3. Put stage and task status in `WBS.md`.
+4. Put the restart summary and one next first action in `START_HERE.md`.
+5. Append date-based details to `RESEARCH_LOG.md`.
+6. Put major choices and rationale in `DECISIONS.md`.
+7. Put only key paths in `FILES.md`.
+8. Update `PROJECT_DASHBOARD.md` with stage, last work date, and next first action.
+
+Do not preserve every sentence. Preserve recoverability.
+
+## Daily Start Workflow
+
+When the user asks what to work on today:
+
+1. Read `PROJECT_DASHBOARD.md`.
+2. Identify active projects and stale projects.
+3. Recommend 1-2 projects for today, unless the user specifies otherwise.
+4. For the chosen project, read `START_HERE.md`.
+5. If needed, read `WBS.md` and `FILES.md`.
+6. Return a short plan centered on the next first action.
+
+## Daily End Workflow
+
+When recording today's work:
+
+1. Append a dated entry to `RESEARCH_LOG.md`.
+2. Update the relevant row or task in `WBS.md`.
+3. Rewrite `START_HERE.md` so the next session can start quickly.
+4. Update `PROJECT_DASHBOARD.md` with last work date, stage, and next first action.
+5. Add to `DECISIONS.md` only if a meaningful research or project decision was made.
+
+## Weekly Review Workflow
+
+When reviewing the portfolio:
+
+1. Read `PROJECT_DASHBOARD.md`.
+2. Flag projects with old last-work dates.
+3. Limit active projects to a manageable set.
+4. Move inactive projects to waiting or paused status when appropriate, using the labels already present in the dashboard.
+5. Ensure every active project has a concrete next first action.
+6. Suggest the next week's top 1-3 priorities.
+
+## Good Next First Actions
+
+A next first action must be small enough to start immediately.
+
+Poor:
+
+- Read more papers.
+- Do the analysis.
+- Revise the manuscript.
+
+Better:
+
+- Check whether the safety-grade data has building name, address, and inspection-date columns.
+- Summarize only the identification strategy from three key papers in `01_literature/lit_matrix.md`.
+- Verify that the sample size in Figure 2 matches the manuscript text.
