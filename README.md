@@ -20,6 +20,7 @@ This is useful when multiple manuscripts, analyses, reviews, and revisions are m
 - `PROJECT_MANAGEMENT_GUIDE.md`: operating guide
 - `research_project_template/`: per-paper project folder template
 - `codex_skill/research-project-manager/`: Codex skill rules for maintaining the system
+- `docs/PRD_reminder_calendar_sync.md`: product requirements for Windows reminders and calendar sync
 
 ## What The Skill Does
 
@@ -57,6 +58,8 @@ The system now includes lightweight collaboration and deadline tracking:
 - Each project `RESEARCH_LOG.md` can record sent requests, received replies, and changed deadlines.
 
 Markdown reminder dates are not real notifications. Hard deadlines should also be registered in an external calendar or reminder app.
+
+Planned automation is described in `docs/PRD_reminder_calendar_sync.md`. The intended direction is Markdown as the source of truth, Windows Task Scheduler for local notifications, and optional one-way sync to Google Calendar or Outlook Calendar.
 
 ## Basic Workflow
 

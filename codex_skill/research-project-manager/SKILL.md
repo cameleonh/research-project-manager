@@ -17,6 +17,7 @@ If the user has not given another root, assume:
 - Template folder: `C:\Users\honey\Documents\New project\research_project_template`
 - Portfolio dashboard: `C:\Users\honey\Documents\New project\PROJECT_DASHBOARD.md`
 - User guide: `C:\Users\honey\Documents\New project\PROJECT_MANAGEMENT_GUIDE.md`
+- Reminder/calendar sync PRD: `C:\Users\honey\Documents\New project\research-project-manager\docs\PRD_reminder_calendar_sync.md`
 
 Verify paths before editing. Work with the user's current files; do not overwrite research content unless explicitly asked.
 
@@ -154,6 +155,7 @@ When reviewing the portfolio:
 - Track sent requests, received replies, and changed deadlines in `RESEARCH_LOG.md`.
 - Keep hard deadlines in an external calendar as the source of actual notifications.
 - Treat the Markdown reminder date as a review trigger, not an alarm system.
+- If the user asks to implement Windows notifications, cron-like reminder scanning, Google Calendar sync, or Outlook Calendar sync, read the reminder/calendar sync PRD before making changes.
 
 ## Good Next First Actions
 
