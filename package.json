@@ -1,0 +1,23 @@
+{
+  "name": "research-project-manager",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Install a Markdown-based research paper project manager and Codex skill.",
+  "bin": {
+    "research-project-manager": "scripts/install.js"
+  },
+  "files": [
+    "PROJECT_DASHBOARD.md",
+    "PROJECT_MANAGEMENT_GUIDE.md",
+    "README.md",
+    "codex_skill/",
+    "docs/",
+    "research_project_template/",
+    "scripts/install.js"
+  ],
+  "engines": {
+    "node": ">=16"
+  },
+  "license": "UNLICENSED"
+}
+

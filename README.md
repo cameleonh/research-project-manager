@@ -22,6 +22,30 @@ This is useful when multiple manuscripts, analyses, reviews, and revisions are m
 - `codex_skill/research-project-manager/`: Codex skill rules for maintaining the system
 - `docs/PRD_reminder_calendar_sync.md`: product requirements for Windows reminders and calendar sync
 
+## Install With npx
+
+Install the Markdown files into the current folder and the Codex skill into `~/.codex/skills/research-project-manager`:
+
+```powershell
+npx -y github:cameleonh/research-project-manager
+```
+
+Install into a specific research folder:
+
+```powershell
+npx -y github:cameleonh/research-project-manager -- --target "C:\Users\honey\Documents\New project"
+```
+
+Useful options:
+
+```powershell
+npx -y github:cameleonh/research-project-manager -- --skip-skill
+npx -y github:cameleonh/research-project-manager -- --skip-files
+npx -y github:cameleonh/research-project-manager -- --force
+```
+
+For private GitHub repositories, the machine running `npx` must have GitHub access to `cameleonh/research-project-manager`.
+
 ## What The Skill Does
 
 The Codex skill in `codex_skill/research-project-manager/` tells Codex how to maintain this Markdown system consistently. It supports:
