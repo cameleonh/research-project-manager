@@ -18,9 +18,7 @@ If the user has not given another root, assume:
 - Portfolio dashboard: `C:\Users\honey\Documents\New project\PROJECT_DASHBOARD.md`
 - User guide: `C:\Users\honey\Documents\New project\PROJECT_MANAGEMENT_GUIDE.md`
 - Reminder/calendar sync PRD: `C:\Users\honey\Documents\New project\research-project-manager\docs\PRD_reminder_calendar_sync.md`
-- Local Windows agent PRD: `C:\Users\honey\Documents\New project\research-project-manager\docs\PRD_local_windows_agent.md`
-- WSL/local agent architecture: `C:\Users\honey\Documents\New project\research-project-manager\docs\ARCHITECTURE_wsl_local_agent.md`
-- WSL/local Windows setup guide: `C:\Users\honey\Documents\New project\research-project-manager\docs\SETUP_wsl_server_local_windows.md`
+- Local Windows agent planning repo: `C:\Users\honey\Documents\New project\research-pm-local-windows-agent`
 
 Verify paths before editing. Work with the user's current files; do not overwrite research content unless explicitly asked.
 

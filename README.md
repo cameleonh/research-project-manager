@@ -21,10 +21,6 @@ This is useful when multiple manuscripts, analyses, reviews, and revisions are m
 - `research_project_template/`: per-paper project folder template
 - `codex_skill/research-project-manager/`: Codex skill rules for maintaining the system
 - `docs/PRD_reminder_calendar_sync.md`: product requirements for Windows reminders and calendar sync
-- `docs/PRD_local_windows_agent.md`: product requirements for server WSL + local Windows alerts
-- `docs/ARCHITECTURE_wsl_local_agent.md`: architecture for shared Markdown and local notification agents
-- `docs/IMPLEMENTATION_PLAN_local_windows_agent.md`: implementation roadmap for the local agent/app path
-- `docs/SETUP_wsl_server_local_windows.md`: setup guide for server WSL plus local Windows notifications
 
 ## Install With npx
 
@@ -145,14 +141,11 @@ Calendar sync is one-way: `PROJECT_DASHBOARD.md` creates or updates calendar eve
 
 ## Server WSL + Local Windows Agent
 
-If the repo is maintained on a server WSL environment but notifications should appear on the current local Windows PC, install the local agent on each Windows PC and point it at the shared Research HQ folder.
+If the repo is maintained on a server WSL environment but notifications should appear on the current local Windows PC, use the companion planning repo:
 
-Key docs:
-
-- `docs/PRD_local_windows_agent.md`
-- `docs/ARCHITECTURE_wsl_local_agent.md`
-- `docs/IMPLEMENTATION_PLAN_local_windows_agent.md`
-- `docs/SETUP_wsl_server_local_windows.md`
+```text
+https://github.com/cameleonh/research-pm-local-windows-agent
+```
 
 Core rule:
 

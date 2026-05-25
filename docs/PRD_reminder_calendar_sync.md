@@ -6,11 +6,11 @@ Add lightweight reminder automation to Research Project Manager. The system shou
 
 The Markdown project files remain the source of truth. Calendar events and Windows notifications are outputs generated from Markdown, not separate places where project state is managed.
 
-For the server WSL + local Windows deployment model, see:
+For the server WSL + local Windows deployment model, see the companion repo:
 
-- `PRD_local_windows_agent.md`
-- `ARCHITECTURE_wsl_local_agent.md`
-- `SETUP_wsl_server_local_windows.md`
+```text
+https://github.com/cameleonh/research-pm-local-windows-agent
+```
 
 ## Problem
 
