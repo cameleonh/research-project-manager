@@ -98,6 +98,30 @@
 - `PROJECT_DASHBOARD.md`의 `마감 / 알림 큐`는 캘린더를 대체하지 않고, 연구 맥락과 연결된 보조 목록으로 쓴다.
 - 리마인드일은 마감일이 아니라 내가 다시 확인할 날짜다.
 
+## 자동 알림 / 캘린더 동기화
+
+설치 후 `.research_pm_tools`에 로컬 알림 도구가 복사된다.
+
+리마인드 dry-run:
+
+```powershell
+npx -y github:cameleonh/research-project-manager -- reminders scan --target "C:\Users\honey\Documents\New project" --dry-run
+```
+
+Windows 알림 실행:
+
+```powershell
+npx -y github:cameleonh/research-project-manager -- reminders scan --target "C:\Users\honey\Documents\New project" --notify
+```
+
+매일 오전 9시 Windows 알림 등록:
+
+```powershell
+npx -y github:cameleonh/research-project-manager -- reminders install-windows-task --target "C:\Users\honey\Documents\New project" --time 09:00
+```
+
+Google Calendar와 Outlook Calendar 동기화는 `PROJECT_DASHBOARD.md`의 `캘린더 등록` 값이 `예` 또는 `yes`인 항목만 대상으로 한다. 동기화는 Markdown에서 Calendar로 가는 단방향이다.
+
 ## 주간 점검
 
 매주 한 번만 한다.

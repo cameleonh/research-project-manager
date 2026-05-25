@@ -46,6 +46,8 @@ npx -y github:cameleonh/research-project-manager -- --force
 
 For private GitHub repositories, the machine running `npx` must have GitHub access to `cameleonh/research-project-manager`.
 
+The installer also copies local reminder tooling into `.research_pm_tools/` under the target folder. That makes Windows Task Scheduler jobs independent of the transient `npx` cache.
+
 ## What The Skill Does
 
 The Codex skill in `codex_skill/research-project-manager/` tells Codex how to maintain this Markdown system consistently. It supports:
@@ -83,7 +85,59 @@ The system now includes lightweight collaboration and deadline tracking:
 
 Markdown reminder dates are not real notifications. Hard deadlines should also be registered in an external calendar or reminder app.
 
-Planned automation is described in `docs/PRD_reminder_calendar_sync.md`. The intended direction is Markdown as the source of truth, Windows Task Scheduler for local notifications, and optional one-way sync to Google Calendar or Outlook Calendar.
+Automation is described in `docs/PRD_reminder_calendar_sync.md`. The implemented direction is Markdown as the source of truth, Windows Task Scheduler for local notifications, and optional one-way sync to Google Calendar or Outlook Calendar.
+
+### Windows Reminder Commands
+
+Preview due and upcoming reminders:
+
+```powershell
+npx -y github:cameleonh/research-project-manager -- reminders scan --target "C:\Users\honey\Documents\New project" --dry-run
+```
+
+Show Windows notifications for due reminders:
+
+```powershell
+npx -y github:cameleonh/research-project-manager -- reminders scan --target "C:\Users\honey\Documents\New project" --notify
+```
+
+Register a daily Windows Task Scheduler job:
+
+```powershell
+npx -y github:cameleonh/research-project-manager -- reminders install-windows-task --target "C:\Users\honey\Documents\New project" --time 09:00
+```
+
+Test Windows notification delivery:
+
+```powershell
+npx -y github:cameleonh/research-project-manager -- reminders test-notification
+```
+
+Mark a reminder row as done:
+
+```powershell
+npx -y github:cameleonh/research-project-manager -- reminders mark --target "C:\Users\honey\Documents\New project" --id R-2026-001 --status done
+```
+
+### Calendar Sync Commands
+
+Google Calendar uses an OAuth desktop/client-secret JSON file:
+
+```powershell
+npx -y github:cameleonh/research-project-manager -- calendar google-auth --client-secret "C:\path\client_secret.json"
+npx -y github:cameleonh/research-project-manager -- calendar google-sync --target "C:\Users\honey\Documents\New project" --dry-run
+npx -y github:cameleonh/research-project-manager -- calendar google-sync --target "C:\Users\honey\Documents\New project"
+```
+
+Outlook Calendar uses Microsoft Graph device-code OAuth with your own Azure app client ID:
+
+```powershell
+npx -y github:cameleonh/research-project-manager -- calendar outlook-auth --client-id "<azure-app-client-id>"
+npx -y github:cameleonh/research-project-manager -- calendar outlook-sync --target "C:\Users\honey\Documents\New project" --dry-run
+npx -y github:cameleonh/research-project-manager -- calendar outlook-sync --target "C:\Users\honey\Documents\New project"
+```
+
+Calendar sync is one-way: `PROJECT_DASHBOARD.md` creates or updates calendar events. Calendar edits are not synced back into Markdown.
 
 ## Basic Workflow
 

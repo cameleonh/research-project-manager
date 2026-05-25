@@ -93,6 +93,23 @@ Recommended `알림 상태` values:
 
 ## Functional Requirements
 
+## Implementation Status
+
+Implemented CLI commands:
+
+- `reminders scan`
+- `reminders test-notification`
+- `reminders install-windows-task`
+- `reminders mark`
+- `reminders status`
+- `reminders weekly`
+- `calendar google-auth`
+- `calendar google-sync`
+- `calendar outlook-auth`
+- `calendar outlook-sync`
+
+The calendar sync is intentionally one-way from Markdown to the selected calendar provider.
+
 ### Phase 1: Windows Local Notifications
 
 - Parse `PROJECT_DASHBOARD.md`.
@@ -225,4 +242,3 @@ Phase 3 is complete when:
 - Microsoft Graph event reminder fields: https://learn.microsoft.com/en-us/graph/api/event-update
 - Windows notification delivery methods: https://learn.microsoft.com/en-us/windows/apps/develop/notifications/choosing-a-notification-delivery-method
 - PowerShell scheduled tasks: https://learn.microsoft.com/en-us/powershell/module/scheduledtasks/register-scheduledtask
-

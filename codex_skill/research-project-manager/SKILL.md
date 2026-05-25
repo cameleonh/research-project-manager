@@ -157,6 +157,19 @@ When reviewing the portfolio:
 - Treat the Markdown reminder date as a review trigger, not an alarm system.
 - If the user asks to implement Windows notifications, cron-like reminder scanning, Google Calendar sync, or Outlook Calendar sync, read the reminder/calendar sync PRD before making changes.
 
+## Reminder Automation Commands
+
+Use these commands for implemented reminder automation:
+
+- Preview reminders: `npx -y github:cameleonh/research-project-manager -- reminders scan --target "<Research_HQ>" --dry-run`
+- Send due Windows notifications: `npx -y github:cameleonh/research-project-manager -- reminders scan --target "<Research_HQ>" --notify`
+- Install daily Windows Task Scheduler job: `npx -y github:cameleonh/research-project-manager -- reminders install-windows-task --target "<Research_HQ>" --time 09:00`
+- Mark a reminder done: `npx -y github:cameleonh/research-project-manager -- reminders mark --target "<Research_HQ>" --id R-2026-001 --status done`
+- Google auth/sync: `calendar google-auth`, then `calendar google-sync`
+- Outlook auth/sync: `calendar outlook-auth`, then `calendar outlook-sync`
+
+Calendar sync is one-way from Markdown to calendar providers.
+
 ## Good Next First Actions
 
 A next first action must be small enough to start immediately.

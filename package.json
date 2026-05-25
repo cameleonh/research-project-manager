@@ -2,9 +2,9 @@
   "name": "research-project-manager",
   "version": "0.1.0",
   "private": true,
-  "description": "Install a Markdown-based research paper project manager and Codex skill.",
+  "description": "Install and automate a Markdown-based research paper project manager and Codex skill.",
   "bin": {
-    "research-project-manager": "scripts/install.js"
+    "research-project-manager": "scripts/cli.js"
   },
   "files": [
     "PROJECT_DASHBOARD.md",
@@ -13,11 +13,13 @@
     "codex_skill/",
     "docs/",
     "research_project_template/",
-    "scripts/install.js"
+    "scripts/cli.js",
+    "scripts/install.js",
+    "scripts/install_windows_task.ps1",
+    "scripts/show_windows_notification.ps1"
   ],
   "engines": {
     "node": ">=16"
   },
   "license": "UNLICENSED"
 }
-

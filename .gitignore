@@ -4,8 +4,8 @@
 Thumbs.db
 .DS_Store
 .research_pm_state/
+.research_pm_tools/
 credentials.json
 token.json
 client_secret*.json
 *.client_secret.json
-
