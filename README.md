@@ -9,6 +9,8 @@ The goal is not to create a heavy project-management app. The goal is to make ev
 - the next first action
 - important decisions
 - key file locations
+- collaboration waits
+- deadlines and reminder dates
 
 This is useful when multiple manuscripts, analyses, reviews, and revisions are moving in parallel and it becomes hard to remember where each project stopped.
 
@@ -28,6 +30,7 @@ The Codex skill in `codex_skill/research-project-manager/` tells Codex how to ma
 - updating daily research logs
 - deciding the next first action for a project
 - updating the portfolio dashboard
+- tracking collaborators, deadlines, external checkpoints, and reminder dates
 - keeping the system lightweight and avoiding unnecessary new files
 
 The skill does not store actual research content. Research content stays in the user's own project folders.
@@ -43,6 +46,17 @@ The skill does not store actual research content. Research content stays in the 
 | `RESEARCH_LOG.md` | Session history and daily work record |
 | `DECISIONS.md` | Important decisions and rationale |
 | `FILES.md` | Key file locations |
+
+## Collaboration, Deadlines, And Reminders
+
+The system now includes lightweight collaboration and deadline tracking:
+
+- `PROJECT_DASHBOARD.md` includes collaboration waiting items and a deadline/reminder queue.
+- Each project `README.md` includes collaboration status and alert-related fields.
+- Each project `WBS.md` can track owner/waiting party and deadline/checkpoint per task.
+- Each project `RESEARCH_LOG.md` can record sent requests, received replies, and changed deadlines.
+
+Markdown reminder dates are not real notifications. Hard deadlines should also be registered in an external calendar or reminder app.
 
 ## Basic Workflow
 

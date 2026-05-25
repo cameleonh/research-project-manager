@@ -1,6 +1,6 @@
 ---
 name: research-project-manager
-description: Use when the user wants to create, organize, migrate, review, or update multiple research paper project folders using Markdown files, including PROJECT_DASHBOARD.md, README.md, WBS.md, START_HERE.md, RESEARCH_LOG.md, DECISIONS.md, and FILES.md.
+description: Use when the user wants to create, organize, migrate, review, or update multiple research paper project folders using Markdown files, including project dashboards, WBS files, restart notes, daily logs, decisions, key file paths, collaboration waiting items, deadlines, and reminder dates.
 ---
 
 # Research Project Manager
@@ -43,6 +43,7 @@ The skill manages this Markdown project system:
 - `RESEARCH_LOG.md` for session history
 - `DECISIONS.md` for important decisions
 - `FILES.md` for key file locations
+- Dashboard sections for collaboration waiting items, deadlines, and reminder dates
 
 ## Supported Tasks
 
@@ -53,6 +54,7 @@ Support these recurring operations:
 - Updating daily work logs
 - Deciding the next first action
 - Updating the project dashboard
+- Tracking collaborator waits, external checkpoints, deadlines, and reminder dates
 - Keeping the system lightweight and avoiding unnecessary new files
 
 ## Operating Rules
@@ -65,6 +67,7 @@ Support these recurring operations:
 - Use `START_HERE.md` as the restart document. It should fit on one short screen when possible.
 - Store actual research content in the user's project files, never inside this skill.
 - The skill should contain only operating rules and procedures, not project data.
+- Markdown reminder dates are not real notifications. If a deadline must produce an alert, tell the user to also put it in their calendar or reminder app.
 
 ## Vocabulary
 
@@ -85,8 +88,9 @@ When creating a new paper project:
 3. Rename the copied folder using a clear pattern such as `YYYY_short_project_name`.
 4. Update `README.md` with the project basics and current paper stage.
 5. Update `WBS.md` with the current active stage and next action.
-6. Update `START_HERE.md` with one immediately executable next first action.
-7. Add one row to `PROJECT_DASHBOARD.md`.
+6. Add deadlines, reminder dates, collaborator waits, or checkpoints if known.
+7. Update `START_HERE.md` with one immediately executable next first action.
+8. Add one row to `PROJECT_DASHBOARD.md`.
 
 If details are missing, make a conservative placeholder instead of blocking, unless the missing detail affects file location or risks overwriting existing work.
 
@@ -101,7 +105,8 @@ When the user provides a long work log, old memo, or scattered notes:
 5. Append date-based details to `RESEARCH_LOG.md`.
 6. Put major choices and rationale in `DECISIONS.md`.
 7. Put only key paths in `FILES.md`.
-8. Update `PROJECT_DASHBOARD.md` with stage, last work date, and next first action.
+8. Extract collaborator waits, deadlines, and reminder dates.
+9. Update `PROJECT_DASHBOARD.md` with stage, last work date, next first action, deadline, reminder date, and blocker.
 
 Do not preserve every sentence. Preserve recoverability.
 
@@ -110,21 +115,23 @@ Do not preserve every sentence. Preserve recoverability.
 When the user asks what to work on today:
 
 1. Read `PROJECT_DASHBOARD.md`.
-2. Identify active projects and stale projects.
-3. Recommend 1-2 projects for today, unless the user specifies otherwise.
-4. For the chosen project, read `START_HERE.md`.
-5. If needed, read `WBS.md` and `FILES.md`.
-6. Return a short plan centered on the next first action.
+2. Check today's or this week's deadlines, reminder dates, and collaboration waiting items.
+3. Identify active projects and stale projects.
+4. Recommend 1-2 projects for today, unless the user specifies otherwise.
+5. For the chosen project, read `START_HERE.md`.
+6. If needed, read `WBS.md` and `FILES.md`.
+7. Return a short plan centered on the next first action.
 
 ## Daily End Workflow
 
 When recording today's work:
 
 1. Append a dated entry to `RESEARCH_LOG.md`.
-2. Update the relevant row or task in `WBS.md`.
-3. Rewrite `START_HERE.md` so the next session can start quickly.
-4. Update `PROJECT_DASHBOARD.md` with last work date, stage, and next first action.
-5. Add to `DECISIONS.md` only if a meaningful research or project decision was made.
+2. Record sent requests, received replies, changed deadlines, and new reminder dates when relevant.
+3. Update the relevant row or task in `WBS.md`, including owner/waiting party and checkpoint if present in the template.
+4. Rewrite `START_HERE.md` so the next session can start quickly.
+5. Update `PROJECT_DASHBOARD.md` with last work date, stage, next first action, deadline, reminder date, and collaboration waiting items.
+6. Add to `DECISIONS.md` only if a meaningful research or project decision was made.
 
 ## Weekly Review Workflow
 
@@ -132,10 +139,21 @@ When reviewing the portfolio:
 
 1. Read `PROJECT_DASHBOARD.md`.
 2. Flag projects with old last-work dates.
-3. Limit active projects to a manageable set.
-4. Move inactive projects to waiting or paused status when appropriate, using the labels already present in the dashboard.
-5. Ensure every active project has a concrete next first action.
-6. Suggest the next week's top 1-3 priorities.
+3. Check the next two weeks of deadlines and reminder dates.
+4. Flag collaboration waiting items that need follow-up.
+5. Limit active projects to a manageable set.
+6. Move inactive projects to waiting or paused status when appropriate, using the labels already present in the dashboard.
+7. Ensure every active project has a concrete next first action.
+8. Suggest the next week's top 1-3 priorities.
+
+## Collaboration, Deadline, and Reminder Rules
+
+- Track cross-project waits in `PROJECT_DASHBOARD.md`, not in a new file by default.
+- Track project-specific collaboration status in the project's `README.md`.
+- Track task-level owner, waiting party, deadline, or checkpoint in `WBS.md` when the template has those columns.
+- Track sent requests, received replies, and changed deadlines in `RESEARCH_LOG.md`.
+- Keep hard deadlines in an external calendar as the source of actual notifications.
+- Treat the Markdown reminder date as a review trigger, not an alarm system.
 
 ## Good Next First Actions
 
