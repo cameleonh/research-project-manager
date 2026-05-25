@@ -18,6 +18,9 @@ If the user has not given another root, assume:
 - Portfolio dashboard: `C:\Users\honey\Documents\New project\PROJECT_DASHBOARD.md`
 - User guide: `C:\Users\honey\Documents\New project\PROJECT_MANAGEMENT_GUIDE.md`
 - Reminder/calendar sync PRD: `C:\Users\honey\Documents\New project\research-project-manager\docs\PRD_reminder_calendar_sync.md`
+- Local Windows agent PRD: `C:\Users\honey\Documents\New project\research-project-manager\docs\PRD_local_windows_agent.md`
+- WSL/local agent architecture: `C:\Users\honey\Documents\New project\research-project-manager\docs\ARCHITECTURE_wsl_local_agent.md`
+- WSL/local Windows setup guide: `C:\Users\honey\Documents\New project\research-project-manager\docs\SETUP_wsl_server_local_windows.md`
 
 Verify paths before editing. Work with the user's current files; do not overwrite research content unless explicitly asked.
 
@@ -156,6 +159,7 @@ When reviewing the portfolio:
 - Keep hard deadlines in an external calendar as the source of actual notifications.
 - Treat the Markdown reminder date as a review trigger, not an alarm system.
 - If the user asks to implement Windows notifications, cron-like reminder scanning, Google Calendar sync, or Outlook Calendar sync, read the reminder/calendar sync PRD before making changes.
+- If the user asks for a server WSL plus local Windows notification setup, read the local Windows agent PRD, architecture document, and setup guide before making changes.
 
 ## Reminder Automation Commands
 
