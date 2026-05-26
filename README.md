@@ -18,6 +18,7 @@ This is useful when multiple manuscripts, analyses, reviews, and revisions are m
 
 - `PROJECT_DASHBOARD.md`: portfolio view across multiple paper projects
 - `PROJECT_MANAGEMENT_GUIDE.md`: operating guide
+- `JOURNAL_TARGETS.md`: updatable journal, society, and conference target reference
 - `research_project_template/`: per-paper project folder template
 - `codex_skill/research-project-manager/`: Codex skill rules for maintaining the system
 - `docs/PRD_reminder_calendar_sync.md`: product requirements for Windows reminders and calendar sync
@@ -68,6 +69,7 @@ The skill does not store actual research content. Research content stays in the 
 | File | Purpose |
 |---|---|
 | `PROJECT_DASHBOARD.md` | Overview of all paper projects |
+| `JOURNAL_TARGETS.md` | Shared journal/society target reference |
 | `README.md` | Stable basics for one paper project |
 | `WBS.md` | Paper-stage tracking and task map |
 | `START_HERE.md` | One-screen restart note for the next session |
@@ -95,6 +97,12 @@ Each project template includes a `06_manuscript/` folder for paper writing:
 ```
 
 Use `research_plan_bullet.md` for design notes and `00_paper_outline.md` for the paper's logic. Write actual manuscript paragraphs in `01_*.md` through `07_*.md`. Treat `manuscript_full.md` as a final assembly file, not the day-to-day source.
+
+## Journal Target Reference
+
+`JOURNAL_TARGETS.md` is a shared Research HQ reference for housing, real estate, architecture, urban studies, and aging-related publication targets.
+
+It stores candidate societies and journals, homepage links, index status, JIF/IF check fields, scope notes, fit memo, and last-checked dates. JIF/IF and index status change over time, so the file is intentionally editable and should be refreshed from official sources before submission decisions.
 
 ## Collaboration, Deadlines, And Reminders
 

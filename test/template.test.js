@@ -47,3 +47,24 @@ test("folder guide explains manuscript source files and final assembly", () => {
   assert.match(guide, /manuscript_full\.md/);
   assert.match(guide, /최종 조립본/);
 });
+
+test("journal targets reference is an installable shared Research HQ file", async () => {
+  const journalTargets = fs.readFileSync(path.join(repoRoot, "JOURNAL_TARGETS.md"), "utf8");
+  const packageJson = JSON.parse(fs.readFileSync(path.join(repoRoot, "package.json"), "utf8"));
+  const { run } = require("../scripts/cli.js");
+  const target = fs.mkdtempSync(path.join(require("node:os").tmpdir(), "rpm-journal-targets-"));
+
+  assert.match(journalTargets, /# Journal Targets/);
+  assert.match(journalTargets, /고령화/);
+  assert.match(journalTargets, /주택/);
+  assert.match(journalTargets, /부동산/);
+  assert.match(journalTargets, /건축/);
+  assert.match(journalTargets, /도시/);
+  assert.match(journalTargets, /확인일/);
+  assert.match(journalTargets, /JIF\/IF/);
+  assert.equal(packageJson.files.includes("JOURNAL_TARGETS.md"), true);
+
+  await run(["install", "--target", target, "--skip-skill", "--skip-tools", "--force"]);
+
+  assert.equal(fs.existsSync(path.join(target, "JOURNAL_TARGETS.md")), true);
+});

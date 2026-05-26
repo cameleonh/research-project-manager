@@ -16,6 +16,7 @@ If the user has not given another root, assume:
 - Project system root: `C:\Users\honey\Documents\New project`
 - Template folder: `C:\Users\honey\Documents\New project\research_project_template`
 - Portfolio dashboard: `C:\Users\honey\Documents\New project\PROJECT_DASHBOARD.md`
+- Journal target reference: `C:\Users\honey\Documents\New project\JOURNAL_TARGETS.md`
 - User guide: `C:\Users\honey\Documents\New project\PROJECT_MANAGEMENT_GUIDE.md`
 - Reminder/calendar sync PRD: `C:\Users\honey\Documents\New project\research-project-manager\docs\PRD_reminder_calendar_sync.md`
 - Dashboard auto-rebuild PRD: `C:\Users\honey\Documents\New project\research-project-manager\docs\PRD_dashboard_auto_rebuild.md`
@@ -28,6 +29,7 @@ Verify paths before editing. Work with the user's current files; do not overwrit
 | File | Role |
 |---|---|
 | `PROJECT_DASHBOARD.md` | Portfolio view across all research projects |
+| `JOURNAL_TARGETS.md` | Shared journal, society, and conference target reference |
 | `README.md` | Stable project basics and current paper stage |
 | `WBS.md` | Paper-stage map and task status |
 | `START_HERE.md` | The first screen to restart work within 5 minutes |
@@ -41,6 +43,7 @@ Verify paths before editing. Work with the user's current files; do not overwrit
 The skill manages this Markdown project system:
 
 - `PROJECT_DASHBOARD.md` for the portfolio view
+- `JOURNAL_TARGETS.md` for journal/society targets and submission fit notes
 - `README.md` for project basics
 - `WBS.md` for paper-stage tracking
 - `START_HERE.md` for the next first action
@@ -60,6 +63,7 @@ Support these recurring operations:
 - Deciding the next first action
 - Updating the project dashboard
 - Rebuilding the project dashboard automatically from project Markdown files
+- Reviewing journal, society, conference, and submission target fit from `JOURNAL_TARGETS.md`
 - Tracking collaborator waits, external checkpoints, deadlines, and reminder dates
 - Keeping the system lightweight and avoiding unnecessary new files
 
@@ -74,11 +78,13 @@ Support these recurring operations:
 - Use `START_HERE.md` as the restart document. It should fit on one short screen when possible.
 - Store actual research content in the user's project files, never inside this skill.
 - The skill should contain only operating rules and procedures, not project data.
+- Do not store changing journal metrics directly in the skill. Use `JOURNAL_TARGETS.md` and refresh it from official sources.
 - Markdown reminder dates are not real notifications. If a deadline must produce an alert, tell the user to also put it in their calendar or reminder app.
 - When the user asks to refresh the project list in `PROJECT_DASHBOARD.md`, prefer the dashboard auto-rebuild CLI over manually editing the generated project-list table.
 - Do not edit content between `<!-- RPM:PROJECT_LIST:START -->` and `<!-- RPM:PROJECT_LIST:END -->` by hand unless the user explicitly asks. That region is owned by the rebuild command.
 - For manuscript work, use `06_manuscript/research_plan_bullet.md` for design notes, `00_paper_outline.md` for overall logic, `01_*.md` through `07_*.md` for actual draft chapters, and `manuscript_full.md` only as a final assembly file.
 - Put implications, interpretations, and policy significance in `06_manuscript/06_discussion.md`; keep `05_results.md` focused on analysis results.
+- When the user asks about publication venues, journal fit, society targets, IF/JIF, or conference options, read `JOURNAL_TARGETS.md` first. If values are stale or missing, verify against official society/publisher pages and JCR/Scopus/KCI before updating.
 
 ## Vocabulary
 
@@ -207,6 +213,18 @@ Excluded from scanning and watching:
 - `.research_pm_state/`
 - `.git/`
 - `node_modules/`
+
+## Journal Target Reference
+
+Use `JOURNAL_TARGETS.md` for housing, real estate, architecture, urban studies, and aging-related journal/society targets.
+
+When updating or using this file:
+
+- Treat homepage URLs, KCI/Scopus/JCR status, and JIF/IF as time-sensitive.
+- Keep `확인일` with every metric or scope check.
+- Prefer official society, publisher, KCI, Scopus, and JCR sources over search snippets.
+- Use `Fit Memo` to explain why a venue fits or does not fit a specific paper.
+- Record final submission decisions in the project's `DECISIONS.md`, not only in `JOURNAL_TARGETS.md`.
 
 ## Reminder Automation Commands
 

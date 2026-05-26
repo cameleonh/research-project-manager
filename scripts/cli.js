@@ -118,7 +118,7 @@ function installFiles(options) {
   const target = path.resolve(options.target || defaultTarget);
   ensureDir(target);
 
-  for (const item of ["PROJECT_DASHBOARD.md", "PROJECT_MANAGEMENT_GUIDE.md", "research_project_template", "docs"]) {
+  for (const item of ["PROJECT_DASHBOARD.md", "PROJECT_MANAGEMENT_GUIDE.md", "JOURNAL_TARGETS.md", "research_project_template", "docs"]) {
     copyPath(path.join(repoRoot, item), path.join(target, item), options);
   }
 }

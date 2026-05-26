@@ -5,6 +5,7 @@
 ## 핵심 원칙
 
 - 전체 상황은 `PROJECT_DASHBOARD.md`에서 본다.
+- 투고처 후보와 학회/저널 정보는 `JOURNAL_TARGETS.md`에서 관리한다.
 - 개별 논문은 해당 프로젝트 폴더의 `START_HERE.md`부터 연다.
 - 논문의 전체 단계는 `WBS.md`에서 관리한다.
 - 오늘 한 일은 `RESEARCH_LOG.md`에 남긴다.
@@ -55,6 +56,7 @@
 | 파일 | 역할 | 자주 여는 정도 |
 |---|---|---|
 | `PROJECT_DASHBOARD.md` | 여러 논문 전체 상태 | 매일 또는 주 2-3회 |
+| `JOURNAL_TARGETS.md` | 공통 학회/저널 후보와 투고처 fit | 투고처 검토 시 |
 | `README.md` | 프로젝트 기본 정보 | 가끔 |
 | `WBS.md` | 논문 단계별 진행 지도 | 작업 전후 |
 | `START_HERE.md` | 다음 첫 행동 | 매번 |
@@ -83,6 +85,18 @@
 평소에는 `manuscript_full.md`를 원천 파일로 쓰지 않는다. 실제 집필과 수정은 `01_introduction.md`부터 `07_conclusion.md`까지 장별 파일에서 한다.
 
 `05_results.md`는 분석 결과를 보여주는 장이다. 큰 해석, 함의, 정책적 시사점은 `06_discussion.md`에 둔다.
+
+## 투고처 / 학회 후보 관리
+
+`JOURNAL_TARGETS.md`는 Research HQ 전체에서 공유하는 투고처 참조 파일이다. 주택, 부동산, 건축, 도시, 고령화 관련 국내 학회와 해외 학술지 후보를 관리한다.
+
+이 파일에는 홈페이지, 색인/등재 상태, JIF/IF 확인 칸, 주 투고 분야, fit 메모, 확인일을 적는다.
+
+운영 기준:
+
+- JIF/IF와 색인 상태는 매년 바뀌므로 값만 적지 말고 확인일을 같이 적는다.
+- 투고 직전에는 공식 홈페이지, KCI, Scopus, JCR에서 다시 확인한다.
+- `JOURNAL_TARGETS.md`에는 후보와 fit 메모를 적고, 특정 논문의 최종 투고 결정 근거는 해당 프로젝트의 `DECISIONS.md`에도 남긴다.
 
 ## WBS 운영 기준
 
