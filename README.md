@@ -87,6 +87,35 @@ Markdown reminder dates are not real notifications. Hard deadlines should also b
 
 Automation is described in `docs/PRD_reminder_calendar_sync.md`. The implemented direction is Markdown as the source of truth, Windows Task Scheduler for local notifications, and optional one-way sync to Google Calendar or Outlook Calendar.
 
+### Dashboard Auto-Rebuild Commands
+
+Regenerate only the auto-managed project-list region in `PROJECT_DASHBOARD.md`:
+
+```powershell
+npx -y github:cameleonh/research-project-manager -- dashboard rebuild --target "C:\Users\honey\Documents\New project"
+```
+
+Preview the generated project table without writing the dashboard:
+
+```powershell
+npx -y github:cameleonh/research-project-manager -- dashboard rebuild --target "C:\Users\honey\Documents\New project" --dry-run
+```
+
+Watch project `README.md`, `WBS.md`, `START_HERE.md`, and `RESEARCH_LOG.md` files and rebuild after changes settle:
+
+```powershell
+npx -y github:cameleonh/research-project-manager -- dashboard watch --target "C:\Users\honey\Documents\New project"
+```
+
+The rebuild command updates only the region between:
+
+```markdown
+<!-- RPM:PROJECT_LIST:START -->
+<!-- RPM:PROJECT_LIST:END -->
+```
+
+If an older dashboard does not have these markers, the command marks the existing `## 논문 프로젝트 목록` table and then replaces only that table.
+
 ### Windows Reminder Commands
 
 Preview due and upcoming reminders:

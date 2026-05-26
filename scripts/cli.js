@@ -11,6 +11,16 @@ const { spawn, spawnSync } = require("child_process");
 const repoRoot = path.resolve(__dirname, "..");
 const defaultTarget = process.cwd();
 const defaultCodexHome = process.env.CODEX_HOME || path.join(os.homedir(), ".codex");
+const projectListStartMarker = "<!-- RPM:PROJECT_LIST:START -->";
+const projectListEndMarker = "<!-- RPM:PROJECT_LIST:END -->";
+const dashboardProjectFiles = ["README.md", "WBS.md", "START_HERE.md"];
+const dashboardWatchedFiles = new Set(["README.md", "WBS.md", "START_HERE.md", "RESEARCH_LOG.md"]);
+const dashboardExcludedNames = new Set([
+  ".git",
+  ".research_pm_state",
+  "node_modules",
+  "research_project_template",
+]);
 
 function usage() {
   console.log(`Research Project Manager
@@ -33,6 +43,11 @@ Calendar commands:
   research-project-manager calendar google-sync --target "C:\\Research_HQ" --dry-run
   research-project-manager calendar outlook-auth --client-id "<azure-app-client-id>"
   research-project-manager calendar outlook-sync --target "C:\\Research_HQ" --dry-run
+
+Dashboard commands:
+  research-project-manager dashboard rebuild --target "C:\\Research_HQ" --dry-run
+  research-project-manager dashboard rebuild --target "C:\\Research_HQ"
+  research-project-manager dashboard watch --target "C:\\Research_HQ"
 
 Install options:
   --target <path>      Install Markdown project files into this folder. Default: current directory.
@@ -223,6 +238,491 @@ function parseMarkdownTable(sectionText) {
     return { headers, rows };
   }
   return { headers: [], rows: [] };
+}
+
+function parseMarkdownHeading(line) {
+  const match = String(line || "").match(/^\s{0,3}(#{1,6})\s+(.+?)\s*#*\s*$/);
+  if (!match) return null;
+  return {
+    level: match[1].length,
+    title: match[2].trim(),
+  };
+}
+
+function parseMarkdownSections(markdown) {
+  const lines = String(markdown || "").split(/\r?\n/);
+  const sections = new Map();
+  let firstH1 = "";
+
+  for (let i = 0; i < lines.length; i += 1) {
+    const heading = parseMarkdownHeading(lines[i]);
+    if (!heading) continue;
+    if (heading.level === 1 && !firstH1) {
+      firstH1 = heading.title;
+    }
+    if (heading.level !== 2) continue;
+
+    let end = lines.length;
+    for (let j = i + 1; j < lines.length; j += 1) {
+      const nextHeading = parseMarkdownHeading(lines[j]);
+      if (nextHeading && nextHeading.level <= heading.level) {
+        end = j;
+        break;
+      }
+    }
+
+    const content = lines.slice(i + 1, end).join("\n").trim();
+    if (!sections.has(heading.title)) sections.set(heading.title, content);
+  }
+
+  return { firstH1, sections };
+}
+
+function cleanMarkdownValue(value) {
+  let text = String(value || "").trim();
+  text = text.replace(/^[-*+]\s+\[[ xX]\]\s*/, "");
+  text = text.replace(/^[-*+]\s*/, "");
+  text = text.replace(/^\d+[.)]\s*/, "");
+  text = text.replace(/^`(.+)`$/, "$1");
+  text = text.replace(/\s+/g, " ").trim();
+  if (["", "-", "YYYY-MM-DD"].includes(text)) return "";
+  return text;
+}
+
+function firstSectionValue(markdown, heading) {
+  const section = parseMarkdownSections(markdown).sections.get(heading);
+  if (!section) return "";
+  const lines = section.split(/\r?\n/);
+  for (const line of lines) {
+    const value = cleanMarkdownValue(line);
+    if (value) return value;
+  }
+  return "";
+}
+
+function firstActionSectionValue(markdown, heading) {
+  const section = parseMarkdownSections(markdown).sections.get(heading);
+  if (!section) return "";
+  const lines = section.split(/\r?\n/);
+  for (const line of lines) {
+    if (!/^\s*[-*+]\s+/.test(line)) continue;
+    const value = cleanMarkdownValue(line);
+    if (value) return value;
+  }
+  for (const line of lines) {
+    if (/처럼 크게 쓰지 말고|바로 착수 가능한 행동/.test(line)) continue;
+    const value = cleanMarkdownValue(line);
+    if (value) return value;
+  }
+  return "";
+}
+
+function readUtf8IfExists(file) {
+  if (!fs.existsSync(file)) return "";
+  return fs.readFileSync(file, "utf8");
+}
+
+function hasExcludedPathPart(filePath, root) {
+  const relative = path.relative(root, filePath);
+  if (!relative || relative.startsWith("..")) return false;
+  return relative.split(/[\\/]+/).some((part) => dashboardExcludedNames.has(part));
+}
+
+function isProjectDir(dir) {
+  let count = 0;
+  for (const file of dashboardProjectFiles) {
+    if (fs.existsSync(path.join(dir, file))) count += 1;
+  }
+  return count >= 2;
+}
+
+function discoverProjectDirs(target) {
+  const root = path.resolve(target || defaultTarget);
+  const projects = [];
+
+  function walk(dir) {
+    if (dir !== root && dashboardExcludedNames.has(path.basename(dir))) return;
+    if (dir !== root && hasExcludedPathPart(dir, root)) return;
+    if (isProjectDir(dir)) {
+      projects.push(dir);
+      return;
+    }
+
+    let entries = [];
+    try {
+      entries = fs.readdirSync(dir, { withFileTypes: true });
+    } catch (error) {
+      return;
+    }
+
+    for (const entry of entries) {
+      if (!entry.isDirectory()) continue;
+      if (dashboardExcludedNames.has(entry.name)) continue;
+      walk(path.join(dir, entry.name));
+    }
+  }
+
+  walk(root);
+  return projects.sort((a, b) => relativeProjectPath(root, a).localeCompare(relativeProjectPath(root, b)));
+}
+
+function relativeProjectPath(target, projectDir) {
+  const relative = path.relative(path.resolve(target), projectDir) || ".";
+  return relative.split(path.sep).join("/");
+}
+
+function latestResearchLogDate(markdown) {
+  let latest = null;
+  const lines = String(markdown || "").split(/\r?\n/);
+  for (const line of lines) {
+    const match = line.match(/^\s{0,3}##\s+(\d{4}-\d{2}-\d{2})\s*#*\s*$/);
+    if (!match) continue;
+    const date = parseDateOnly(match[1]);
+    if (!date) continue;
+    if (!latest || date > latest) latest = date;
+  }
+  return latest ? formatDate(latest) : "";
+}
+
+function extractDateCandidates(markdown) {
+  const candidates = [];
+  const lines = String(markdown || "").split(/\r?\n/);
+  let currentH2 = "";
+  for (const line of lines) {
+    const heading = parseMarkdownHeading(line);
+    if (heading && heading.level === 2) {
+      currentH2 = heading.title;
+    }
+
+    const matches = line.matchAll(/\b(\d{4}-\d{2}-\d{2})\b/g);
+    for (const match of matches) {
+      const date = parseDateOnly(match[1]);
+      if (!date) continue;
+      const lineText = line.toLowerCase();
+      const headingText = currentH2.toLowerCase();
+      const lineHasReminder = /(리마인드|remind|알림|notification)/i.test(lineText);
+      const lineHasDeadline = /(마감|deadline|due|체크포인트|checkpoint|제출|투고|회의)/i.test(lineText);
+      const headingHasReminder = /(리마인드|remind|알림|notification)/i.test(headingText);
+      const headingHasDeadline = /(마감|deadline|due|체크포인트|checkpoint|제출|투고|회의)/i.test(headingText);
+      const kinds = new Set();
+
+      if (lineHasReminder) kinds.add("reminder");
+      if (lineHasDeadline) kinds.add("deadline");
+      if (!lineHasReminder && !lineHasDeadline) {
+        if (headingHasReminder) kinds.add("reminder");
+        if (headingHasDeadline) kinds.add("deadline");
+      }
+
+      candidates.push({
+        date,
+        dateText: formatDate(date),
+        kinds,
+      });
+    }
+  }
+  return candidates;
+}
+
+function nearestFutureDate(candidates, kind) {
+  const today = todayLocal();
+  const filtered = candidates
+    .filter((candidate) => candidate.date >= today)
+    .filter((candidate) => !kind || candidate.kinds.has(kind));
+  const pool = filtered.length > 0 || !kind
+    ? filtered
+    : candidates.filter((candidate) => candidate.date >= today);
+  pool.sort((a, b) => a.date - b.date);
+  return pool[0] ? pool[0].dateText : "";
+}
+
+function wbsBlockedReason(markdown) {
+  const table = parseMarkdownTable(getSection(markdown, "단계별 작업"));
+  const blocked = table.rows.filter((row) => String(row["상태"] || "").includes("막힘"));
+  if (blocked.length === 0) return "";
+  return blocked.slice(0, 3).map((row) => {
+    const label = [row["ID"], row["단계"], row["작업"]].filter(Boolean).join(" ");
+    const detail = [row["다음 행동"], row["담당 / 대기상대"], row["마감 / 체크포인트"]]
+      .map(cleanMarkdownValue)
+      .filter(Boolean)
+      .join("; ");
+    return detail ? `${label} (${detail})` : label;
+  }).join("; ");
+}
+
+function projectInfo(target, projectDir) {
+  const readme = readUtf8IfExists(path.join(projectDir, "README.md"));
+  const startHere = readUtf8IfExists(path.join(projectDir, "START_HERE.md"));
+  const wbs = readUtf8IfExists(path.join(projectDir, "WBS.md"));
+  const researchLog = readUtf8IfExists(path.join(projectDir, "RESEARCH_LOG.md"));
+  const readmeSections = parseMarkdownSections(readme);
+  const dateCandidates = [
+    ...extractDateCandidates(readme),
+    ...extractDateCandidates(startHere),
+    ...extractDateCandidates(wbs),
+  ];
+
+  return {
+    project: readmeSections.firstH1 || path.basename(projectDir),
+    status: firstSectionValue(readme, "현재 상태"),
+    stage: firstSectionValue(readme, "현재 논문 단계") || firstSectionValue(wbs, "현재 단계"),
+    lastWorkDate: firstSectionValue(startHere, "마지막 업데이트") || latestResearchLogDate(researchLog),
+    nextAction: firstActionSectionValue(startHere, "다음에 시작할 첫 행동"),
+    nextDeadline: nearestFutureDate(dateCandidates, "deadline"),
+    reminderDate: nearestFutureDate(dateCandidates, "reminder"),
+    blockedReason: firstSectionValue(startHere, "막힌 지점") || wbsBlockedReason(wbs),
+    folder: relativeProjectPath(target, projectDir),
+  };
+}
+
+function escapeMarkdownTableCell(value) {
+  return cleanMarkdownValue(value).replace(/\|/g, "\\|");
+}
+
+function buildProjectDashboardTable(target) {
+  const root = path.resolve(target || defaultTarget);
+  const headers = ["프로젝트", "상태", "단계", "마지막 작업일", "다음 첫 행동", "다음 마감", "리마인드일", "막힌 이유", "폴더"];
+  const rows = discoverProjectDirs(root).map((dir) => projectInfo(root, dir));
+  const lines = [
+    `| ${headers.join(" | ")} |`,
+    `|${headers.map(() => "---").join("|")}|`,
+  ];
+
+  for (const row of rows) {
+    lines.push(`| ${[
+      row.project,
+      row.status,
+      row.stage,
+      row.lastWorkDate,
+      row.nextAction,
+      row.nextDeadline,
+      row.reminderDate,
+      row.blockedReason,
+      row.folder,
+    ].map(escapeMarkdownTableCell).join(" | ")} |`);
+  }
+
+  return lines.join("\n");
+}
+
+function lineEnding(markdown) {
+  return String(markdown || "").includes("\r\n") ? "\r\n" : "\n";
+}
+
+function updateMarkedProjectList(markdown, table) {
+  const start = markdown.indexOf(projectListStartMarker);
+  const end = markdown.indexOf(projectListEndMarker);
+  if (start === -1 && end === -1) return null;
+  if (start === -1 || end === -1 || end < start) {
+    throw new Error("Dashboard project list markers are incomplete or out of order");
+  }
+  const eol = lineEnding(markdown);
+  const before = markdown.slice(0, start + projectListStartMarker.length);
+  const after = markdown.slice(end);
+  return `${before}${eol}${table}${eol}${after}`;
+}
+
+function updateUnmarkedProjectList(markdown, table) {
+  const eol = lineEnding(markdown);
+  const lines = String(markdown || "").split(/\r?\n/);
+  const headingIndex = lines.findIndex((line) => line.trim() === "## 논문 프로젝트 목록");
+  if (headingIndex === -1) {
+    throw new Error("Dashboard project list markers not found, and ## 논문 프로젝트 목록 section was not found");
+  }
+
+  let sectionEnd = lines.length;
+  for (let i = headingIndex + 1; i < lines.length; i += 1) {
+    if (/^\s{0,3}##\s+/.test(lines[i])) {
+      sectionEnd = i;
+      break;
+    }
+  }
+
+  let tableStart = -1;
+  let tableEnd = -1;
+  for (let i = headingIndex + 1; i < sectionEnd - 1; i += 1) {
+    if (!lines[i].trim().startsWith("|")) continue;
+    if (!/^\s*\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|?\s*$/.test(lines[i + 1])) continue;
+    tableStart = i;
+    tableEnd = i + 2;
+    while (tableEnd < sectionEnd && lines[tableEnd].trim().startsWith("|")) {
+      tableEnd += 1;
+    }
+    break;
+  }
+
+  if (tableStart === -1) {
+    throw new Error("Dashboard project list markers not found, and no standard project table was found to mark safely");
+  }
+
+  const replacement = [
+    projectListStartMarker,
+    ...table.split(/\r?\n/),
+    projectListEndMarker,
+  ];
+  lines.splice(tableStart, tableEnd - tableStart, ...replacement);
+  return lines.join(eol);
+}
+
+function updateProjectDashboardMarkdown(markdown, table) {
+  const updated = updateMarkedProjectList(markdown, table);
+  if (updated !== null) return updated;
+  return updateUnmarkedProjectList(markdown, table);
+}
+
+function rebuildDashboard(options) {
+  const target = path.resolve(options.target || defaultTarget);
+  const table = buildProjectDashboardTable(target);
+  if (options.dryRun) {
+    console.log(table);
+    return { table, file: dashboardPath(options), changed: false };
+  }
+
+  const file = dashboardPath({ ...options, target });
+  if (!fs.existsSync(file)) {
+    throw new Error(`Dashboard not found: ${file}`);
+  }
+  const markdown = fs.readFileSync(file, "utf8");
+  const updated = updateProjectDashboardMarkdown(markdown, table);
+  if (updated === markdown) {
+    console.log(`dashboard unchanged: ${file}`);
+    return { table, file, changed: false };
+  }
+  fs.writeFileSync(file, updated, "utf8");
+  console.log(`dashboard updated: ${file}`);
+  return { table, file, changed: true };
+}
+
+function dashboardRebuildCommand(argv) {
+  const { options } = parseOptions(argv, { target: defaultTarget, dryRun: false });
+  return rebuildDashboard(options);
+}
+
+function collectWatchDirs(target) {
+  const root = path.resolve(target || defaultTarget);
+  const dirs = [];
+
+  function walk(dir) {
+    if (dir !== root && dashboardExcludedNames.has(path.basename(dir))) return;
+    if (dir !== root && hasExcludedPathPart(dir, root)) return;
+    dirs.push(dir);
+
+    let entries = [];
+    try {
+      entries = fs.readdirSync(dir, { withFileTypes: true });
+    } catch (error) {
+      return;
+    }
+
+    for (const entry of entries) {
+      if (!entry.isDirectory()) continue;
+      if (dashboardExcludedNames.has(entry.name)) continue;
+      walk(path.join(dir, entry.name));
+    }
+  }
+
+  walk(root);
+  return dirs;
+}
+
+function shouldWatchEvent(target, fileName) {
+  if (!fileName) return true;
+  const normalized = String(fileName);
+  const base = path.basename(normalized);
+  if (base === "PROJECT_DASHBOARD.md") return false;
+  if (!dashboardWatchedFiles.has(base)) return false;
+  return !hasExcludedPathPart(path.join(path.resolve(target), normalized), path.resolve(target));
+}
+
+function watchDashboard(options) {
+  const target = path.resolve(options.target || defaultTarget);
+  const debounceMs = Number(options.debounceMs || 2000);
+  const watchers = new Map();
+  let timer = null;
+  let rebuilding = false;
+  let pending = false;
+
+  function closeRemovedWatchers(nextDirs) {
+    const keep = new Set(nextDirs);
+    for (const [dir, watcher] of watchers.entries()) {
+      if (keep.has(dir)) continue;
+      watcher.close();
+      watchers.delete(dir);
+    }
+  }
+
+  function refreshWatchers() {
+    const dirs = collectWatchDirs(target);
+    closeRemovedWatchers(dirs);
+    for (const dir of dirs) {
+      if (watchers.has(dir)) continue;
+      try {
+        const watcher = fs.watch(dir, (eventType, fileName) => {
+          if (eventType === "rename") {
+            setTimeout(refreshWatchers, 100);
+          }
+          if (!shouldWatchEvent(target, fileName)) return;
+          scheduleRebuild(fileName ? path.join(dir, String(fileName)) : dir);
+        });
+        watchers.set(dir, watcher);
+      } catch (error) {
+        console.error(`watch skip: ${dir}: ${error.message}`);
+      }
+    }
+  }
+
+  function scheduleRebuild(reason) {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      runRebuild(reason);
+    }, debounceMs);
+  }
+
+  function runRebuild(reason) {
+    if (rebuilding) {
+      pending = true;
+      return;
+    }
+    rebuilding = true;
+    try {
+      console.log(`dashboard rebuild triggered: ${reason || "change"}`);
+      rebuildDashboard(options);
+    } catch (error) {
+      console.error(`dashboard rebuild failed: ${error.message}`);
+    } finally {
+      rebuilding = false;
+      refreshWatchers();
+      if (pending) {
+        pending = false;
+        scheduleRebuild("pending change");
+      }
+    }
+  }
+
+  refreshWatchers();
+  console.log(`watching dashboard sources under: ${target}`);
+  runRebuild("initial scan");
+
+  return {
+    close() {
+      clearTimeout(timer);
+      for (const watcher of watchers.values()) watcher.close();
+      watchers.clear();
+    },
+  };
+}
+
+function dashboardWatchCommand(argv) {
+  const { options } = parseOptions(argv, { target: defaultTarget, dryRun: false, debounceMs: "2000" });
+  const watcher = watchDashboard(options);
+  process.once("SIGINT", () => {
+    watcher.close();
+    console.log("dashboard watcher stopped");
+    process.exit(0);
+  });
+  process.once("SIGTERM", () => {
+    watcher.close();
+    process.exit(0);
+  });
 }
 
 function parseDateOnly(value) {
@@ -968,6 +1468,13 @@ async function run(argv = process.argv.slice(2)) {
     if (sub === "outlook-sync") return outlookSync(rest);
     throw new Error(`Unknown calendar command: ${sub || ""}`);
   }
+  if (argv[0] === "dashboard") {
+    const sub = argv[1];
+    const rest = argv.slice(2);
+    if (sub === "rebuild") return dashboardRebuildCommand(rest);
+    if (sub === "watch") return dashboardWatchCommand(rest);
+    throw new Error(`Unknown dashboard command: ${sub || ""}`);
+  }
   throw new Error(`Unknown command: ${argv[0]}`);
 }
 
@@ -984,4 +1491,13 @@ if (require.main === module) {
   main();
 }
 
-module.exports = { main, run, loadReminderItems, parseMarkdownTable, classifyItems };
+module.exports = {
+  main,
+  run,
+  loadReminderItems,
+  parseMarkdownTable,
+  classifyItems,
+  parseMarkdownSections,
+  buildProjectDashboardTable,
+  updateProjectDashboardMarkdown,
+};
