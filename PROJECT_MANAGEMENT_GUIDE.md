@@ -10,6 +10,7 @@
 - 오늘 한 일은 `RESEARCH_LOG.md`에 남긴다.
 - 중요한 판단만 `DECISIONS.md`에 적는다.
 - 주요 파일 위치만 `FILES.md`에 적는다.
+- 실제 원고 문단은 `06_manuscript/`의 장별 Markdown 파일에 쓴다.
 - 협업 대기, 마감, 리마인드일은 `PROJECT_DASHBOARD.md`에서 한 번에 본다.
 - 실제 알림이 필요한 날짜는 캘린더에도 등록한다.
 
@@ -60,6 +61,28 @@
 | `RESEARCH_LOG.md` | 날짜별 작업 기록 | 작업 종료 시 |
 | `DECISIONS.md` | 중요한 결정 기록 | 결정이 있을 때 |
 | `FILES.md` | 핵심 파일 위치 | 파일을 찾을 때 |
+| `06_manuscript/*.md` | 실제 원고 문단 | 원고 작성 시 |
+
+## 원고 폴더 운영 기준
+
+원고는 `06_manuscript/`에 보관한다. 초기 설계 메모와 실제 원고 문단을 분리한다.
+
+권장 구조:
+
+- `research_plan_bullet.md`: 연구 설계, 변수, 데이터, 분석 순서, 아직 원고 문장이 아닌 메모
+- `00_paper_outline.md`: 논문 전체 논리 흐름과 장별 역할
+- `01_introduction.md`: 서론
+- `02_literature_review.md`: 선행연구
+- `03_data.md`: 자료와 변수
+- `04_method.md`: 분석방법
+- `05_results.md`: 분석결과
+- `06_discussion.md`: 함의, 해석, 정책적 시사점
+- `07_conclusion.md`: 결론
+- `manuscript_full.md`: 최종 제출 또는 공유 직전 조립본
+
+평소에는 `manuscript_full.md`를 원천 파일로 쓰지 않는다. 실제 집필과 수정은 `01_introduction.md`부터 `07_conclusion.md`까지 장별 파일에서 한다.
+
+`05_results.md`는 분석 결과를 보여주는 장이다. 큰 해석, 함의, 정책적 시사점은 `06_discussion.md`에 둔다.
 
 ## WBS 운영 기준
 

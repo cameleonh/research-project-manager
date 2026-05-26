@@ -21,6 +21,7 @@ This is useful when multiple manuscripts, analyses, reviews, and revisions are m
 - `research_project_template/`: per-paper project folder template
 - `codex_skill/research-project-manager/`: Codex skill rules for maintaining the system
 - `docs/PRD_reminder_calendar_sync.md`: product requirements for Windows reminders and calendar sync
+- `research_project_template/06_manuscript/`: chapter-based manuscript Markdown files
 
 ## Install With npx
 
@@ -73,6 +74,27 @@ The skill does not store actual research content. Research content stays in the 
 | `RESEARCH_LOG.md` | Session history and daily work record |
 | `DECISIONS.md` | Important decisions and rationale |
 | `FILES.md` | Key file locations |
+| `06_manuscript/*.md` | Chapter-based manuscript drafting files |
+
+## Manuscript Drafting Layout
+
+Each project template includes a `06_manuscript/` folder for paper writing:
+
+```text
+06_manuscript/
+  research_plan_bullet.md
+  00_paper_outline.md
+  01_introduction.md
+  02_literature_review.md
+  03_data.md
+  04_method.md
+  05_results.md
+  06_discussion.md
+  07_conclusion.md
+  manuscript_full.md
+```
+
+Use `research_plan_bullet.md` for design notes and `00_paper_outline.md` for the paper's logic. Write actual manuscript paragraphs in `01_*.md` through `07_*.md`. Treat `manuscript_full.md` as a final assembly file, not the day-to-day source.
 
 ## Collaboration, Deadlines, And Reminders
 

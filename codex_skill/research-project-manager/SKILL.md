@@ -34,6 +34,7 @@ Verify paths before editing. Work with the user's current files; do not overwrit
 | `RESEARCH_LOG.md` | Date-based record of actual work performed |
 | `DECISIONS.md` | Important decisions, reasons, alternatives, and revisit conditions |
 | `FILES.md` | Key file locations only, not a complete file inventory |
+| `06_manuscript/*.md` | Chapter-based manuscript drafting files |
 
 ## Managed Files
 
@@ -46,6 +47,7 @@ The skill manages this Markdown project system:
 - `RESEARCH_LOG.md` for session history
 - `DECISIONS.md` for important decisions
 - `FILES.md` for key file locations
+- `06_manuscript/` for actual manuscript paragraphs and paper outline files
 - Dashboard sections for collaboration waiting items, deadlines, and reminder dates
 
 ## Supported Tasks
@@ -67,6 +69,7 @@ Support these recurring operations:
 - Preserve the language and labels already used in the user's template files.
 - Do not put detailed daily logs in `WBS.md`; keep them in `RESEARCH_LOG.md`.
 - Do not bury the next first action only in `RESEARCH_LOG.md`; copy the actionable next step into `START_HERE.md`.
+- Do not put long manuscript paragraphs in `WBS.md`, `START_HERE.md`, or `RESEARCH_LOG.md`; keep actual draft text in `06_manuscript/`.
 - Use `PROJECT_DASHBOARD.md` for the many-project overview, not for detailed project notes.
 - Use `START_HERE.md` as the restart document. It should fit on one short screen when possible.
 - Store actual research content in the user's project files, never inside this skill.
@@ -74,6 +77,8 @@ Support these recurring operations:
 - Markdown reminder dates are not real notifications. If a deadline must produce an alert, tell the user to also put it in their calendar or reminder app.
 - When the user asks to refresh the project list in `PROJECT_DASHBOARD.md`, prefer the dashboard auto-rebuild CLI over manually editing the generated project-list table.
 - Do not edit content between `<!-- RPM:PROJECT_LIST:START -->` and `<!-- RPM:PROJECT_LIST:END -->` by hand unless the user explicitly asks. That region is owned by the rebuild command.
+- For manuscript work, use `06_manuscript/research_plan_bullet.md` for design notes, `00_paper_outline.md` for overall logic, `01_*.md` through `07_*.md` for actual draft chapters, and `manuscript_full.md` only as a final assembly file.
+- Put implications, interpretations, and policy significance in `06_manuscript/06_discussion.md`; keep `05_results.md` focused on analysis results.
 
 ## Vocabulary
 
@@ -96,7 +101,8 @@ When creating a new paper project:
 5. Update `WBS.md` with the current active stage and next action.
 6. Add deadlines, reminder dates, collaborator waits, or checkpoints if known.
 7. Update `START_HERE.md` with one immediately executable next first action.
-8. Rebuild the project list in `PROJECT_DASHBOARD.md` using the dashboard auto-rebuild command when available.
+8. Use `06_manuscript/research_plan_bullet.md` for initial research design notes and `00_paper_outline.md` for the paper's early argument structure.
+9. Rebuild the project list in `PROJECT_DASHBOARD.md` using the dashboard auto-rebuild command when available.
 
 If details are missing, make a conservative placeholder instead of blocking, unless the missing detail affects file location or risks overwriting existing work.
 
@@ -111,8 +117,9 @@ When the user provides a long work log, old memo, or scattered notes:
 5. Append date-based details to `RESEARCH_LOG.md`.
 6. Put major choices and rationale in `DECISIONS.md`.
 7. Put only key paths in `FILES.md`.
-8. Extract collaborator waits, deadlines, and reminder dates.
-9. Update the source project files, then rebuild `PROJECT_DASHBOARD.md` so stage, last work date, next first action, deadline, reminder date, and blocker are refreshed.
+8. Put manuscript-ready paragraphs in the appropriate `06_manuscript/01_*.md` through `07_*.md` file.
+9. Extract collaborator waits, deadlines, and reminder dates.
+10. Update the source project files, then rebuild `PROJECT_DASHBOARD.md` so stage, last work date, next first action, deadline, reminder date, and blocker are refreshed.
 
 Do not preserve every sentence. Preserve recoverability.
 
@@ -136,8 +143,9 @@ When recording today's work:
 2. Record sent requests, received replies, changed deadlines, and new reminder dates when relevant.
 3. Update the relevant row or task in `WBS.md`, including owner/waiting party and checkpoint if present in the template.
 4. Rewrite `START_HERE.md` so the next session can start quickly.
-5. Rebuild `PROJECT_DASHBOARD.md` after updating the project source files; update manual collaboration waiting sections separately when needed.
-6. Add to `DECISIONS.md` only if a meaningful research or project decision was made.
+5. If manuscript text changed, update the relevant `06_manuscript/*.md` chapter file rather than storing the draft in logs.
+6. Rebuild `PROJECT_DASHBOARD.md` after updating the project source files; update manual collaboration waiting sections separately when needed.
+7. Add to `DECISIONS.md` only if a meaningful research or project decision was made.
 
 ## Weekly Review Workflow
 
