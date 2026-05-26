@@ -18,6 +18,7 @@ If the user has not given another root, assume:
 - Portfolio dashboard: `C:\Users\honey\Documents\New project\PROJECT_DASHBOARD.md`
 - User guide: `C:\Users\honey\Documents\New project\PROJECT_MANAGEMENT_GUIDE.md`
 - Reminder/calendar sync PRD: `C:\Users\honey\Documents\New project\research-project-manager\docs\PRD_reminder_calendar_sync.md`
+- Dashboard auto-rebuild PRD: `C:\Users\honey\Documents\New project\research-project-manager\docs\PRD_dashboard_auto_rebuild.md`
 - Local Windows agent planning repo: `C:\Users\honey\Documents\New project\research-pm-local-windows-agent`
 
 Verify paths before editing. Work with the user's current files; do not overwrite research content unless explicitly asked.
@@ -56,6 +57,7 @@ Support these recurring operations:
 - Updating daily work logs
 - Deciding the next first action
 - Updating the project dashboard
+- Rebuilding the project dashboard automatically from project Markdown files
 - Tracking collaborator waits, external checkpoints, deadlines, and reminder dates
 - Keeping the system lightweight and avoiding unnecessary new files
 
@@ -70,6 +72,8 @@ Support these recurring operations:
 - Store actual research content in the user's project files, never inside this skill.
 - The skill should contain only operating rules and procedures, not project data.
 - Markdown reminder dates are not real notifications. If a deadline must produce an alert, tell the user to also put it in their calendar or reminder app.
+- When the user asks to refresh the project list in `PROJECT_DASHBOARD.md`, prefer the dashboard auto-rebuild CLI over manually editing the generated project-list table.
+- Do not edit content between `<!-- RPM:PROJECT_LIST:START -->` and `<!-- RPM:PROJECT_LIST:END -->` by hand unless the user explicitly asks. That region is owned by the rebuild command.
 
 ## Vocabulary
 
@@ -92,7 +96,7 @@ When creating a new paper project:
 5. Update `WBS.md` with the current active stage and next action.
 6. Add deadlines, reminder dates, collaborator waits, or checkpoints if known.
 7. Update `START_HERE.md` with one immediately executable next first action.
-8. Add one row to `PROJECT_DASHBOARD.md`.
+8. Rebuild the project list in `PROJECT_DASHBOARD.md` using the dashboard auto-rebuild command when available.
 
 If details are missing, make a conservative placeholder instead of blocking, unless the missing detail affects file location or risks overwriting existing work.
 
@@ -108,7 +112,7 @@ When the user provides a long work log, old memo, or scattered notes:
 6. Put major choices and rationale in `DECISIONS.md`.
 7. Put only key paths in `FILES.md`.
 8. Extract collaborator waits, deadlines, and reminder dates.
-9. Update `PROJECT_DASHBOARD.md` with stage, last work date, next first action, deadline, reminder date, and blocker.
+9. Update the source project files, then rebuild `PROJECT_DASHBOARD.md` so stage, last work date, next first action, deadline, reminder date, and blocker are refreshed.
 
 Do not preserve every sentence. Preserve recoverability.
 
@@ -132,7 +136,7 @@ When recording today's work:
 2. Record sent requests, received replies, changed deadlines, and new reminder dates when relevant.
 3. Update the relevant row or task in `WBS.md`, including owner/waiting party and checkpoint if present in the template.
 4. Rewrite `START_HERE.md` so the next session can start quickly.
-5. Update `PROJECT_DASHBOARD.md` with last work date, stage, next first action, deadline, reminder date, and collaboration waiting items.
+5. Rebuild `PROJECT_DASHBOARD.md` after updating the project source files; update manual collaboration waiting sections separately when needed.
 6. Add to `DECISIONS.md` only if a meaningful research or project decision was made.
 
 ## Weekly Review Workflow
@@ -158,6 +162,43 @@ When reviewing the portfolio:
 - Treat the Markdown reminder date as a review trigger, not an alarm system.
 - If the user asks to implement Windows notifications, cron-like reminder scanning, Google Calendar sync, or Outlook Calendar sync, read the reminder/calendar sync PRD before making changes.
 - If the user asks for a server WSL plus local Windows notification setup, read the local Windows agent PRD, architecture document, and setup guide before making changes.
+- If the user asks to change dashboard auto-rebuild behavior, read the dashboard auto-rebuild PRD before making changes.
+
+## Dashboard Auto-Rebuild Commands
+
+Use these commands for implemented project-list dashboard automation:
+
+- Preview generated project table: `npx -y github:cameleonh/research-project-manager -- dashboard rebuild --target "<Research_HQ>" --dry-run`
+- Rebuild the project-list region in `PROJECT_DASHBOARD.md`: `npx -y github:cameleonh/research-project-manager -- dashboard rebuild --target "<Research_HQ>"`
+- Watch project Markdown files and rebuild after changes: `npx -y github:cameleonh/research-project-manager -- dashboard watch --target "<Research_HQ>"`
+
+The rebuild command scans project folders below the target. A folder counts as a project when at least two of `README.md`, `WBS.md`, and `START_HERE.md` exist.
+
+The command updates only the region between these markers:
+
+```markdown
+<!-- RPM:PROJECT_LIST:START -->
+<!-- RPM:PROJECT_LIST:END -->
+```
+
+The generated project-list fields come from project files:
+
+- Project name: first H1 in `README.md`, falling back to folder name.
+- Status: `README.md` section `## 현재 상태`.
+- Stage: `README.md` section `## 현재 논문 단계`, falling back to `WBS.md` section `## 현재 단계`.
+- Last work date: `START_HERE.md` section `## 마지막 업데이트`, falling back to the latest `## YYYY-MM-DD` in `RESEARCH_LOG.md`.
+- Next first action: `START_HERE.md` section `## 다음에 시작할 첫 행동`.
+- Next deadline and reminder date: nearest future `YYYY-MM-DD` from `README.md`, `START_HERE.md`, or `WBS.md`.
+- Blocked reason: `START_HERE.md` section `## 막힌 지점`, falling back to blocked rows in `WBS.md`.
+- Folder: target-relative path.
+
+Excluded from scanning and watching:
+
+- `PROJECT_DASHBOARD.md`
+- `research_project_template/`
+- `.research_pm_state/`
+- `.git/`
+- `node_modules/`
 
 ## Reminder Automation Commands
 
