@@ -37,6 +37,8 @@
 ## 작업 지도
 - 세부 진행은 `WBS.md`에서 관리한다.
 - 다시 시작할 때는 `START_HERE.md`를 먼저 연다.
+- 투고 전에는 `SUBMISSION_CHECKLIST.md`로 투고 가능 여부를 판정한다.
+- 이번 논문에 넣지 않을 아이디어는 `PARKING_LOT.md`에 보관한다.
 
 ## 다음 마감
 -

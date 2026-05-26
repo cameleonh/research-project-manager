@@ -19,6 +19,7 @@ This is useful when multiple manuscripts, analyses, reviews, and revisions are m
 - `PROJECT_DASHBOARD.md`: portfolio view across multiple paper projects
 - `PROJECT_MANAGEMENT_GUIDE.md`: operating guide
 - `JOURNAL_TARGETS.md`: updatable journal, society, and conference target reference
+- `docs/PROMPTS.md`: prompt recipes for using the Markdown workflow and Codex skill
 - `research_project_template/`: per-paper project folder template
 - `codex_skill/research-project-manager/`: Codex skill rules for maintaining the system
 - `docs/PRD_reminder_calendar_sync.md`: product requirements for Windows reminders and calendar sync
@@ -77,6 +78,8 @@ The skill does not store actual research content. Research content stays in the 
 | `DECISIONS.md` | Important decisions and rationale |
 | `FILES.md` | Key file locations |
 | `06_manuscript/*.md` | Chapter-based manuscript drafting files |
+| `SUBMISSION_CHECKLIST.md` | Pre-submission readiness checklist |
+| `PARKING_LOT.md` | Ideas intentionally excluded from the current manuscript |
 
 ## Manuscript Drafting Layout
 
@@ -97,6 +100,8 @@ Each project template includes a `06_manuscript/` folder for paper writing:
 ```
 
 Use `research_plan_bullet.md` for design notes and `00_paper_outline.md` for the paper's logic. Write actual manuscript paragraphs in `01_*.md` through `07_*.md`. Treat `manuscript_full.md` as a final assembly file, not the day-to-day source.
+
+Use `SUBMISSION_CHECKLIST.md` when the manuscript enters submission preparation. Use `PARKING_LOT.md` to keep good but out-of-scope ideas from expanding the current paper.
 
 ## Journal Target Reference
 
@@ -221,6 +226,8 @@ Local Windows agent shows visible notifications.
 3. Use each project's `WBS.md` for paper-stage tracking.
 4. Use each project's `START_HERE.md` to restart work quickly.
 5. Use each project's `RESEARCH_LOG.md` for session history.
+6. Use `SUBMISSION_CHECKLIST.md` when the manuscript enters submission preparation.
+7. Use `PARKING_LOT.md` to keep good but out-of-scope ideas from expanding the current paper.
 
 ## Codex Usage Example
 
@@ -235,5 +242,7 @@ Use $research-project-manager to create a new paper project from the template.
 Use $research-project-manager to migrate this long work log into START_HERE, WBS, and RESEARCH_LOG.
 Use $research-project-manager to review my PROJECT_DASHBOARD and suggest this week's top priorities.
 ```
+
+More prompt recipes are in `docs/PROMPTS.md`.
 
 Actual research data and private project contents should live in the user's own research folders, not in this repository.

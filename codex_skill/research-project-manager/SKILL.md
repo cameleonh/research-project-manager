@@ -37,6 +37,8 @@ Verify paths before editing. Work with the user's current files; do not overwrit
 | `DECISIONS.md` | Important decisions, reasons, alternatives, and revisit conditions |
 | `FILES.md` | Key file locations only, not a complete file inventory |
 | `06_manuscript/*.md` | Chapter-based manuscript drafting files |
+| `SUBMISSION_CHECKLIST.md` | Pre-submission readiness checklist for closing the manuscript |
+| `PARKING_LOT.md` | Good but out-of-scope ideas intentionally excluded from the current manuscript |
 
 ## Managed Files
 
@@ -51,7 +53,10 @@ The skill manages this Markdown project system:
 - `DECISIONS.md` for important decisions
 - `FILES.md` for key file locations
 - `06_manuscript/` for actual manuscript paragraphs and paper outline files
+- `SUBMISSION_CHECKLIST.md` for pre-submission readiness checks
+- `PARKING_LOT.md` for out-of-scope ideas and follow-up research candidates
 - Dashboard sections for collaboration waiting items, deadlines, and reminder dates
+- `docs/PROMPTS.md` for user-facing prompt examples when the user asks how to invoke or use this workflow
 
 ## Supported Tasks
 
@@ -76,6 +81,8 @@ Support these recurring operations:
 - Do not put long manuscript paragraphs in `WBS.md`, `START_HERE.md`, or `RESEARCH_LOG.md`; keep actual draft text in `06_manuscript/`.
 - Use `PROJECT_DASHBOARD.md` for the many-project overview, not for detailed project notes.
 - Use `START_HERE.md` as the restart document. It should fit on one short screen when possible.
+- Use `SUBMISSION_CHECKLIST.md` only as a closing checklist. Do not turn it into an open-ended research task list.
+- Use `PARKING_LOT.md` to preserve good ideas that should not expand the current manuscript.
 - Store actual research content in the user's project files, never inside this skill.
 - The skill should contain only operating rules and procedures, not project data.
 - Do not store changing journal metrics directly in the skill. Use `JOURNAL_TARGETS.md` and refresh it from official sources.
