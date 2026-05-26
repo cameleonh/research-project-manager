@@ -39,6 +39,7 @@ Verify paths before editing. Work with the user's current files; do not overwrit
 | `06_manuscript/*.md` | Chapter-based manuscript drafting files |
 | `SUBMISSION_CHECKLIST.md` | Pre-submission readiness checklist for closing the manuscript |
 | `PARKING_LOT.md` | Good but out-of-scope ideas intentionally excluded from the current manuscript |
+| `ANALYSIS_DASHBOARD.md` | Optional registry linking analysis IDs, scripts, outputs, manuscript locations, and claims |
 
 ## Managed Files
 
@@ -55,6 +56,7 @@ The skill manages this Markdown project system:
 - `06_manuscript/` for actual manuscript paragraphs and paper outline files
 - `SUBMISSION_CHECKLIST.md` for pre-submission readiness checks
 - `PARKING_LOT.md` for out-of-scope ideas and follow-up research candidates
+- Optional `ANALYSIS_DASHBOARD.md` for analysis-heavy projects only
 - Dashboard sections for collaboration waiting items, deadlines, and reminder dates
 - `docs/PROMPTS.md` for user-facing prompt examples when the user asks how to invoke or use this workflow
 
@@ -69,6 +71,7 @@ Support these recurring operations:
 - Updating the project dashboard
 - Rebuilding the project dashboard automatically from project Markdown files
 - Reviewing journal, society, conference, and submission target fit from `JOURNAL_TARGETS.md`
+- Creating or updating an optional `ANALYSIS_DASHBOARD.md` when a project has many scripts, outputs, baselines, robustness checks, or model comparisons
 - Tracking collaborator waits, external checkpoints, deadlines, and reminder dates
 - Keeping the system lightweight and avoiding unnecessary new files
 
@@ -83,6 +86,8 @@ Support these recurring operations:
 - Use `START_HERE.md` as the restart document. It should fit on one short screen when possible.
 - Use `SUBMISSION_CHECKLIST.md` only as a closing checklist. Do not turn it into an open-ended research task list.
 - Use `PARKING_LOT.md` to preserve good ideas that should not expand the current manuscript.
+- Do not create `ANALYSIS_DASHBOARD.md` by default. Suggest it only for analysis-heavy projects where `FILES.md` no longer clearly links scripts, results, manuscript locations, and supported claims.
+- When creating `ANALYSIS_DASHBOARD.md`, use simple IDs such as `A0`, `A1`, `A2`; include purpose, input data, script, output folder, manuscript location, supported claim, and status.
 - Store actual research content in the user's project files, never inside this skill.
 - The skill should contain only operating rules and procedures, not project data.
 - Do not store changing journal metrics directly in the skill. Use `JOURNAL_TARGETS.md` and refresh it from official sources.
@@ -115,7 +120,8 @@ When creating a new paper project:
 6. Add deadlines, reminder dates, collaborator waits, or checkpoints if known.
 7. Update `START_HERE.md` with one immediately executable next first action.
 8. Use `06_manuscript/research_plan_bullet.md` for initial research design notes and `00_paper_outline.md` for the paper's early argument structure.
-9. Rebuild the project list in `PROJECT_DASHBOARD.md` using the dashboard auto-rebuild command when available.
+9. Do not create `ANALYSIS_DASHBOARD.md` at project creation unless the user already has multiple analysis scripts or output folders.
+10. Rebuild the project list in `PROJECT_DASHBOARD.md` using the dashboard auto-rebuild command when available.
 
 If details are missing, make a conservative placeholder instead of blocking, unless the missing detail affects file location or risks overwriting existing work.
 
@@ -131,8 +137,9 @@ When the user provides a long work log, old memo, or scattered notes:
 6. Put major choices and rationale in `DECISIONS.md`.
 7. Put only key paths in `FILES.md`.
 8. Put manuscript-ready paragraphs in the appropriate `06_manuscript/01_*.md` through `07_*.md` file.
-9. Extract collaborator waits, deadlines, and reminder dates.
-10. Update the source project files, then rebuild `PROJECT_DASHBOARD.md` so stage, last work date, next first action, deadline, reminder date, and blocker are refreshed.
+9. If analysis scripts or result folders are numerous, create or update `ANALYSIS_DASHBOARD.md` to map analysis IDs to scripts, outputs, manuscript sections, and supported claims.
+10. Extract collaborator waits, deadlines, and reminder dates.
+11. Update the source project files, then rebuild `PROJECT_DASHBOARD.md` so stage, last work date, next first action, deadline, reminder date, and blocker are refreshed.
 
 Do not preserve every sentence. Preserve recoverability.
 
@@ -157,8 +164,9 @@ When recording today's work:
 3. Update the relevant row or task in `WBS.md`, including owner/waiting party and checkpoint if present in the template.
 4. Rewrite `START_HERE.md` so the next session can start quickly.
 5. If manuscript text changed, update the relevant `06_manuscript/*.md` chapter file rather than storing the draft in logs.
-6. Rebuild `PROJECT_DASHBOARD.md` after updating the project source files; update manual collaboration waiting sections separately when needed.
-7. Add to `DECISIONS.md` only if a meaningful research or project decision was made.
+6. If a new analysis script or result folder was created and `ANALYSIS_DASHBOARD.md` exists, update its analysis chain and status.
+7. Rebuild `PROJECT_DASHBOARD.md` after updating the project source files; update manual collaboration waiting sections separately when needed.
+8. Add to `DECISIONS.md` only if a meaningful research or project decision was made.
 
 ## Weekly Review Workflow
 

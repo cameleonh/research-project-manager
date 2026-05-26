@@ -20,6 +20,7 @@ This is useful when multiple manuscripts, analyses, reviews, and revisions are m
 - `PROJECT_MANAGEMENT_GUIDE.md`: operating guide
 - `JOURNAL_TARGETS.md`: updatable journal, society, and conference target reference
 - `docs/PROMPTS.md`: prompt recipes for using the Markdown workflow and Codex skill
+- `docs/ANALYSIS_DASHBOARD.md`: optional analysis-dashboard pattern for analysis-heavy papers
 - `research_project_template/`: per-paper project folder template
 - `codex_skill/research-project-manager/`: Codex skill rules for maintaining the system
 - `docs/PRD_reminder_calendar_sync.md`: product requirements for Windows reminders and calendar sync
@@ -80,6 +81,7 @@ The skill does not store actual research content. Research content stays in the 
 | `06_manuscript/*.md` | Chapter-based manuscript drafting files |
 | `SUBMISSION_CHECKLIST.md` | Pre-submission readiness checklist |
 | `PARKING_LOT.md` | Ideas intentionally excluded from the current manuscript |
+| `ANALYSIS_DASHBOARD.md` | Optional analysis registry for script/output/manuscript links |
 
 ## Manuscript Drafting Layout
 

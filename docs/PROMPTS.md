@@ -134,6 +134,38 @@ Use $research-project-manager to decide whether this idea belongs in the current
 $research-project-manager 써서 이 아이디어가 현재 원고에 꼭 필요한지, 아니면 PARKING_LOT에 둘지 판단해줘. 빼면 이유와 다시 꺼낼 조건도 적어줘.
 ```
 
+## 분석 ID 대시보드가 필요할 때
+
+분석 스크립트와 결과 폴더가 늘어나서 원고 어디에 쓰이는지 헷갈릴 때 사용한다. 모든 논문에 만들 필요는 없다.
+
+```text
+Use $research-project-manager to create an optional ANALYSIS_DASHBOARD.md for this analysis-heavy paper. Assign A0-A4 style IDs and link each analysis to its input data, script, output folder, manuscript section, supported claim, and status.
+```
+
+```text
+$research-project-manager 써서 이 분석 많은 논문에 ANALYSIS_DASHBOARD.md를 만들어줘. A0-A4처럼 ID를 붙이고, 각 분석의 입력자료, 스크립트, 결과 폴더, 원고 위치, 지원하는 주장, 상태를 연결해줘.
+```
+
+새 분석을 추가했을 때는 이렇게 말한다.
+
+```text
+Use $research-project-manager to add this new script and output folder to ANALYSIS_DASHBOARD.md, then update FILES.md and START_HERE if needed.
+```
+
+```text
+$research-project-manager 써서 새 분석 스크립트와 결과 폴더를 ANALYSIS_DASHBOARD.md에 추가해줘. 필요하면 FILES.md와 START_HERE도 같이 갱신해줘.
+```
+
+이미 있는 파일 관계를 정리할 때는 이렇게 말한다.
+
+```text
+Use $research-project-manager to audit this project's analysis chain. Check whether every result used in 05_results.md has an analysis ID, script, output folder, and source file.
+```
+
+```text
+$research-project-manager 써서 이 프로젝트의 분석 체인을 점검해줘. 05_results.md에 쓰인 결과마다 분석 ID, 스크립트, 결과 폴더, 원천 파일이 있는지 확인해줘.
+```
+
 ## 대시보드와 START_HERE가 헷갈릴 때
 
 역할을 다시 나누고 싶을 때 사용한다.
