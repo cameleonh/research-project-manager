@@ -20,6 +20,7 @@ If the user has not given another root, assume:
 - User guide: `C:\Users\honey\Documents\New project\PROJECT_MANAGEMENT_GUIDE.md`
 - Reminder/calendar sync PRD: `C:\Users\honey\Documents\New project\research-project-manager\docs\PRD_reminder_calendar_sync.md`
 - Dashboard auto-rebuild PRD: `C:\Users\honey\Documents\New project\research-project-manager\docs\PRD_dashboard_auto_rebuild.md`
+- Finishing workflow guide: `C:\Users\honey\Documents\New project\research-project-manager\docs\FINISHING_WORKFLOW.md`
 - Local Windows agent planning repo: `C:\Users\honey\Documents\New project\research-pm-local-windows-agent`
 
 Verify paths before editing. Work with the user's current files; do not overwrite research content unless explicitly asked.
@@ -59,6 +60,7 @@ The skill manages this Markdown project system:
 - Optional `ANALYSIS_DASHBOARD.md` for analysis-heavy projects only
 - Dashboard sections for collaboration waiting items, deadlines, and reminder dates
 - `docs/PROMPTS.md` for user-facing prompt examples when the user asks how to invoke or use this workflow
+- `docs/FINISHING_WORKFLOW.md` for turning mature analyses into submission-ready manuscripts
 
 ## Supported Tasks
 
@@ -72,6 +74,7 @@ Support these recurring operations:
 - Rebuilding the project dashboard automatically from project Markdown files
 - Reviewing journal, society, conference, and submission target fit from `JOURNAL_TARGETS.md`
 - Creating or updating an optional `ANALYSIS_DASHBOARD.md` when a project has many scripts, outputs, baselines, robustness checks, or model comparisons
+- Applying the finishing workflow when the user has mature analyses but needs to close manuscripts for submission
 - Tracking collaborator waits, external checkpoints, deadlines, and reminder dates
 - Keeping the system lightweight and avoiding unnecessary new files
 
@@ -88,6 +91,7 @@ Support these recurring operations:
 - Use `PARKING_LOT.md` to preserve good ideas that should not expand the current manuscript.
 - Do not create `ANALYSIS_DASHBOARD.md` by default. Suggest it only for analysis-heavy projects where `FILES.md` no longer clearly links scripts, results, manuscript locations, and supported claims.
 - When creating `ANALYSIS_DASHBOARD.md`, use simple IDs such as `A0`, `A1`, `A2`; include purpose, input data, script, output folder, manuscript location, supported claim, and status.
+- When the user says analysis is easy but writing/submission closure is hard, use the finishing workflow: lock one research question, map analyses, write results, calibrate discussion, park new ideas, run the submission checklist, and submit.
 - Store actual research content in the user's project files, never inside this skill.
 - The skill should contain only operating rules and procedures, not project data.
 - Do not store changing journal metrics directly in the skill. Use `JOURNAL_TARGETS.md` and refresh it from official sources.

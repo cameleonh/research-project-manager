@@ -21,6 +21,7 @@ This is useful when multiple manuscripts, analyses, reviews, and revisions are m
 - `JOURNAL_TARGETS.md`: updatable journal, society, and conference target reference
 - `docs/PROMPTS.md`: prompt recipes for using the Markdown workflow and Codex skill
 - `docs/ANALYSIS_DASHBOARD.md`: optional analysis-dashboard pattern for analysis-heavy papers
+- `docs/FINISHING_WORKFLOW.md`: workflow for turning 70-90% research into submission-ready manuscripts
 - `research_project_template/`: per-paper project folder template
 - `codex_skill/research-project-manager/`: Codex skill rules for maintaining the system
 - `docs/PRD_reminder_calendar_sync.md`: product requirements for Windows reminders and calendar sync
@@ -104,6 +105,8 @@ Each project template includes a `06_manuscript/` folder for paper writing:
 Use `research_plan_bullet.md` for design notes and `00_paper_outline.md` for the paper's logic. Write actual manuscript paragraphs in `01_*.md` through `07_*.md`. Treat `manuscript_full.md` as a final assembly file, not the day-to-day source.
 
 Use `SUBMISSION_CHECKLIST.md` when the manuscript enters submission preparation. Use `PARKING_LOT.md` to keep good but out-of-scope ideas from expanding the current paper.
+
+For research that is analytically mature but not yet submitted, use `docs/FINISHING_WORKFLOW.md` to move from analysis to results, discussion, parking-lot decisions, submission checklist, and final submission.
 
 ## Journal Target Reference
 

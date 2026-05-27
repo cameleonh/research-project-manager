@@ -122,6 +122,28 @@ Use $research-project-manager in finish mode. Open SUBMISSION_CHECKLIST and PARK
 $research-project-manager finish mode로 봐줘. SUBMISSION_CHECKLIST와 PARKING_LOT 기준으로, 투고에 꼭 필요한 것과 이번 논문에서 뺄 것을 나눠줘.
 ```
 
+## 80% 연구를 투고본으로 닫을 때
+
+분석은 거의 끝났지만 원고 마무리가 막힐 때 사용한다.
+
+```text
+Use $research-project-manager to apply the finishing workflow to this paper. Lock one research question, map analyses to manuscript sections, identify what goes to PARKING_LOT, and give me the next 3 actions toward submission.
+```
+
+```text
+$research-project-manager 써서 이 논문에 finishing workflow를 적용해줘. 연구질문 하나로 잠그고, 분석을 원고 절에 연결하고, PARKING_LOT로 뺄 것을 나누고, 투고까지 다음 행동 3개를 정해줘.
+```
+
+여러 편 중 빨리 닫을 논문을 고를 때는 이렇게 말한다.
+
+```text
+Use $research-project-manager to find 2-3 projects that are 70-90% complete and can be converted into submissions fastest. Use START_HERE, WBS, ANALYSIS_DASHBOARD, and SUBMISSION_CHECKLIST if present.
+```
+
+```text
+$research-project-manager 써서 70-90% 진행됐고 가장 빨리 투고본으로 바꿀 수 있는 논문 2-3개를 골라줘. START_HERE, WBS, ANALYSIS_DASHBOARD, SUBMISSION_CHECKLIST를 기준으로 봐줘.
+```
+
 ## 새 아이디어가 생겼을 때
 
 아이디어가 좋지만 논문 범위를 키울 위험이 있을 때 사용한다.
