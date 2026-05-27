@@ -84,6 +84,12 @@ The skill does not store actual research content. Research content stays in the 
 | `PARKING_LOT.md` | Ideas intentionally excluded from the current manuscript |
 | `ANALYSIS_DASHBOARD.md` | Optional analysis registry for script/output/manuscript links |
 
+## Navigation Pattern
+
+Use `PROJECT_DASHBOARD.md` to choose which project to work on. After opening one project, read its `START_HERE.md` first, then use the `단계별 읽기 순서` table in that project's `README.md` to move to the right file for the current stage.
+
+The per-project `README.md` links each paper stage to the files usually needed at that point: `WBS.md`, `FILES.md`, `06_manuscript/*.md`, `PARKING_LOT.md`, and `SUBMISSION_CHECKLIST.md`.
+
 ## Manuscript Drafting Layout
 
 Each project template includes a `06_manuscript/` folder for paper writing:

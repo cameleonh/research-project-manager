@@ -49,6 +49,7 @@ The skill manages this Markdown project system:
 - `PROJECT_DASHBOARD.md` for the portfolio view
 - `JOURNAL_TARGETS.md` for journal/society targets and submission fit notes
 - `README.md` for project basics
+- The `README.md` stage navigation table for which files to read and edit at each paper stage
 - `WBS.md` for paper-stage tracking
 - `START_HERE.md` for the next first action
 - `RESEARCH_LOG.md` for session history
@@ -82,6 +83,7 @@ Support these recurring operations:
 
 - Keep the system lightweight. Prefer updating existing files over adding new files.
 - Preserve the language and labels already used in the user's template files.
+- Keep a stage navigation table in each project `README.md` when the template has one. It should link the current paper stage to the files to read first, files to inspect next, and files to edit.
 - Do not put detailed daily logs in `WBS.md`; keep them in `RESEARCH_LOG.md`.
 - Do not bury the next first action only in `RESEARCH_LOG.md`; copy the actionable next step into `START_HERE.md`.
 - Do not put long manuscript paragraphs in `WBS.md`, `START_HERE.md`, or `RESEARCH_LOG.md`; keep actual draft text in `06_manuscript/`.
@@ -120,12 +122,13 @@ When creating a new paper project:
 2. Copy `research_project_template` into the target project folder.
 3. Rename the copied folder using a clear pattern such as `YYYY_short_project_name`.
 4. Update `README.md` with the project basics and current paper stage.
-5. Update `WBS.md` with the current active stage and next action.
-6. Add deadlines, reminder dates, collaborator waits, or checkpoints if known.
-7. Update `START_HERE.md` with one immediately executable next first action.
-8. Use `06_manuscript/research_plan_bullet.md` for initial research design notes and `00_paper_outline.md` for the paper's early argument structure.
-9. Do not create `ANALYSIS_DASHBOARD.md` at project creation unless the user already has multiple analysis scripts or output folders.
-10. Rebuild the project list in `PROJECT_DASHBOARD.md` using the dashboard auto-rebuild command when available.
+5. Check that `README.md` stage navigation links still match the copied project structure.
+6. Update `WBS.md` with the current active stage and next action.
+7. Add deadlines, reminder dates, collaborator waits, or checkpoints if known.
+8. Update `START_HERE.md` with one immediately executable next first action.
+9. Use `06_manuscript/research_plan_bullet.md` for initial research design notes and `00_paper_outline.md` for the paper's early argument structure.
+10. Do not create `ANALYSIS_DASHBOARD.md` at project creation unless the user already has multiple analysis scripts or output folders.
+11. Rebuild the project list in `PROJECT_DASHBOARD.md` using the dashboard auto-rebuild command when available.
 
 If details are missing, make a conservative placeholder instead of blocking, unless the missing detail affects file location or risks overwriting existing work.
 

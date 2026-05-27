@@ -34,9 +34,25 @@
 ## 현재 논문 단계
 아이디어 / 선행연구 / 데이터확보 / 분석설계 / 분석중 / 원고초안 / 투고준비 / 심사대응 / 수정중 / 완료
 
+## 단계별 읽기 순서
+
+| 지금 단계 | 먼저 읽을 파일 | 이어서 볼 파일 | 실제로 수정할 파일 |
+|---|---|---|---|
+| 재시작 / 오늘 할 일 선택 | [START_HERE.md](START_HERE.md) | [WBS.md](WBS.md), [FILES.md](FILES.md) | [START_HERE.md](START_HERE.md), [RESEARCH_LOG.md](RESEARCH_LOG.md) |
+| 아이디어 / 연구질문 고정 | [README.md](README.md) | [06_manuscript/research_plan_bullet.md](06_manuscript/research_plan_bullet.md), [06_manuscript/00_paper_outline.md](06_manuscript/00_paper_outline.md) | [README.md](README.md), [DECISIONS.md](DECISIONS.md) |
+| 선행연구 정리 | [WBS.md](WBS.md) | [01_literature/](01_literature/), [06_manuscript/02_literature_review.md](06_manuscript/02_literature_review.md) | [06_manuscript/02_literature_review.md](06_manuscript/02_literature_review.md), [FILES.md](FILES.md) |
+| 데이터 확보 / 변수 정리 | [FILES.md](FILES.md) | [02_data_raw/](02_data_raw/), [03_data_processed/](03_data_processed/), [06_manuscript/03_data.md](06_manuscript/03_data.md) | [FILES.md](FILES.md), [06_manuscript/03_data.md](06_manuscript/03_data.md), [DECISIONS.md](DECISIONS.md) |
+| 분석설계 / 분석중 | [WBS.md](WBS.md) | [04_analysis/](04_analysis/), [06_manuscript/04_method.md](06_manuscript/04_method.md), [06_manuscript/05_results.md](06_manuscript/05_results.md) | [06_manuscript/04_method.md](06_manuscript/04_method.md), [06_manuscript/05_results.md](06_manuscript/05_results.md), [FILES.md](FILES.md) |
+| 분석이 많아 추적이 어려움 | [FILES.md](FILES.md) | `ANALYSIS_DASHBOARD.md` | `ANALYSIS_DASHBOARD.md`, [06_manuscript/05_results.md](06_manuscript/05_results.md) |
+| 원고초안 작성 | [06_manuscript/00_paper_outline.md](06_manuscript/00_paper_outline.md) | [06_manuscript/01_introduction.md](06_manuscript/01_introduction.md), [06_manuscript/05_results.md](06_manuscript/05_results.md), [06_manuscript/06_discussion.md](06_manuscript/06_discussion.md) | [06_manuscript/](06_manuscript/)의 장별 파일 |
+| 새 아이디어가 계속 생김 | [PARKING_LOT.md](PARKING_LOT.md) | [06_manuscript/00_paper_outline.md](06_manuscript/00_paper_outline.md), [DECISIONS.md](DECISIONS.md) | [PARKING_LOT.md](PARKING_LOT.md), [DECISIONS.md](DECISIONS.md) |
+| 투고준비 | [SUBMISSION_CHECKLIST.md](SUBMISSION_CHECKLIST.md) | [06_manuscript/manuscript_full.md](06_manuscript/manuscript_full.md), [07_outputs/](07_outputs/) | [SUBMISSION_CHECKLIST.md](SUBMISSION_CHECKLIST.md), [07_outputs/](07_outputs/) |
+| 심사대응 / 수정중 | [DECISIONS.md](DECISIONS.md) | [RESEARCH_LOG.md](RESEARCH_LOG.md), [06_manuscript/](06_manuscript/) | [DECISIONS.md](DECISIONS.md), [RESEARCH_LOG.md](RESEARCH_LOG.md), [06_manuscript/](06_manuscript/) |
+
 ## 작업 지도
 - 세부 진행은 `WBS.md`에서 관리한다.
 - 다시 시작할 때는 `START_HERE.md`를 먼저 연다.
+- 단계별로 어떤 파일을 읽을지 헷갈리면 위 `단계별 읽기 순서` 표를 따른다.
 - 투고 전에는 `SUBMISSION_CHECKLIST.md`로 투고 가능 여부를 판정한다.
 - 이번 논문에 넣지 않을 아이디어는 `PARKING_LOT.md`에 보관한다.
 

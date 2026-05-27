@@ -2,6 +2,18 @@
 
 여러 논문 프로젝트를 한 화면에서 보는 파일이다. 각 프로젝트의 자세한 내용은 해당 폴더의 `START_HERE.md`와 `WBS.md`에서 확인한다.
 
+## 읽는 순서
+
+1. 이 파일의 [현재 우선순위](#현재-우선순위)에서 이번 주에 밀 프로젝트를 고른다.
+2. [논문 프로젝트 목록](#논문-프로젝트-목록)에서 단계, 다음 첫 행동, 마감, 막힌 이유를 확인한다.
+3. 선택한 프로젝트 폴더의 `START_HERE.md`를 먼저 연다.
+4. 단계와 작업 범위를 확인하려면 `WBS.md`와 `README.md`를 연다.
+5. 파일 위치가 헷갈리면 `FILES.md`를 연다.
+6. 투고처를 고를 때는 [JOURNAL_TARGETS.md](JOURNAL_TARGETS.md)를 연다.
+7. 운영법이 헷갈리면 [PROJECT_MANAGEMENT_GUIDE.md](PROJECT_MANAGEMENT_GUIDE.md)를 본다.
+
+새 프로젝트에서 단계별로 읽을 파일은 [research_project_template/README.md](research_project_template/README.md)의 `단계별 읽기 순서`를 따른다.
+
 ## 현재 우선순위
 
 이번 주에 실제로 건드릴 프로젝트는 1-3개만 적는다.
