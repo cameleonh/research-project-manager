@@ -114,13 +114,42 @@ Use the exact project statuses, WBS statuses, and paper stages that appear in th
 
 Do not invent a larger status taxonomy unless the user asks.
 
+## Folder Naming Rules
+
+When organizing research paper folders, keep folder names as stable IDs and keep changing state in Markdown metadata.
+
+- Prefer ASCII folder names in the form `YYYY_short_english_slug`.
+- Use lowercase words separated by underscores.
+- Do not put `active`, `paused`, `waiting`, `done`, or other status labels in folder names.
+- Do not use spaces, parentheses, long dates, or long Korean titles in folder names when creating or renaming project folders.
+- Store the readable Korean title and longer explanation in the project's `README.md`, not in the folder name.
+- Use `_program` for a broad research program that contains several paper projects, for example `2026_tabpfn_avm_research_program`.
+- Use numbered subfolders inside a program for paper-level projects, for example `2026_01_high_risk_jeonse_descriptive` and `2026_02_sparse_housing_tabpfn_avm`.
+- Use `_inbox_*` only for temporary or unclear folders that need later classification.
+- Use `PROJECT_DASHBOARD.md` and each project `README.md` / `START_HERE.md` for status fields such as `active`, `waiting`, `paused`, `backlog`, `submitted`, `revision`, `done`, and `archive`.
+
+Before renaming existing folders:
+
+1. Check whether the target folder already exists.
+2. Search Markdown files for the old folder name.
+3. Rename only folders inside the intended research root.
+4. Update Markdown path references after the rename.
+5. Remove only empty leftover old-name folders after verifying they contain no files.
+6. For Windows case-only renames, use a temporary intermediate name before applying the final casing.
+
+For the user's Obsidian paper vault, when no more specific root is given and the user refers to `02_Paper`, assume:
+
+- Paper vault root: `D:\Writing_Data\Obsidian Vault\02_Paper`
+- Portfolio dashboard: `D:\Writing_Data\Obsidian Vault\02_Paper\PROJECT_DASHBOARD.md`
+- Current folder naming style: `YYYY_short_english_slug`
+
 ## New Project Workflow
 
 When creating a new paper project:
 
 1. Confirm or infer a short project name and target parent folder.
 2. Copy `research_project_template` into the target project folder.
-3. Rename the copied folder using a clear pattern such as `YYYY_short_project_name`.
+3. Rename the copied folder using `YYYY_short_english_slug`; use `_program` only for multi-paper research programs.
 4. Update `README.md` with the project basics and current paper stage.
 5. Check that `README.md` stage navigation links still match the copied project structure.
 6. Update `WBS.md` with the current active stage and next action.
