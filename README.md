@@ -2,6 +2,7 @@
 
 <!-- project-summary -->
 > **What this is:** Markdown-based project management system and Codex skill for researchers managing multiple paper projects.
+> **한국어:** 여러 논문 프로젝트를 Markdown으로 추적하고 재개하기 위한 연구자용 프로젝트 관리 시스템과 Codex 스킬입니다.
 <!-- /project-summary -->
 
 
