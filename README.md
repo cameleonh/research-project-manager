@@ -1,5 +1,10 @@
 # Research Project Manager
 
+<!-- project-summary -->
+> **What this is:** Markdown-based project management system and Codex skill for researchers managing multiple paper projects.
+<!-- /project-summary -->
+
+
 Markdown-based project management system and Codex skill for researchers who run several paper projects at the same time.
 
 The goal is not to create a heavy project-management app. The goal is to make every paper project easy to resume after interruptions by preserving:
