@@ -104,6 +104,18 @@ Support these recurring operations:
 - Put implications, interpretations, and policy significance in `06_manuscript/06_discussion.md`; keep `05_results.md` focused on analysis results.
 - When the user asks about publication venues, journal fit, society targets, IF/JIF, or conference options, read `JOURNAL_TARGETS.md` first. If values are stale or missing, verify against official society/publisher pages and JCR/Scopus/KCI before updating.
 
+## Manuscript Writing Format
+
+When the user asks which writing format to use, treat this skill's project template as the canonical workspace and manuscript system.
+
+- Use the Research Project Manager structure for the project: `README.md`, `WBS.md`, `START_HERE.md`, `RESEARCH_LOG.md`, `DECISIONS.md`, `FILES.md`, `SUBMISSION_CHECKLIST.md`, `PARKING_LOT.md`, and `06_manuscript/`.
+- Use `06_manuscript/` as the actual manuscript source. Do not draft long paper paragraphs in management files.
+- Use external writing folders, including `C:\Users\hserver\Downloads\2025_seoultech_capstone_design\writings`, only as reference scaffolds for generic chapter prompts.
+- Do not copy stale project-specific content from external writing folders into a new project.
+- Do not preserve malformed Markdown headings such as duplicated `## ##` or `### ###`; normalize headings before moving any useful material.
+- Borrow only reusable section prompts when helpful: abstract `Background / Objective / Methods / Results / Conclusion`, introduction problem-gap-purpose-contribution, literature theory-empirical gap-hypotheses, method data-variables-analysis strategy, results descriptive-main-additional analyses, and discussion interpretation-literature connection-implications-limitations.
+- Keep the final source of truth in the current project's `06_manuscript/*.md` files. External templates are aids, not managed project files.
+
 ## Vocabulary
 
 Use the exact project statuses, WBS statuses, and paper stages that appear in the user's existing Markdown files. If the template exists, read the relevant headings and table options from:

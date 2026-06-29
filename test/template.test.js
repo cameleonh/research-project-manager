@@ -38,6 +38,35 @@ test("discussion template has implication and paper-sentence holding sections", 
 
   assert.match(discussion, /## 핵심 함의 후보/);
   assert.match(discussion, /## 논문식 문장 후보/);
+  assert.match(discussion, /## 연구결과 해석/);
+  assert.match(discussion, /## 연구의 한계/);
+});
+
+test("manuscript templates include reusable writing scaffold prompts", () => {
+  const plan = fs.readFileSync(path.join(manuscriptDir, "research_plan_bullet.md"), "utf8");
+  const outline = fs.readFileSync(path.join(manuscriptDir, "00_paper_outline.md"), "utf8");
+  const results = fs.readFileSync(path.join(manuscriptDir, "05_results.md"), "utf8");
+  const full = fs.readFileSync(path.join(manuscriptDir, "manuscript_full.md"), "utf8");
+
+  assert.match(plan, /## 연구모형 \/ 개념틀/);
+  assert.match(plan, /## 가설 \/ 기대 방향/);
+  assert.match(outline, /Background/);
+  assert.match(outline, /Objective/);
+  assert.match(results, /## 기술통계 \/ 기초 결과/);
+  assert.match(results, /## 연구질문 \/ 가설별 검증/);
+  assert.match(full, /Background, Objective, Methods, Results, Conclusion/);
+});
+
+test("skill documents canonical manuscript format choice", () => {
+  const skill = fs.readFileSync(
+    path.join(repoRoot, "codex_skill", "research-project-manager", "SKILL.md"),
+    "utf8",
+  );
+
+  assert.match(skill, /## Manuscript Writing Format/);
+  assert.match(skill, /canonical workspace and manuscript system/);
+  assert.match(skill, /2025_seoultech_capstone_design\\writings/);
+  assert.match(skill, /malformed Markdown headings/);
 });
 
 test("folder guide explains manuscript source files and final assembly", () => {

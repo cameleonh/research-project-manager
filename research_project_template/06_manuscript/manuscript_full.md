@@ -6,6 +6,7 @@
 
 ## 조립 순서
 
+0. 초록: Background, Objective, Methods, Results, Conclusion 순서로 결과 확정 후 작성
 1. `01_introduction.md`
 2. `02_literature_review.md`
 3. `03_data.md`

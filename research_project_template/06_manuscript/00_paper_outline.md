@@ -8,6 +8,15 @@
 ## 기여
 -
 
+## 초록 약속
+결과 숫자가 확정되기 전에는 방향만 적는다. 최종 초록 문장은 `manuscript_full.md` 또는 투고 양식 조립 단계에서 확정한다.
+
+- Background:
+- Objective:
+- Methods:
+- Results:
+- Conclusion:
+
 ## 장별 역할
 
 ### `01_introduction.md`
