@@ -76,6 +76,32 @@ test("manuscript templates follow writings scene order and section prompts", () 
   assert.match(full, /Conceptual Frameworks\.md/);
 });
 
+test("writings-style chapter files keep metadata yaml blocks", () => {
+  const chapterFiles = [
+    "Abstract.md",
+    "Introduction.md",
+    "Theory.md",
+    "Conceptual Frameworks.md",
+    "Methods.md",
+    "Result.md",
+    "Discussion.md",
+    "Conclusion.md",
+  ];
+
+  for (const file of chapterFiles) {
+    const content = fs.readFileSync(path.join(manuscriptDir, file), "utf8");
+
+    assert.match(content, /## 메타데이터/);
+    assert.match(content, /```yaml[\s\S]*title: "논문 제목"[\s\S]*authors:/);
+    assert.match(content, /name: "저자명"/);
+    assert.match(content, /affiliation: "소속기관"/);
+    assert.match(content, /email: "author@email\.com"/);
+    assert.match(content, /journal: "목표 학술지"/);
+    assert.match(content, /date: YYYY-MM-DD/);
+    assert.match(content, /keywords: \[키워드1, 키워드2, 키워드3\]/);
+  }
+});
+
 test("skill documents canonical manuscript format choice", () => {
   const skill = fs.readFileSync(
     path.join(repoRoot, "codex_skill", "research-project-manager", "SKILL.md"),
@@ -86,6 +112,8 @@ test("skill documents canonical manuscript format choice", () => {
   assert.match(skill, /canonical chapter manuscript format/);
   assert.match(skill, /2025_seoultech_capstone_design\\writings/);
   assert.match(skill, /Conceptual Frameworks\.md/);
+  assert.match(skill, /Keep the `## 메타데이터` YAML block/);
+  assert.match(skill, /title`, `authors`/);
   assert.match(skill, /malformed Markdown headings/);
 });
 

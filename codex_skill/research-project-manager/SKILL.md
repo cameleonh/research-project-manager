@@ -113,6 +113,8 @@ When the user asks which writing format to use, treat this skill's project templ
 - Use `06_manuscript/` as the actual manuscript source. Do not draft long paper paragraphs in management files.
 - For chapter manuscripts, follow `C:\Users\hserver\Downloads\2025_seoultech_capstone_design\writings`: `Index.md` Longform scenes plus `Abstract.md`, `Introduction.md`, `Theory.md`, `Conceptual Frameworks.md`, `Methods.md`, `Result.md`, `Discussion.md`, and `Conclusion.md`.
 - Use the clean reusable headings from `writings`, including metadata, numbered chapter headings, and subheadings; do not copy stale project-specific content from that external folder into a new project.
+- Keep the `## 메타데이터` YAML block at the top of every chapter manuscript file. The reusable metadata fields are `title`, `authors` with `name`, `affiliation`, and `email`, `journal`, `date`, and `keywords`.
+- When project facts are known, update chapter metadata consistently across all chapter files; do not leave different titles, journals, dates, or keywords in different chapters unless the user explicitly wants chapter-specific metadata.
 - Do not preserve malformed Markdown headings such as duplicated `## ##` or `### ###`; normalize headings before moving any useful material.
 - Keep the final source of truth in the current project's `06_manuscript/*.md` files. External `writings` folders define the format, but are not managed project files.
 
