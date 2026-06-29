@@ -96,18 +96,20 @@
 
 - `research_plan_bullet.md`: 연구 설계, 변수, 데이터, 분석 순서, 아직 원고 문장이 아닌 메모
 - `00_paper_outline.md`: 논문 전체 논리 흐름과 장별 역할
-- `01_introduction.md`: 서론
-- `02_literature_review.md`: 선행연구
-- `03_data.md`: 자료와 변수
-- `04_method.md`: 분석방법
-- `05_results.md`: 분석결과
-- `06_discussion.md`: 함의, 해석, 정책적 시사점
-- `07_conclusion.md`: 결론
+- `Index.md`: Longform 장면 순서
+- `Abstract.md`: 초록
+- `Introduction.md`: 서론
+- `Theory.md`: 이론적 배경과 선행연구
+- `Conceptual Frameworks.md`: 연구모형과 변수 정의
+- `Methods.md`: 자료, 변수 측정, 분석전략
+- `Result.md`: 분석결과
+- `Discussion.md`: 함의, 해석, 정책적 시사점
+- `Conclusion.md`: 결론
 - `manuscript_full.md`: 최종 제출 또는 공유 직전 조립본
 
-평소에는 `manuscript_full.md`를 원천 파일로 쓰지 않는다. 실제 집필과 수정은 `01_introduction.md`부터 `07_conclusion.md`까지 장별 파일에서 한다.
+평소에는 `manuscript_full.md`를 원천 파일로 쓰지 않는다. 실제 집필과 수정은 `Index.md`에 나열된 `writings` 스타일 장별 파일에서 한다.
 
-`05_results.md`는 분석 결과를 보여주는 장이다. 큰 해석, 함의, 정책적 시사점은 `06_discussion.md`에 둔다.
+`Result.md`는 분석 결과를 보여주는 장이다. 큰 해석, 함의, 정책적 시사점은 `Discussion.md`에 둔다.
 
 ## 투고처 / 학회 후보 관리
 
@@ -164,8 +166,8 @@
 1. 연구질문을 한 문장으로 잠근다.
 2. 분석한다.
 3. `ANALYSIS_DASHBOARD.md`로 분석-결과-원고 위치를 잠근다.
-4. `06_manuscript/05_results.md`에 결과를 표/그림 중심으로 넣는다.
-5. `06_manuscript/06_discussion.md`에서 해석 강도를 조절한다.
+4. `06_manuscript/Result.md`에 결과를 표/그림 중심으로 넣는다.
+5. `06_manuscript/Discussion.md`에서 해석 강도를 조절한다.
 6. 새 아이디어는 `PARKING_LOT.md`로 뺀다.
 7. `SUBMISSION_CHECKLIST.md`로 투고 가능 여부를 판정한다.
 8. 투고한다.

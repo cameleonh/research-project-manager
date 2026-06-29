@@ -17,13 +17,15 @@
 ## 원고
 - `06_manuscript/research_plan_bullet.md`: 연구 설계, 변수, 데이터, 분석 순서, 아직 원고 문장이 아닌 메모
 - `06_manuscript/00_paper_outline.md`: 논문 전체 논리 흐름과 장별 역할
-- `06_manuscript/01_introduction.md`: 서론
-- `06_manuscript/02_literature_review.md`: 선행연구
-- `06_manuscript/03_data.md`: 자료와 변수
-- `06_manuscript/04_method.md`: 분석방법
-- `06_manuscript/05_results.md`: 분석결과
-- `06_manuscript/06_discussion.md`: 함의, 해석, 정책적 시사점
-- `06_manuscript/07_conclusion.md`: 결론
+- `06_manuscript/Index.md`: Longform 장면 순서
+- `06_manuscript/Abstract.md`: 초록
+- `06_manuscript/Introduction.md`: 서론
+- `06_manuscript/Theory.md`: 이론적 배경과 선행연구
+- `06_manuscript/Conceptual Frameworks.md`: 연구모형과 변수 정의
+- `06_manuscript/Methods.md`: 자료, 변수 측정, 분석전략
+- `06_manuscript/Result.md`: 분석결과
+- `06_manuscript/Discussion.md`: 함의, 해석, 정책적 시사점
+- `06_manuscript/Conclusion.md`: 결론
 - `06_manuscript/manuscript_full.md`: 최종 제출 또는 공유 직전 조립본
 
 ## 최종 산출물

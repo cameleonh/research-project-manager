@@ -9,52 +9,71 @@ const manuscriptDir = path.join(repoRoot, "research_project_template", "06_manus
 const expectedFiles = [
   "research_plan_bullet.md",
   "00_paper_outline.md",
-  "01_introduction.md",
-  "02_literature_review.md",
-  "03_data.md",
-  "04_method.md",
-  "05_results.md",
-  "06_discussion.md",
-  "07_conclusion.md",
+  "Index.md",
+  "Abstract.md",
+  "Introduction.md",
+  "Theory.md",
+  "Conceptual Frameworks.md",
+  "Methods.md",
+  "Result.md",
+  "Discussion.md",
+  "Conclusion.md",
   "manuscript_full.md",
 ];
 
-test("research project template includes chapter-based manuscript files", () => {
+test("research project template includes writings-style manuscript files", () => {
   for (const file of expectedFiles) {
     assert.equal(fs.existsSync(path.join(manuscriptDir, file)), true, `${file} should exist`);
   }
 });
 
+test("legacy numbered manuscript chapter files are not part of the new template", () => {
+  const files = fs.readdirSync(manuscriptDir);
+
+  assert.equal(files.includes("01_introduction.md"), false);
+  assert.equal(files.includes("02_literature_review.md"), false);
+  assert.equal(files.includes("03_data.md"), false);
+  assert.equal(files.includes("04_method.md"), false);
+  assert.equal(files.includes("05_results.md"), false);
+  assert.equal(files.includes("06_discussion.md"), false);
+  assert.equal(files.includes("07_conclusion.md"), false);
+});
+
 test("paper outline documents chapter roles and discussion boundaries", () => {
   const outline = fs.readFileSync(path.join(manuscriptDir, "00_paper_outline.md"), "utf8");
 
-  assert.match(outline, /05_results\.md[\s\S]*분석 결과/);
-  assert.match(outline, /06_discussion\.md[\s\S]*왜 중요한지/);
+  assert.match(outline, /Result\.md[\s\S]*분석 결과/);
+  assert.match(outline, /Discussion\.md[\s\S]*왜 중요한지/);
   assert.match(outline, /결과 반복/);
 });
 
-test("discussion template has implication and paper-sentence holding sections", () => {
-  const discussion = fs.readFileSync(path.join(manuscriptDir, "06_discussion.md"), "utf8");
+test("discussion template follows writings section structure", () => {
+  const discussion = fs.readFileSync(path.join(manuscriptDir, "Discussion.md"), "utf8");
 
-  assert.match(discussion, /## 핵심 함의 후보/);
-  assert.match(discussion, /## 논문식 문장 후보/);
-  assert.match(discussion, /## 연구결과 해석/);
-  assert.match(discussion, /## 연구의 한계/);
+  assert.match(discussion, /## 7\. Discussion/);
+  assert.match(discussion, /### 7\.1 연구결과 해석/);
+  assert.match(discussion, /### 7\.5 연구의 한계/);
 });
 
-test("manuscript templates include reusable writing scaffold prompts", () => {
+test("manuscript templates follow writings scene order and section prompts", () => {
+  const index = fs.readFileSync(path.join(manuscriptDir, "Index.md"), "utf8");
+  const abstract = fs.readFileSync(path.join(manuscriptDir, "Abstract.md"), "utf8");
   const plan = fs.readFileSync(path.join(manuscriptDir, "research_plan_bullet.md"), "utf8");
   const outline = fs.readFileSync(path.join(manuscriptDir, "00_paper_outline.md"), "utf8");
-  const results = fs.readFileSync(path.join(manuscriptDir, "05_results.md"), "utf8");
+  const results = fs.readFileSync(path.join(manuscriptDir, "Result.md"), "utf8");
   const full = fs.readFileSync(path.join(manuscriptDir, "manuscript_full.md"), "utf8");
 
+  assert.match(index, /scenes:\s*[\s\S]*- Abstract[\s\S]*- Conceptual Frameworks[\s\S]*- Conclusion/);
+  assert.match(abstract, /### Background/);
+  assert.match(abstract, /### Objective/);
   assert.match(plan, /## 연구모형 \/ 개념틀/);
   assert.match(plan, /## 가설 \/ 기대 방향/);
   assert.match(outline, /Background/);
   assert.match(outline, /Objective/);
-  assert.match(results, /## 기술통계 \/ 기초 결과/);
-  assert.match(results, /## 연구질문 \/ 가설별 검증/);
-  assert.match(full, /Background, Objective, Methods, Results, Conclusion/);
+  assert.match(results, /### 6\.1 기술통계 및 상관관계/);
+  assert.match(results, /### 6\.2 가설 검증/);
+  assert.match(full, /Abstract\.md/);
+  assert.match(full, /Conceptual Frameworks\.md/);
 });
 
 test("skill documents canonical manuscript format choice", () => {
@@ -64,8 +83,9 @@ test("skill documents canonical manuscript format choice", () => {
   );
 
   assert.match(skill, /## Manuscript Writing Format/);
-  assert.match(skill, /canonical workspace and manuscript system/);
+  assert.match(skill, /canonical chapter manuscript format/);
   assert.match(skill, /2025_seoultech_capstone_design\\writings/);
+  assert.match(skill, /Conceptual Frameworks\.md/);
   assert.match(skill, /malformed Markdown headings/);
 });
 

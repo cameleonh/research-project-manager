@@ -36,13 +36,15 @@
 
 - `research_plan_bullet.md`: 연구 설계, 변수, 데이터, 분석 순서, 아직 원고 문장이 아닌 메모
 - `00_paper_outline.md`: 논문 전체 논리, 핵심 주장, 장별 역할
-- `01_introduction.md`: 서론
-- `02_literature_review.md`: 선행연구
-- `03_data.md`: 자료와 변수
-- `04_method.md`: 분석방법
-- `05_results.md`: 분석결과
-- `06_discussion.md`: 함의, 해석, 정책적 시사점
-- `07_conclusion.md`: 결론
+- `Index.md`: Longform 장면 순서
+- `Abstract.md`: 초록
+- `Introduction.md`: 서론
+- `Theory.md`: 이론적 배경과 선행연구
+- `Conceptual Frameworks.md`: 연구모형과 변수 정의
+- `Methods.md`: 자료, 변수 측정, 분석전략
+- `Result.md`: 분석결과
+- `Discussion.md`: 함의, 해석, 정책적 시사점
+- `Conclusion.md`: 결론
 - `manuscript_full.md`: 최종 제출 또는 공유 직전 최종 조립본
 
 평소에는 `manuscript_full.md`를 원천 파일로 쓰지 않는다. 실제 집필과 수정은 장별 파일에서 한다.

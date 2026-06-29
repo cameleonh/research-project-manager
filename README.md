@@ -104,17 +104,19 @@ Each project template includes a `06_manuscript/` folder for paper writing:
 06_manuscript/
   research_plan_bullet.md
   00_paper_outline.md
-  01_introduction.md
-  02_literature_review.md
-  03_data.md
-  04_method.md
-  05_results.md
-  06_discussion.md
-  07_conclusion.md
+  Index.md
+  Abstract.md
+  Introduction.md
+  Theory.md
+  Conceptual Frameworks.md
+  Methods.md
+  Result.md
+  Discussion.md
+  Conclusion.md
   manuscript_full.md
 ```
 
-Use `research_plan_bullet.md` for design notes and `00_paper_outline.md` for the paper's logic. Write actual manuscript paragraphs in `01_*.md` through `07_*.md`. Treat `manuscript_full.md` as a final assembly file, not the day-to-day source.
+Use `research_plan_bullet.md` for design notes and `00_paper_outline.md` for the paper's logic. Write actual manuscript paragraphs in the `writings`-style chapter files listed by `Index.md`. Treat `manuscript_full.md` as a final assembly file, not the day-to-day source.
 
 Use `SUBMISSION_CHECKLIST.md` when the manuscript enters submission preparation. Use `PARKING_LOT.md` to keep good but out-of-scope ideas from expanding the current paper.
 

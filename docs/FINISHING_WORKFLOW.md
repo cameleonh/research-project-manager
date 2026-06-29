@@ -21,8 +21,8 @@
 1. 연구질문을 한 문장으로 잠근다.
 2. 분석한다.
 3. ANALYSIS_DASHBOARD로 분석-결과-원고 위치를 잠근다.
-4. 05_results.md에 결과를 표/그림 중심으로 넣는다.
-5. 06_discussion.md에서 해석 강도를 조절한다.
+4. Result.md에 결과를 표/그림 중심으로 넣는다.
+5. Discussion.md에서 해석 강도를 조절한다.
 6. 새 아이디어는 PARKING_LOT로 뺀다.
 7. SUBMISSION_CHECKLIST로 투고 가능 여부를 판정한다.
 8. 투고한다.
@@ -81,7 +81,7 @@
 
 ### 4. 결과장 작성
 
-`05_results.md`는 분석 결과를 보여주는 장이다. 큰 해석과 정책적 함의는 `06_discussion.md`로 보낸다.
+`Result.md`는 분석 결과를 보여주는 장이다. 큰 해석과 정책적 함의는 `Discussion.md`로 보낸다.
 
 점검 질문:
 
@@ -91,13 +91,13 @@
 
 결과물:
 
-- `06_manuscript/05_results.md`
+- `06_manuscript/Result.md`
 - 표/그림 파일
 - 본문과 표/그림 번호의 일치
 
 ### 5. 논의장 작성
 
-`06_discussion.md`에서는 결과의 의미를 설명하되, 주장 강도를 낮출 부분은 낮춘다. 이미 알고 있는 약점은 숨기는 것이 아니라 한계 또는 후속연구로 배치한다.
+`Discussion.md`에서는 결과의 의미를 설명하되, 주장 강도를 낮출 부분은 낮춘다. 이미 알고 있는 약점은 숨기는 것이 아니라 한계 또는 후속연구로 배치한다.
 
 점검 질문:
 
@@ -107,7 +107,7 @@
 
 결과물:
 
-- `06_manuscript/06_discussion.md`
+- `06_manuscript/Discussion.md`
 - 한계 문단
 - 후속연구 문단
 
@@ -196,7 +196,7 @@
 
 - `START_HERE.md`: 지금 붙잡은 질문과 다음 첫 행동
 - `ANALYSIS_DASHBOARD.md`: 분석-결과-원고 위치 연결
-- `06_manuscript/05_results.md`: 결과장
-- `06_manuscript/06_discussion.md`: 논의장
+- `06_manuscript/Result.md`: 결과장
+- `06_manuscript/Discussion.md`: 논의장
 - `PARKING_LOT.md`: 이번 논문에서 뺄 아이디어
 - `SUBMISSION_CHECKLIST.md`: 투고 가능 판정

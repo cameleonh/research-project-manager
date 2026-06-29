@@ -181,11 +181,11 @@ $research-project-manager 써서 새 분석 스크립트와 결과 폴더를 ANA
 이미 있는 파일 관계를 정리할 때는 이렇게 말한다.
 
 ```text
-Use $research-project-manager to audit this project's analysis chain. Check whether every result used in 05_results.md has an analysis ID, script, output folder, and source file.
+Use $research-project-manager to audit this project's analysis chain. Check whether every result used in Result.md has an analysis ID, script, output folder, and source file.
 ```
 
 ```text
-$research-project-manager 써서 이 프로젝트의 분석 체인을 점검해줘. 05_results.md에 쓰인 결과마다 분석 ID, 스크립트, 결과 폴더, 원천 파일이 있는지 확인해줘.
+$research-project-manager 써서 이 프로젝트의 분석 체인을 점검해줘. Result.md에 쓰인 결과마다 분석 ID, 스크립트, 결과 폴더, 원천 파일이 있는지 확인해줘.
 ```
 
 ## 대시보드와 START_HERE가 헷갈릴 때

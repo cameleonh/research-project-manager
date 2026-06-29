@@ -81,7 +81,7 @@ paper_project/
 
 - 새 분석 스크립트를 만들면 먼저 `분석 체인`에 ID를 부여한다.
 - 새 결과 폴더를 만들면 `핵심 산출물`과 `FILES.md`에 추가한다.
-- 논문 본문에 들어가는 결과는 반드시 `06_manuscript/05_results.md`에 요약한다.
+- 논문 본문에 들어가는 결과는 반드시 `06_manuscript/Result.md`에 요약한다.
 - 보류된 분석 아이디어는 `PARKING_LOT.md`로 보낸다.
 ```
 

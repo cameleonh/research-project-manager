@@ -37,7 +37,7 @@ Verify paths before editing. Work with the user's current files; do not overwrit
 | `RESEARCH_LOG.md` | Date-based record of actual work performed |
 | `DECISIONS.md` | Important decisions, reasons, alternatives, and revisit conditions |
 | `FILES.md` | Key file locations only, not a complete file inventory |
-| `06_manuscript/*.md` | Chapter-based manuscript drafting files |
+| `06_manuscript/*.md` | Chapter-based manuscript drafting files using the `writings` scene format |
 | `SUBMISSION_CHECKLIST.md` | Pre-submission readiness checklist for closing the manuscript |
 | `PARKING_LOT.md` | Good but out-of-scope ideas intentionally excluded from the current manuscript |
 | `ANALYSIS_DASHBOARD.md` | Optional registry linking analysis IDs, scripts, outputs, manuscript locations, and claims |
@@ -55,7 +55,7 @@ The skill manages this Markdown project system:
 - `RESEARCH_LOG.md` for session history
 - `DECISIONS.md` for important decisions
 - `FILES.md` for key file locations
-- `06_manuscript/` for actual manuscript paragraphs and paper outline files
+- `06_manuscript/` for actual manuscript paragraphs and paper outline files; chapter files follow the `writings` scene format
 - `SUBMISSION_CHECKLIST.md` for pre-submission readiness checks
 - `PARKING_LOT.md` for out-of-scope ideas and follow-up research candidates
 - Optional `ANALYSIS_DASHBOARD.md` for analysis-heavy projects only
@@ -100,21 +100,21 @@ Support these recurring operations:
 - Markdown reminder dates are not real notifications. If a deadline must produce an alert, tell the user to also put it in their calendar or reminder app.
 - When the user asks to refresh the project list in `PROJECT_DASHBOARD.md`, prefer the dashboard auto-rebuild CLI over manually editing the generated project-list table.
 - Do not edit content between `<!-- RPM:PROJECT_LIST:START -->` and `<!-- RPM:PROJECT_LIST:END -->` by hand unless the user explicitly asks. That region is owned by the rebuild command.
-- For manuscript work, use `06_manuscript/research_plan_bullet.md` for design notes, `00_paper_outline.md` for overall logic, `01_*.md` through `07_*.md` for actual draft chapters, and `manuscript_full.md` only as a final assembly file.
-- Put implications, interpretations, and policy significance in `06_manuscript/06_discussion.md`; keep `05_results.md` focused on analysis results.
+- For manuscript work, use `06_manuscript/research_plan_bullet.md` for design notes, `00_paper_outline.md` for overall logic, the `writings` scene files for actual draft chapters, and `manuscript_full.md` only as a final assembly file.
+- Use these chapter files for new projects: `Index.md`, `Abstract.md`, `Introduction.md`, `Theory.md`, `Conceptual Frameworks.md`, `Methods.md`, `Result.md`, `Discussion.md`, and `Conclusion.md`.
+- Put implications, interpretations, and policy significance in `06_manuscript/Discussion.md`; keep `Result.md` focused on analysis results.
 - When the user asks about publication venues, journal fit, society targets, IF/JIF, or conference options, read `JOURNAL_TARGETS.md` first. If values are stale or missing, verify against official society/publisher pages and JCR/Scopus/KCI before updating.
 
 ## Manuscript Writing Format
 
-When the user asks which writing format to use, treat this skill's project template as the canonical workspace and manuscript system.
+When the user asks which writing format to use, treat this skill's project template as the canonical workspace and use the `writings` format as the canonical chapter manuscript format.
 
 - Use the Research Project Manager structure for the project: `README.md`, `WBS.md`, `START_HERE.md`, `RESEARCH_LOG.md`, `DECISIONS.md`, `FILES.md`, `SUBMISSION_CHECKLIST.md`, `PARKING_LOT.md`, and `06_manuscript/`.
 - Use `06_manuscript/` as the actual manuscript source. Do not draft long paper paragraphs in management files.
-- Use external writing folders, including `C:\Users\hserver\Downloads\2025_seoultech_capstone_design\writings`, only as reference scaffolds for generic chapter prompts.
-- Do not copy stale project-specific content from external writing folders into a new project.
+- For chapter manuscripts, follow `C:\Users\hserver\Downloads\2025_seoultech_capstone_design\writings`: `Index.md` Longform scenes plus `Abstract.md`, `Introduction.md`, `Theory.md`, `Conceptual Frameworks.md`, `Methods.md`, `Result.md`, `Discussion.md`, and `Conclusion.md`.
+- Use the clean reusable headings from `writings`, including metadata, numbered chapter headings, and subheadings; do not copy stale project-specific content from that external folder into a new project.
 - Do not preserve malformed Markdown headings such as duplicated `## ##` or `### ###`; normalize headings before moving any useful material.
-- Borrow only reusable section prompts when helpful: abstract `Background / Objective / Methods / Results / Conclusion`, introduction problem-gap-purpose-contribution, literature theory-empirical gap-hypotheses, method data-variables-analysis strategy, results descriptive-main-additional analyses, and discussion interpretation-literature connection-implications-limitations.
-- Keep the final source of truth in the current project's `06_manuscript/*.md` files. External templates are aids, not managed project files.
+- Keep the final source of truth in the current project's `06_manuscript/*.md` files. External `writings` folders define the format, but are not managed project files.
 
 ## Vocabulary
 
@@ -167,7 +167,7 @@ When creating a new paper project:
 6. Update `WBS.md` with the current active stage and next action.
 7. Add deadlines, reminder dates, collaborator waits, or checkpoints if known.
 8. Update `START_HERE.md` with one immediately executable next first action.
-9. Use `06_manuscript/research_plan_bullet.md` for initial research design notes and `00_paper_outline.md` for the paper's early argument structure.
+9. Use `06_manuscript/research_plan_bullet.md` for initial research design notes, `00_paper_outline.md` for the paper's early argument structure, and the `writings` scene files for chapter drafting.
 10. Do not create `ANALYSIS_DASHBOARD.md` at project creation unless the user already has multiple analysis scripts or output folders.
 11. Rebuild the project list in `PROJECT_DASHBOARD.md` using the dashboard auto-rebuild command when available.
 
@@ -184,7 +184,7 @@ When the user provides a long work log, old memo, or scattered notes:
 5. Append date-based details to `RESEARCH_LOG.md`.
 6. Put major choices and rationale in `DECISIONS.md`.
 7. Put only key paths in `FILES.md`.
-8. Put manuscript-ready paragraphs in the appropriate `06_manuscript/01_*.md` through `07_*.md` file.
+8. Put manuscript-ready paragraphs in the appropriate `06_manuscript/Abstract.md`, `Introduction.md`, `Theory.md`, `Conceptual Frameworks.md`, `Methods.md`, `Result.md`, `Discussion.md`, or `Conclusion.md` file.
 9. If analysis scripts or result folders are numerous, create or update `ANALYSIS_DASHBOARD.md` to map analysis IDs to scripts, outputs, manuscript sections, and supported claims.
 10. Extract collaborator waits, deadlines, and reminder dates.
 11. Update the source project files, then rebuild `PROJECT_DASHBOARD.md` so stage, last work date, next first action, deadline, reminder date, and blocker are refreshed.
