@@ -32,6 +32,7 @@ This is useful when multiple manuscripts, analyses, reviews, and revisions are m
 - `codex_skill/research-project-manager/`: Codex skill rules for maintaining the system
 - `docs/PRD_reminder_calendar_sync.md`: product requirements for Windows reminders and calendar sync
 - `research_project_template/06_manuscript/`: chapter-based manuscript Markdown files
+- `research_project_template/FINAL_AUDIT.md`: final code/content/citation submission gate
 
 ## Install With npx
 
@@ -69,7 +70,9 @@ The Codex skill in `codex_skill/research-project-manager/` tells Codex how to ma
 - deciding the next first action for a project
 - updating the portfolio dashboard
 - tracking collaborators, deadlines, external checkpoints, and reminder dates
+- checking data/code variables before trusting results
 - checking manuscript citations against the reference list and verifying cited-paper existence
+- running a final audit from code through cited literature before submission
 - keeping the system lightweight and avoiding unnecessary new files
 
 The skill does not store actual research content. Research content stays in the user's own project folders.
@@ -88,6 +91,7 @@ The skill does not store actual research content. Research content stays in the 
 | `FILES.md` | Key file locations |
 | `VARIABLE_AUDIT.md` | Actual data column, code variable name, manuscript concept, and review status crosswalk |
 | `CITATION_AUDIT.md` | In-text citation, reference list, DOI/source, and existence-check crosswalk |
+| `FINAL_AUDIT.md` | Final code/content/citation audit before submission |
 | `06_manuscript/*.md` | Chapter-based manuscript drafting files |
 | `SUBMISSION_CHECKLIST.md` | Pre-submission readiness checklist |
 | `PARKING_LOT.md` | Ideas intentionally excluded from the current manuscript |
@@ -97,7 +101,7 @@ The skill does not store actual research content. Research content stays in the 
 
 Use `PROJECT_DASHBOARD.md` to choose which project to work on. After opening one project, read its `START_HERE.md` first, then use the `단계별 읽기 순서` table in that project's `README.md` to move to the right file for the current stage.
 
-The per-project `README.md` links each paper stage to the files usually needed at that point: `WBS.md`, `FILES.md`, `VARIABLE_AUDIT.md`, `CITATION_AUDIT.md`, `06_manuscript/*.md`, `PARKING_LOT.md`, and `SUBMISSION_CHECKLIST.md`.
+The per-project `README.md` links each paper stage to the files usually needed at that point: `WBS.md`, `FILES.md`, `VARIABLE_AUDIT.md`, `CITATION_AUDIT.md`, `FINAL_AUDIT.md`, `06_manuscript/*.md`, `PARKING_LOT.md`, and `SUBMISSION_CHECKLIST.md`.
 
 ## Manuscript Drafting Layout
 
@@ -124,6 +128,32 @@ Use `research_plan_bullet.md` for design notes and `00_paper_outline.md` for the
 Use `SUBMISSION_CHECKLIST.md` when the manuscript enters submission preparation. Use `PARKING_LOT.md` to keep good but out-of-scope ideas from expanding the current paper.
 
 For research that is analytically mature but not yet submitted, use `docs/FINISHING_WORKFLOW.md` to move from analysis to results, discussion, parking-lot decisions, submission checklist, and final submission.
+
+## Audit Commands
+
+Check code variables against actual data headers:
+
+```powershell
+npx -y github:cameleonh/research-project-manager -- audit variables --target "C:\Users\honey\Documents\New project\paper_folder"
+```
+
+Check manuscript placeholders and required chapter files:
+
+```powershell
+npx -y github:cameleonh/research-project-manager -- audit content --target "C:\Users\honey\Documents\New project\paper_folder"
+```
+
+Check in-text citations against references and DOI/URL evidence:
+
+```powershell
+npx -y github:cameleonh/research-project-manager -- audit citations --target "C:\Users\honey\Documents\New project\paper_folder"
+```
+
+Run the final code-to-citation gate:
+
+```powershell
+npx -y github:cameleonh/research-project-manager -- audit final --target "C:\Users\honey\Documents\New project\paper_folder" --strict
+```
 
 ## Journal Target Reference
 

@@ -44,6 +44,12 @@ Calendar commands:
   research-project-manager calendar outlook-auth --client-id "<azure-app-client-id>"
   research-project-manager calendar outlook-sync --target "C:\\Research_HQ" --dry-run
 
+Audit commands:
+  research-project-manager audit variables --target "C:\\Research_HQ\\paper"
+  research-project-manager audit citations --target "C:\\Research_HQ\\paper"
+  research-project-manager audit content --target "C:\\Research_HQ\\paper"
+  research-project-manager audit final --target "C:\\Research_HQ\\paper" --strict
+
 Dashboard commands:
   research-project-manager dashboard rebuild --target "C:\\Research_HQ" --dry-run
   research-project-manager dashboard rebuild --target "C:\\Research_HQ"
@@ -74,7 +80,7 @@ function parseOptions(argv, defaults = {}) {
       continue;
     }
     const key = arg.slice(2);
-    if (["help", "dry-run", "notify", "notify-upcoming", "force", "skip-files", "skip-skill", "skip-tools"].includes(key)) {
+    if (["help", "dry-run", "notify", "notify-upcoming", "force", "skip-files", "skip-skill", "skip-tools", "strict"].includes(key)) {
       options[toCamel(key)] = true;
       continue;
     }
@@ -1436,6 +1442,559 @@ async function outlookSync(argv) {
   writeState(target, state);
 }
 
+function walkFiles(root, predicate = () => true) {
+  const files = [];
+  if (!fs.existsSync(root)) return files;
+
+  function walk(current) {
+    let entries = [];
+    try {
+      entries = fs.readdirSync(current, { withFileTypes: true });
+    } catch (error) {
+      return;
+    }
+    for (const entry of entries) {
+      if (entry.name === ".git" || entry.name === "node_modules" || entry.name === ".research_pm_state") continue;
+      const fullPath = path.join(current, entry.name);
+      if (entry.isDirectory()) {
+        walk(fullPath);
+      } else if (entry.isFile() && predicate(fullPath)) {
+        files.push(fullPath);
+      }
+    }
+  }
+
+  walk(root);
+  return files.sort();
+}
+
+function lineNumberAt(text, index) {
+  return String(text || "").slice(0, index).split(/\r?\n/).length;
+}
+
+function normalizeKeyText(value) {
+  return String(value || "")
+    .normalize("NFKC")
+    .replace(/\bet\s+al\.?/gi, "")
+    .replace(/\s+외\b/g, "")
+    .replace(/[^\p{L}\p{N}_ -]/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+}
+
+function firstAuthorToken(value) {
+  const text = normalizeKeyText(value);
+  return text.split(/\s+/).filter(Boolean)[0] || "";
+}
+
+function citationKey(author, year) {
+  const normalizedAuthor = firstAuthorToken(author);
+  const normalizedYear = String(year || "").trim().toLowerCase();
+  if (!normalizedAuthor || !normalizedYear) return "";
+  return `${normalizedAuthor}|${normalizedYear}`;
+}
+
+function citationKeyFromReference(text) {
+  const raw = String(text || "").replace(/^[-*+]\s+/, "").replace(/^\d+[.)]\s+/, "").trim();
+  const yearMatch = raw.match(/\b((?:18|19|20)\d{2}[a-z]?)\b/i);
+  if (!yearMatch) return "";
+  const beforeYear = raw.slice(0, yearMatch.index).replace(/\($/, "").trim();
+  const authorPart = beforeYear.split(/[,&;]/)[0] || beforeYear;
+  return citationKey(authorPart, yearMatch[1]);
+}
+
+function citationKeyFromCitationText(text) {
+  const raw = String(text || "").trim();
+  const match = raw.match(/^(.+?)[,\s]+((?:18|19|20)\d{2}[a-z]?)(?:\b|,|\s|$)/i);
+  if (!match) return "";
+  return citationKey(match[1], match[2]);
+}
+
+function hasReferenceEvidence(text) {
+  return /10\.\d{4,9}\/[-._;()/:A-Z0-9]+/i.test(text) || /https?:\/\//i.test(text);
+}
+
+function uniqueByKey(items) {
+  const seen = new Set();
+  const result = [];
+  for (const item of items) {
+    if (!item.key || seen.has(item.key)) continue;
+    seen.add(item.key);
+    result.push(item);
+  }
+  return result;
+}
+
+function manuscriptMarkdownFiles(target) {
+  const manuscriptDir = path.join(path.resolve(target || defaultTarget), "06_manuscript");
+  return walkFiles(manuscriptDir, (file) => file.toLowerCase().endsWith(".md"));
+}
+
+function extractInTextCitations(markdown, file) {
+  const citations = [];
+  const text = String(markdown || "");
+  const narrative = /([\p{L}][\p{L}'’.-]*(?:\s+et\s+al\.?)?)\s*\(((?:18|19|20)\d{2}[a-z]?)\)/giu;
+  let match;
+  while ((match = narrative.exec(text)) !== null) {
+    const key = citationKey(match[1], match[2]);
+    if (!key) continue;
+    citations.push({
+      key,
+      raw: match[0],
+      file,
+      line: lineNumberAt(text, match.index),
+    });
+  }
+
+  const parenthetical = /\(([^()\n]*(?:18|19|20)\d{2}[a-z]?[^()\n]*)\)/gi;
+  while ((match = parenthetical.exec(text)) !== null) {
+    const parts = match[1].split(";").map((part) => part.trim()).filter(Boolean);
+    for (const part of parts) {
+      const key = citationKeyFromCitationText(part);
+      if (!key) continue;
+      citations.push({
+        key,
+        raw: part,
+        file,
+        line: lineNumberAt(text, match.index),
+      });
+    }
+  }
+
+  return uniqueByKey(citations);
+}
+
+function extractReferenceEntriesFromMarkdown(markdown, file) {
+  const lines = String(markdown || "").split(/\r?\n/);
+  const entries = [];
+  let inReferences = false;
+  let referenceLevel = 0;
+
+  for (let i = 0; i < lines.length; i += 1) {
+    const heading = parseMarkdownHeading(lines[i]);
+    if (heading) {
+      if (/^(references|bibliography|참고문헌|참고 문헌)$/i.test(heading.title.trim())) {
+        inReferences = true;
+        referenceLevel = heading.level;
+        continue;
+      }
+      if (inReferences && heading.level <= referenceLevel) {
+        inReferences = false;
+      }
+    }
+    if (!inReferences) continue;
+    const line = lines[i].trim();
+    if (!line || !/\b(?:18|19|20)\d{2}[a-z]?\b/i.test(line)) continue;
+    const key = citationKeyFromReference(line);
+    if (!key) continue;
+    entries.push({
+      key,
+      raw: line.replace(/^[-*+]\s+/, "").replace(/^\d+[.)]\s+/, "").trim(),
+      file,
+      line: i + 1,
+      hasEvidence: hasReferenceEvidence(line),
+    });
+  }
+
+  return uniqueByKey(entries);
+}
+
+function stripReferenceSections(markdown) {
+  const lines = String(markdown || "").split(/\r?\n/);
+  const kept = [];
+  let inReferences = false;
+  let referenceLevel = 0;
+
+  for (const line of lines) {
+    const heading = parseMarkdownHeading(line);
+    if (heading) {
+      if (/^(references|bibliography|참고문헌|참고 문헌)$/i.test(heading.title.trim())) {
+        inReferences = true;
+        referenceLevel = heading.level;
+        continue;
+      }
+      if (inReferences && heading.level <= referenceLevel) {
+        inReferences = false;
+      }
+    }
+    if (!inReferences) kept.push(line);
+  }
+
+  return kept.join("\n");
+}
+
+function auditCitations(options = {}) {
+  const target = path.resolve(options.target || defaultTarget);
+  const files = manuscriptMarkdownFiles(target);
+  const citations = [];
+  const references = [];
+
+  for (const file of files) {
+    const markdown = fs.readFileSync(file, "utf8");
+    references.push(...extractReferenceEntriesFromMarkdown(markdown, path.relative(target, file)));
+    citations.push(...extractInTextCitations(stripReferenceSections(markdown), path.relative(target, file)));
+  }
+
+  const citationKeys = new Set(citations.map((item) => item.key));
+  const referenceKeys = new Set(references.map((item) => item.key));
+  const missingReferenceKeys = [...citationKeys].filter((key) => !referenceKeys.has(key)).sort();
+  const uncitedReferenceKeys = [...referenceKeys].filter((key) => !citationKeys.has(key)).sort();
+  const referencesNeedingEvidenceKeys = references
+    .filter((entry) => !entry.hasEvidence)
+    .map((entry) => entry.key)
+    .sort();
+
+  return {
+    target,
+    citations,
+    references,
+    missingReferenceKeys,
+    uncitedReferenceKeys,
+    referencesNeedingEvidenceKeys,
+    ready: missingReferenceKeys.length === 0
+      && uncitedReferenceKeys.length === 0
+      && referencesNeedingEvidenceKeys.length === 0,
+  };
+}
+
+function parseDelimitedHeader(line, delimiter) {
+  const cells = [];
+  let current = "";
+  let quoted = false;
+  for (let i = 0; i < line.length; i += 1) {
+    const char = line[i];
+    if (char === "\"") {
+      quoted = !quoted;
+      continue;
+    }
+    if (char === delimiter && !quoted) {
+      cells.push(current.trim());
+      current = "";
+      continue;
+    }
+    current += char;
+  }
+  cells.push(current.trim());
+  return cells.filter(Boolean);
+}
+
+function dataFiles(target) {
+  const root = path.resolve(target || defaultTarget);
+  return [
+    ...walkFiles(path.join(root, "02_data_raw"), (file) => /\.(csv|tsv)$/i.test(file)),
+    ...walkFiles(path.join(root, "03_data_processed"), (file) => /\.(csv|tsv)$/i.test(file)),
+  ];
+}
+
+function readDataColumns(target) {
+  const columns = new Set();
+  const files = [];
+  for (const file of dataFiles(target)) {
+    const firstLine = fs.readFileSync(file, "utf8").split(/\r?\n/)[0] || "";
+    const delimiter = file.toLowerCase().endsWith(".tsv") ? "\t" : ",";
+    const parsed = parseDelimitedHeader(firstLine, delimiter);
+    parsed.forEach((column) => columns.add(column));
+    files.push({ file: path.relative(path.resolve(target || defaultTarget), file), columns: parsed });
+  }
+  return { columns, files };
+}
+
+function analysisFiles(target) {
+  const root = path.resolve(target || defaultTarget);
+  return walkFiles(path.join(root, "04_analysis"), (file) => /\.(r|py|js|ts|qmd|rmd)$/i.test(file));
+}
+
+const codeVariableStopWords = new Set([
+  "data", "df", "model", "lm", "glm", "print", "read", "csv", "read_csv", "read_csv2",
+  "filter", "mutate", "select", "arrange", "summarise", "summary", "true", "false",
+  "na", "nan", "null", "none", "if", "else", "for", "while", "return", "function",
+]);
+
+function addCodeVariable(result, value) {
+  const name = String(value || "").trim();
+  if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(name)) return;
+  if (codeVariableStopWords.has(name.toLowerCase())) return;
+  result.add(name);
+}
+
+function extractCodeVariables(source) {
+  const variables = new Set();
+  let match;
+
+  const dollar = /\$([A-Za-z_][A-Za-z0-9_]*)/g;
+  while ((match = dollar.exec(source)) !== null) addCodeVariable(variables, match[1]);
+
+  const bracket = /\[\s*["']([A-Za-z_][A-Za-z0-9_]*)["']\s*\]/g;
+  while ((match = bracket.exec(source)) !== null) addCodeVariable(variables, match[1]);
+
+  const lines = String(source || "").split(/\r?\n/);
+  for (const line of lines) {
+    const formula = line.match(/~([^#]+)/);
+    if (!formula) continue;
+    const formulaText = formula[1].split(",")[0];
+    const tokens = formulaText.match(/[A-Za-z_][A-Za-z0-9_]*/g) || [];
+    tokens.forEach((token) => addCodeVariable(variables, token));
+    const lhs = line.slice(0, line.indexOf("~")).match(/([A-Za-z_][A-Za-z0-9_]*)\s*$/);
+    if (lhs) addCodeVariable(variables, lhs[1]);
+  }
+
+  return variables;
+}
+
+function auditVariables(options = {}) {
+  const target = path.resolve(options.target || defaultTarget);
+  const { columns, files: dataSources } = readDataColumns(target);
+  const usedCodeVariables = new Set();
+  const scripts = [];
+
+  for (const file of analysisFiles(target)) {
+    const source = fs.readFileSync(file, "utf8");
+    const variables = extractCodeVariables(source);
+    variables.forEach((variable) => usedCodeVariables.add(variable));
+    scripts.push({
+      file: path.relative(target, file),
+      variables: [...variables].sort(),
+    });
+  }
+
+  const missingDataColumns = [...usedCodeVariables]
+    .filter((variable) => !columns.has(variable))
+    .sort();
+
+  return {
+    target,
+    dataSources,
+    dataColumns: [...columns].sort(),
+    scripts,
+    usedCodeVariables,
+    missingDataColumns,
+    ready: missingDataColumns.length === 0,
+  };
+}
+
+const requiredManuscriptFiles = [
+  "Abstract.md",
+  "Introduction.md",
+  "Theory.md",
+  "Conceptual Frameworks.md",
+  "Methods.md",
+  "Result.md",
+  "Discussion.md",
+  "Conclusion.md",
+];
+
+const manuscriptPlaceholders = [
+  "논문 제목",
+  "저자명",
+  "author@email.com",
+  "목표 학술지",
+  "YYYY-MM-DD",
+  "키워드1",
+];
+
+function auditContent(options = {}) {
+  const target = path.resolve(options.target || defaultTarget);
+  const manuscriptDir = path.join(target, "06_manuscript");
+  const missingRequiredFiles = requiredManuscriptFiles
+    .filter((file) => !fs.existsSync(path.join(manuscriptDir, file)));
+  const placeholderIssues = [];
+
+  for (const file of manuscriptMarkdownFiles(target)) {
+    const relative = path.relative(target, file);
+    const markdown = fs.readFileSync(file, "utf8");
+    for (const placeholder of manuscriptPlaceholders) {
+      if (!markdown.includes(placeholder)) continue;
+      placeholderIssues.push({ file: relative, placeholder });
+    }
+  }
+
+  return {
+    target,
+    missingRequiredFiles,
+    placeholderIssues,
+    ready: missingRequiredFiles.length === 0 && placeholderIssues.length === 0,
+  };
+}
+
+const auditBlockerStatuses = [
+  "확인 전",
+  "불일치",
+  "애매함",
+  "수정 필요",
+  "본문만 있음",
+  "목록만 있음",
+  "서지정보 불일치",
+  "확인 실패",
+  "DOI 불일치",
+  "제목/저자 불일치",
+  "공식 출처 없음",
+  "문제 있음",
+  "미통과",
+];
+
+function auditTableFiles(target) {
+  return ["VARIABLE_AUDIT.md", "CITATION_AUDIT.md", "FINAL_AUDIT.md", "SUBMISSION_CHECKLIST.md"]
+    .map((file) => path.join(path.resolve(target || defaultTarget), file))
+    .filter((file) => fs.existsSync(file));
+}
+
+function scanAuditTableBlockers(target) {
+  const blockers = [];
+  for (const file of auditTableFiles(target)) {
+    const relative = path.relative(path.resolve(target || defaultTarget), file);
+    const lines = fs.readFileSync(file, "utf8").split(/\r?\n/);
+    lines.forEach((line, index) => {
+      const trimmed = line.trim();
+      if (!trimmed.startsWith("|")) return;
+      if (trimmed.includes("---") || /\|\s*ID\s*\|/.test(trimmed)) return;
+      const cells = splitMarkdownRow(trimmed);
+      if (["ID", "순서", "쟁점"].includes(cells[0])) return;
+      const status = auditBlockerStatuses.find((candidate) => trimmed.includes(candidate));
+      if (!status) return;
+      blockers.push({
+        file: relative,
+        line: index + 1,
+        status,
+        row: trimmed,
+      });
+    });
+  }
+  return { blockers };
+}
+
+function auditFinal(options = {}) {
+  const target = path.resolve(options.target || defaultTarget);
+  const variable = auditVariables({ target });
+  const content = auditContent({ target });
+  const citation = auditCitations({ target });
+  const auditTables = scanAuditTableBlockers(target);
+  const ready = variable.ready && content.ready && citation.ready && auditTables.blockers.length === 0;
+
+  return {
+    target,
+    ready,
+    variable,
+    content,
+    citation,
+    auditTables,
+  };
+}
+
+function renderList(items, empty = "- 없음") {
+  if (!items || items.length === 0) return empty;
+  return items.map((item) => `- ${item}`).join("\n");
+}
+
+function renderCitationAudit(report) {
+  return [
+    "# Citation Audit Report",
+    "",
+    `- Status: ${report.ready ? "ready" : "blocked"}`,
+    `- In-text citation keys: ${report.citations.length}`,
+    `- Reference entries: ${report.references.length}`,
+    "",
+    "## Missing Reference Entries",
+    renderList(report.missingReferenceKeys),
+    "",
+    "## Uncited Reference Entries",
+    renderList(report.uncitedReferenceKeys),
+    "",
+    "## References Needing Existence Evidence",
+    renderList(report.referencesNeedingEvidenceKeys),
+  ].join("\n");
+}
+
+function renderVariableAudit(report) {
+  return [
+    "# Variable Audit Report",
+    "",
+    `- Status: ${report.ready ? "ready" : "blocked"}`,
+    `- Data columns: ${report.dataColumns.length}`,
+    `- Code variables: ${report.usedCodeVariables.size}`,
+    "",
+    "## Missing Data Columns Used By Code",
+    renderList(report.missingDataColumns),
+  ].join("\n");
+}
+
+function renderContentAudit(report) {
+  return [
+    "# Content Audit Report",
+    "",
+    `- Status: ${report.ready ? "ready" : "blocked"}`,
+    "",
+    "## Missing Manuscript Files",
+    renderList(report.missingRequiredFiles),
+    "",
+    "## Placeholder Issues",
+    report.placeholderIssues.length === 0
+      ? "- 없음"
+      : report.placeholderIssues.map((issue) => `- ${issue.file}: ${issue.placeholder}`).join("\n"),
+  ].join("\n");
+}
+
+function renderFinalAudit(report) {
+  return [
+    "# Final Audit Report",
+    "",
+    `- Status: ${report.ready ? "ready" : "blocked"}`,
+    `- Variable/code audit: ${report.variable.ready ? "ready" : "blocked"}`,
+    `- Manuscript content audit: ${report.content.ready ? "ready" : "blocked"}`,
+    `- Citation/reference audit: ${report.citation.ready ? "ready" : "blocked"}`,
+    `- Audit table blockers: ${report.auditTables.blockers.length}`,
+    "",
+    "## Code / Variable Blockers",
+    renderList(report.variable.missingDataColumns),
+    "",
+    "## Content Blockers",
+    report.content.placeholderIssues.length === 0
+      ? renderList(report.content.missingRequiredFiles)
+      : report.content.placeholderIssues.map((issue) => `- ${issue.file}: ${issue.placeholder}`).join("\n"),
+    "",
+    "## Citation Blockers",
+    renderList([
+      ...report.citation.missingReferenceKeys.map((key) => `missing reference: ${key}`),
+      ...report.citation.uncitedReferenceKeys.map((key) => `uncited reference: ${key}`),
+      ...report.citation.referencesNeedingEvidenceKeys.map((key) => `needs DOI/URL evidence: ${key}`),
+    ]),
+    "",
+    "## Audit Table Blockers",
+    report.auditTables.blockers.length === 0
+      ? "- 없음"
+      : report.auditTables.blockers.map((blocker) => `- ${blocker.file}:${blocker.line} ${blocker.status}`).join("\n"),
+  ].join("\n");
+}
+
+function auditCommand(argv) {
+  const sub = argv[0];
+  const { options } = parseOptions(argv.slice(1), { target: defaultTarget, strict: false });
+  let report;
+  let rendered;
+
+  if (sub === "citations") {
+    report = auditCitations(options);
+    rendered = renderCitationAudit(report);
+  } else if (sub === "variables") {
+    report = auditVariables(options);
+    rendered = renderVariableAudit(report);
+  } else if (sub === "content") {
+    report = auditContent(options);
+    rendered = renderContentAudit(report);
+  } else if (sub === "final") {
+    report = auditFinal(options);
+    rendered = renderFinalAudit(report);
+  } else {
+    throw new Error(`Unknown audit command: ${sub || ""}`);
+  }
+
+  console.log(rendered);
+  if (options.strict && !report.ready) {
+    throw new Error(`${sub} audit found blockers`);
+  }
+  return report;
+}
+
 async function run(argv = process.argv.slice(2)) {
   while (argv[0] === "--") {
     argv = argv.slice(1);
@@ -1475,6 +2034,9 @@ async function run(argv = process.argv.slice(2)) {
     if (sub === "watch") return dashboardWatchCommand(rest);
     throw new Error(`Unknown dashboard command: ${sub || ""}`);
   }
+  if (argv[0] === "audit") {
+    return auditCommand(argv.slice(1));
+  }
   throw new Error(`Unknown command: ${argv[0]}`);
 }
 
@@ -1500,4 +2062,8 @@ module.exports = {
   parseMarkdownSections,
   buildProjectDashboardTable,
   updateProjectDashboardMarkdown,
+  auditCitations,
+  auditVariables,
+  auditContent,
+  auditFinal,
 };

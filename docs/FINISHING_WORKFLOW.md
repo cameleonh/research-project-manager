@@ -26,8 +26,9 @@
 6. Discussion.md에서 해석 강도를 조절한다.
 7. 새 아이디어는 PARKING_LOT로 뺀다.
 8. CITATION_AUDIT로 본문 인용-참고문헌 목록-실재 확인을 검증한다.
-9. SUBMISSION_CHECKLIST로 투고 가능 여부를 판정한다.
-10. 투고한다.
+9. FINAL_AUDIT로 코드/변수-원고 내용-인용/참고문헌을 통합 점검한다.
+10. SUBMISSION_CHECKLIST로 투고 가능 여부를 판정한다.
+11. 투고한다.
 ```
 
 ## 단계별 기준
@@ -149,7 +150,25 @@
 - 수정된 참고문헌 목록
 - 미확인 인용의 다음 행동
 
-### 8. 투고 가능 판정
+### 8. 최종 audit
+
+`FINAL_AUDIT.md`는 코드부터 인용 문헌까지 닫는 마지막 gate다. `audit variables`, `audit content`, `audit citations`, `audit final --strict` 순서로 확인한다.
+
+점검 질문:
+
+- 코드에서 사용한 변수가 실제 데이터 컬럼과 원고 변수 설명에 연결되는가?
+- 원고 장별 파일에 placeholder나 빠진 장이 없는가?
+- 본문 인용과 참고문헌 목록이 양방향으로 맞는가?
+- 인용 논문 실재 확인 근거가 남아 있는가?
+- 최종 audit blocker가 `제외` 사유 없이 남아 있지 않은가?
+
+결과물:
+
+- `FINAL_AUDIT.md`
+- `START_HERE.md`의 남은 첫 수정 행동
+- `WBS.md`의 최종 blocker 상태
+
+### 9. 투고 가능 판정
 
 원고가 어느 정도 닫히면 `SUBMISSION_CHECKLIST.md`를 연다. 이 파일은 할 일 목록이 아니라 투고 가능 판정표다.
 
@@ -160,6 +179,7 @@
 - 표본 수, 변수 정의, 핵심 계수, 본문 수치가 일치하는가?
 - `VARIABLE_AUDIT.md`의 핵심 변수 검증 상태가 모두 해결되었는가?
 - `CITATION_AUDIT.md`의 본문-목록 대조와 실재 확인 상태가 모두 해결되었는가?
+- `FINAL_AUDIT.md`와 `audit final --strict`가 통과했는가?
 - 제목, 초록, 결론이 같은 주장을 하는가?
 
 결과물:
@@ -168,7 +188,7 @@
 - 남은 필수 수정 3개
 - 투고일
 
-### 9. 투고
+### 10. 투고
 
 투고는 연구의 끝이 아니라 심사대 위에 올리는 단계다. 완벽한 원고를 기다리기보다, 심사받을 수 있는 원고를 제출한다.
 
@@ -222,6 +242,7 @@
 - `ANALYSIS_DASHBOARD.md`: 분석-결과-원고 위치 연결
 - `VARIABLE_AUDIT.md`: 실제 데이터 컬럼-코드 변수명-원고 변수명 대조
 - `CITATION_AUDIT.md`: 본문 인용-참고문헌 목록-실재 확인 대조
+- `FINAL_AUDIT.md`: 코드/변수-원고 내용-인용/참고문헌 최종 통합 판정
 - `06_manuscript/Result.md`: 결과장
 - `06_manuscript/Discussion.md`: 논의장
 - `PARKING_LOT.md`: 이번 논문에서 뺄 아이디어

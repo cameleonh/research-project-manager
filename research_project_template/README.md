@@ -46,7 +46,7 @@
 | 분석이 많아 추적이 어려움 | [FILES.md](FILES.md) | [VARIABLE_AUDIT.md](VARIABLE_AUDIT.md), `ANALYSIS_DASHBOARD.md` | [VARIABLE_AUDIT.md](VARIABLE_AUDIT.md), `ANALYSIS_DASHBOARD.md`, [06_manuscript/Result.md](06_manuscript/Result.md) |
 | 원고초안 작성 | [06_manuscript/Index.md](06_manuscript/Index.md), [06_manuscript/00_paper_outline.md](06_manuscript/00_paper_outline.md) | [06_manuscript/Introduction.md](06_manuscript/Introduction.md), [06_manuscript/Result.md](06_manuscript/Result.md), [06_manuscript/Discussion.md](06_manuscript/Discussion.md), [CITATION_AUDIT.md](CITATION_AUDIT.md) | [06_manuscript/](06_manuscript/)의 장별 파일, [CITATION_AUDIT.md](CITATION_AUDIT.md) |
 | 새 아이디어가 계속 생김 | [PARKING_LOT.md](PARKING_LOT.md) | [06_manuscript/00_paper_outline.md](06_manuscript/00_paper_outline.md), [DECISIONS.md](DECISIONS.md) | [PARKING_LOT.md](PARKING_LOT.md), [DECISIONS.md](DECISIONS.md) |
-| 투고준비 | [SUBMISSION_CHECKLIST.md](SUBMISSION_CHECKLIST.md) | [CITATION_AUDIT.md](CITATION_AUDIT.md), [06_manuscript/manuscript_full.md](06_manuscript/manuscript_full.md), [07_outputs/](07_outputs/) | [SUBMISSION_CHECKLIST.md](SUBMISSION_CHECKLIST.md), [CITATION_AUDIT.md](CITATION_AUDIT.md), [07_outputs/](07_outputs/) |
+| 투고준비 | [SUBMISSION_CHECKLIST.md](SUBMISSION_CHECKLIST.md) | [VARIABLE_AUDIT.md](VARIABLE_AUDIT.md), [CITATION_AUDIT.md](CITATION_AUDIT.md), [FINAL_AUDIT.md](FINAL_AUDIT.md), [06_manuscript/manuscript_full.md](06_manuscript/manuscript_full.md), [07_outputs/](07_outputs/) | [SUBMISSION_CHECKLIST.md](SUBMISSION_CHECKLIST.md), [VARIABLE_AUDIT.md](VARIABLE_AUDIT.md), [CITATION_AUDIT.md](CITATION_AUDIT.md), [FINAL_AUDIT.md](FINAL_AUDIT.md), [07_outputs/](07_outputs/) |
 | 심사대응 / 수정중 | [DECISIONS.md](DECISIONS.md) | [RESEARCH_LOG.md](RESEARCH_LOG.md), [06_manuscript/](06_manuscript/) | [DECISIONS.md](DECISIONS.md), [RESEARCH_LOG.md](RESEARCH_LOG.md), [06_manuscript/](06_manuscript/) |
 
 ## 작업 지도
@@ -54,6 +54,7 @@
 - 다시 시작할 때는 `START_HERE.md`를 먼저 연다.
 - 단계별로 어떤 파일을 읽을지 헷갈리면 위 `단계별 읽기 순서` 표를 따른다.
 - 투고 전에는 `SUBMISSION_CHECKLIST.md`로 투고 가능 여부를 판정한다.
+- 최종 투고 전에는 `FINAL_AUDIT.md`로 코드/변수, 원고 내용, 인용/참고문헌을 함께 닫는다.
 - 이번 논문에 넣지 않을 아이디어는 `PARKING_LOT.md`에 보관한다.
 
 ## 다음 마감

@@ -36,6 +36,11 @@
 
 투고 전에는 본문에 인용한 모든 논문이 참고문헌 목록에 있고, 참고문헌 목록의 모든 항목이 본문에서 인용되었으며, 핵심 인용 논문이 실제로 존재하는지 확인한다.
 
+### `FINAL_AUDIT.md`
+코드/변수 검토, 원고 내용 검토, 인용/참고문헌 검토를 한 번에 닫는 최종 gate.
+
+`audit variables`, `audit content`, `audit citations`, `audit final --strict` 순서로 점검하고, blocker가 남아 있으면 투고 가능으로 표시하지 않는다.
+
 ### `05_figures`
 그림, 표, 시각화 결과.
 

@@ -214,6 +214,16 @@ Use $research-project-manager to verify whether the cited papers actually exist.
 $research-project-manager 써서 인용한 논문이 실제로 존재하는지 확인해줘. DOI resolver, 출판사 페이지, Crossref, PubMed, KCI, RISS, DBpia, Scopus 같은 근거를 CITATION_AUDIT.md에 남겨줘.
 ```
 
+### Final Audit
+
+```text
+Use $research-project-manager to run a final audit from code through cited literature. Check variables, analysis code, manuscript content, in-text citations, reference list, cited-paper existence, and unresolved audit blockers.
+```
+
+```text
+$research-project-manager 써서 코드부터 인용 문헌까지 최종 audit 해줘. 변수, 분석 코드, 원고 내용, 본문 인용, 참고문헌 목록, 인용 논문 실재 여부, 미해결 blocker를 확인해줘.
+```
+
 이미 있는 파일 관계를 정리할 때는 이렇게 말한다.
 
 ```text

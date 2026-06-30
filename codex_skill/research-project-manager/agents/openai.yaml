@@ -1,5 +1,4 @@
 interface:
   display_name: "Research Project Manager"
-  short_description: "Manage multiple research paper projects"
-  default_prompt: "Use $research-project-manager to update my paper project dashboard and next actions."
-
+  short_description: "Manage research papers, variables, citations, and final audit"
+  default_prompt: "Use $research-project-manager to update my paper project dashboard, variables, citations, and final audit."

@@ -85,6 +85,7 @@
 | `FILES.md` | 핵심 파일 위치 | 파일을 찾을 때 |
 | `VARIABLE_AUDIT.md` | 실제 데이터 컬럼, 코드 변수명, 원고 변수명 대조 | 변수/코드 리뷰 시 |
 | `CITATION_AUDIT.md` | 본문 인용, 참고문헌 목록, 실재 확인 대조 | 인용/참고문헌 리뷰 시 |
+| `FINAL_AUDIT.md` | 코드/변수, 원고 내용, 인용/참고문헌 최종 통합 판정 | 투고 직전 |
 | `06_manuscript/*.md` | 실제 원고 문단 | 원고 작성 시 |
 | `SUBMISSION_CHECKLIST.md` | 투고 가능 판정 | 투고준비 단계 |
 | `PARKING_LOT.md` | 이번 논문에서 뺄 아이디어 | 새 아이디어가 생길 때 |
@@ -124,6 +125,19 @@
 본문 인용과 참고문헌 목록은 `CITATION_AUDIT.md`에서 양방향으로 대조한다. 본문에 인용했지만 참고문헌 목록에 없는 항목, 참고문헌 목록에는 있지만 본문에서 인용하지 않은 항목, 저자/연도/제목/DOI가 맞지 않는 항목을 분리해 표시한다.
 
 인용 논문이 실제로 존재하는지는 검색 결과 제목만 보고 확정하지 않는다. DOI resolver, publisher page, Crossref, PubMed, KCI, RISS, DBpia, Scopus 같은 확인 가능한 출처와 확인일을 `CITATION_AUDIT.md`에 남긴다. `확인 전`, `확인 실패`, `DOI 불일치`, `제목/저자 불일치`, `공식 출처 없음`, `수정 필요`가 남아 있으면 참고문헌을 투고-ready로 보지 않는다.
+
+## 최종 audit 기준
+
+투고 직전에는 코드부터 인용 문헌까지 한 번에 닫는다.
+
+```powershell
+npx -y github:cameleonh/research-project-manager -- audit variables --target "<Project>"
+npx -y github:cameleonh/research-project-manager -- audit content --target "<Project>"
+npx -y github:cameleonh/research-project-manager -- audit citations --target "<Project>"
+npx -y github:cameleonh/research-project-manager -- audit final --target "<Project>" --strict
+```
+
+`audit final --strict`가 막히면 `FINAL_AUDIT.md`, `START_HERE.md`, `WBS.md`에 남은 blocker와 다음 행동을 적고 투고 가능으로 표시하지 않는다.
 
 ## 투고처 / 학회 후보 관리
 

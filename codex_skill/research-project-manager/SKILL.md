@@ -1,6 +1,6 @@
 ---
 name: research-project-manager
-description: Use when the user wants to create, organize, migrate, review, or update multiple research paper project folders using Markdown files, including project dashboards, WBS files, restart notes, daily logs, decisions, key file paths, collaboration waiting items, deadlines, and reminder dates.
+description: Use when the user wants to create, organize, migrate, review, or update research paper project folders; check variables, analysis code, manuscript content, citations, references, submission readiness, or run a final submission audit.
 ---
 
 # Research Project Manager
@@ -39,6 +39,7 @@ Verify paths before editing. Work with the user's current files; do not overwrit
 | `FILES.md` | Key file locations only, not a complete file inventory |
 | `VARIABLE_AUDIT.md` | Crosswalk for actual data columns, code variable names, manuscript concepts, and review status |
 | `CITATION_AUDIT.md` | Crosswalk for in-text citations, reference list entries, and actual paper existence checks |
+| `FINAL_AUDIT.md` | Final gate that closes code/variable, manuscript content, citation/reference, and submission readiness checks |
 | `06_manuscript/*.md` | Chapter-based manuscript drafting files using the `writings` scene format |
 | `SUBMISSION_CHECKLIST.md` | Pre-submission readiness checklist for closing the manuscript |
 | `PARKING_LOT.md` | Good but out-of-scope ideas intentionally excluded from the current manuscript |
@@ -59,6 +60,7 @@ The skill manages this Markdown project system:
 - `FILES.md` for key file locations
 - `VARIABLE_AUDIT.md` for data/code/manuscript variable review
 - `CITATION_AUDIT.md` for manuscript citation/reference matching and cited-paper existence review
+- `FINAL_AUDIT.md` for the final code-to-citation submission gate
 - `06_manuscript/` for actual manuscript paragraphs and paper outline files; chapter files follow the `writings` scene format
 - `SUBMISSION_CHECKLIST.md` for pre-submission readiness checks
 - `PARKING_LOT.md` for out-of-scope ideas and follow-up research candidates
@@ -83,6 +85,7 @@ Support these recurring operations:
 - Reviewing analysis code at the variable and sample-definition level before trusting results
 - Creating or updating `CITATION_AUDIT.md` to check whether in-text citations match the reference list
 - Verifying cited references for actual paper existence before submission
+- Running final audits that check code variables, manuscript content, citations, references, and unresolved audit-table blockers together
 - Applying the finishing workflow when the user has mature analyses but needs to close manuscripts for submission
 - Tracking collaborator waits, external checkpoints, deadlines, and reminder dates
 - Keeping the system lightweight and avoiding unnecessary new files
@@ -109,6 +112,8 @@ Support these recurring operations:
 - In `CITATION_AUDIT.md`, match every in-text citation to the reference list and every reference list entry back to an in-text citation unless the user intentionally keeps an uncited background source.
 - For actual paper existence checks, do not rely on search snippets alone. Prefer DOI resolver, publisher page, Crossref, PubMed, KCI, RISS, DBpia, Scopus, or another authoritative scholarly source, and record the evidence and check date.
 - Do not mark references ready for submission while any core citation has `본문만 있음`, `목록만 있음`, `서지정보 불일치`, `확인 실패`, `DOI 불일치`, `제목/저자 불일치`, `공식 출처 없음`, `수정 필요`, or `확인 전` status.
+- Use `FINAL_AUDIT.md` as the final gate after code/variable review, manuscript content review, and citation/reference review.
+- Do not mark a paper ready for submission until `audit variables`, `audit content`, `audit citations`, and `audit final --strict` have no blockers or every blocker is explicitly marked `제외` with a reason.
 - When the user says analysis is easy but writing/submission closure is hard, use the finishing workflow: lock one research question, map analyses, write results, calibrate discussion, park new ideas, run the submission checklist, and submit.
 - Store actual research content in the user's project files, never inside this skill.
 - The skill should contain only operating rules and procedures, not project data.
@@ -125,7 +130,7 @@ Support these recurring operations:
 
 When the user asks which writing format to use, treat this skill's project template as the canonical workspace and use the `writings` format as the canonical chapter manuscript format.
 
-- Use the Research Project Manager structure for the project: `README.md`, `WBS.md`, `START_HERE.md`, `RESEARCH_LOG.md`, `DECISIONS.md`, `FILES.md`, `SUBMISSION_CHECKLIST.md`, `PARKING_LOT.md`, and `06_manuscript/`.
+- Use the Research Project Manager structure for the project: `README.md`, `WBS.md`, `START_HERE.md`, `RESEARCH_LOG.md`, `DECISIONS.md`, `FILES.md`, `VARIABLE_AUDIT.md`, `CITATION_AUDIT.md`, `FINAL_AUDIT.md`, `SUBMISSION_CHECKLIST.md`, `PARKING_LOT.md`, and `06_manuscript/`.
 - Use `06_manuscript/` as the actual manuscript source. Do not draft long paper paragraphs in management files.
 - For chapter manuscripts, follow `C:\Users\hserver\Downloads\2025_seoultech_capstone_design\writings`: `Index.md` Longform scenes plus `Abstract.md`, `Introduction.md`, `Theory.md`, `Conceptual Frameworks.md`, `Methods.md`, `Result.md`, `Discussion.md`, and `Conclusion.md`.
 - Use the clean reusable headings from `writings`, including metadata, numbered chapter headings, and subheadings; do not copy stale project-specific content from that external folder into a new project.
@@ -188,8 +193,9 @@ When creating a new paper project:
 9. Use `06_manuscript/research_plan_bullet.md` for initial research design notes, `00_paper_outline.md` for the paper's early argument structure, and the `writings` scene files for chapter drafting.
 10. Keep `VARIABLE_AUDIT.md` available for variable crosswalk and code review once real data or analysis code exists.
 11. Keep `CITATION_AUDIT.md` available for citation/reference matching and cited-paper existence review once manuscript citations exist.
-12. Do not create `ANALYSIS_DASHBOARD.md` at project creation unless the user already has multiple analysis scripts or output folders.
-13. Rebuild the project list in `PROJECT_DASHBOARD.md` using the dashboard auto-rebuild command when available.
+12. Keep `FINAL_AUDIT.md` available for the final code/content/citation gate before submission.
+13. Do not create `ANALYSIS_DASHBOARD.md` at project creation unless the user already has multiple analysis scripts or output folders.
+14. Rebuild the project list in `PROJECT_DASHBOARD.md` using the dashboard auto-rebuild command when available.
 
 If details are missing, make a conservative placeholder instead of blocking, unless the missing detail affects file location or risks overwriting existing work.
 
@@ -207,9 +213,10 @@ When the user provides a long work log, old memo, or scattered notes:
 8. Put manuscript-ready paragraphs in the appropriate `06_manuscript/Abstract.md`, `Introduction.md`, `Theory.md`, `Conceptual Frameworks.md`, `Methods.md`, `Result.md`, `Discussion.md`, or `Conclusion.md` file.
 9. If notes include data columns, code variables, variable definitions, sample filters, joins, recodes, or result claims, update `VARIABLE_AUDIT.md`.
 10. If notes include citations, reference-list items, BibTeX/RIS exports, DOI lists, or bibliography problems, update `CITATION_AUDIT.md`.
-11. If analysis scripts or result folders are numerous, create or update `ANALYSIS_DASHBOARD.md` to map analysis IDs to scripts, outputs, manuscript sections, and supported claims.
-12. Extract collaborator waits, deadlines, and reminder dates.
-13. Update the source project files, then rebuild `PROJECT_DASHBOARD.md` so stage, last work date, next first action, deadline, reminder date, and blocker are refreshed.
+11. If the project is near submission or sharing, update `FINAL_AUDIT.md`.
+12. If analysis scripts or result folders are numerous, create or update `ANALYSIS_DASHBOARD.md` to map analysis IDs to scripts, outputs, manuscript sections, and supported claims.
+13. Extract collaborator waits, deadlines, and reminder dates.
+14. Update the source project files, then rebuild `PROJECT_DASHBOARD.md` so stage, last work date, next first action, deadline, reminder date, and blocker are refreshed.
 
 Do not preserve every sentence. Preserve recoverability.
 
@@ -236,9 +243,10 @@ When recording today's work:
 5. If manuscript text changed, update the relevant `06_manuscript/*.md` chapter file rather than storing the draft in logs.
 6. If analysis code, data columns, variable definitions, filters, joins, or recodes changed, update `VARIABLE_AUDIT.md`.
 7. If manuscript citations or reference-list entries changed, update `CITATION_AUDIT.md`.
-8. If a new analysis script or result folder was created and `ANALYSIS_DASHBOARD.md` exists, update its analysis chain and status.
-9. Rebuild `PROJECT_DASHBOARD.md` after updating the project source files; update manual collaboration waiting sections separately when needed.
-10. Add to `DECISIONS.md` only if a meaningful research or project decision was made.
+8. If the project is in submission preparation, update `FINAL_AUDIT.md`.
+9. If a new analysis script or result folder was created and `ANALYSIS_DASHBOARD.md` exists, update its analysis chain and status.
+10. Rebuild `PROJECT_DASHBOARD.md` after updating the project source files; update manual collaboration waiting sections separately when needed.
+11. Add to `DECISIONS.md` only if a meaningful research or project decision was made.
 
 ## Variable and Code Review Workflow
 
@@ -266,6 +274,19 @@ When the user asks whether citations are correct, whether cited papers exist, or
 7. Record the verification source, evidence, and check date in `CITATION_AUDIT.md`; mark unresolved cases as `확인 실패`, `DOI 불일치`, `제목/저자 불일치`, `공식 출처 없음`, or `수정 필요`.
 8. Cross-check high-risk details: author order, publication year, title, journal, volume, issue, pages/article number, DOI, and Korean/English title variants.
 9. Put follow-up fixes in `START_HERE.md`, task status in `WBS.md`, and final citation-format readiness in `SUBMISSION_CHECKLIST.md`.
+
+## Final Audit Workflow
+
+When the user asks for a final check, submission readiness, or a complete review from code through cited literature:
+
+1. Run or emulate `audit variables --target "<project>"` first. Confirm actual data columns, code variable names, generated variables, sample filters, joins, and manuscript variable descriptions.
+2. Update `VARIABLE_AUDIT.md`; unresolved core-variable statuses block submission.
+3. Run or emulate `audit content --target "<project>"`. Check manuscript placeholders, metadata, missing chapter files, title/abstract/body/result/discussion/conclusion alignment, table/figure references, and `SUBMISSION_CHECKLIST.md`.
+4. Run or emulate `audit citations --target "<project>"`. Check in-text citations against the reference list and verify cited-paper existence using authoritative sources.
+5. Update `CITATION_AUDIT.md`; unresolved citation/reference statuses block submission.
+6. Run or emulate `audit final --target "<project>" --strict`. This is the final gate from code through cited literature.
+7. Update `FINAL_AUDIT.md` with the result of code/variable review, manuscript content review, citation/reference review, and final blocker status.
+8. If any blocker remains, put the next fix in `START_HERE.md`, task status in `WBS.md`, and do not mark `SUBMISSION_CHECKLIST.md` as submission-ready.
 
 ## Weekly Review Workflow
 
@@ -299,6 +320,13 @@ Use these commands for implemented project-list dashboard automation:
 - Preview generated project table: `npx -y github:cameleonh/research-project-manager -- dashboard rebuild --target "<Research_HQ>" --dry-run`
 - Rebuild the project-list region in `PROJECT_DASHBOARD.md`: `npx -y github:cameleonh/research-project-manager -- dashboard rebuild --target "<Research_HQ>"`
 - Watch project Markdown files and rebuild after changes: `npx -y github:cameleonh/research-project-manager -- dashboard watch --target "<Research_HQ>"`
+
+Use these commands for implemented project audits:
+
+- Code/variable audit: `npx -y github:cameleonh/research-project-manager -- audit variables --target "<Project>"`
+- Manuscript content audit: `npx -y github:cameleonh/research-project-manager -- audit content --target "<Project>"`
+- Citation/reference audit: `npx -y github:cameleonh/research-project-manager -- audit citations --target "<Project>"`
+- Final strict audit: `npx -y github:cameleonh/research-project-manager -- audit final --target "<Project>" --strict`
 
 The rebuild command scans project folders below the target. A folder counts as a project when at least two of `README.md`, `WBS.md`, and `START_HERE.md` exist.
 

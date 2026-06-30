@@ -180,6 +180,37 @@ test("skill requires citation audits before submission", () => {
   assert.match(skill, /publisher page/);
 });
 
+test("final audit template closes code content and citation review together", () => {
+  const finalAudit = fs.readFileSync(path.join(repoRoot, "research_project_template", "FINAL_AUDIT.md"), "utf8");
+
+  assert.match(finalAudit, /# FINAL_AUDIT/);
+  assert.match(finalAudit, /audit variables/);
+  assert.match(finalAudit, /audit content/);
+  assert.match(finalAudit, /audit citations/);
+  assert.match(finalAudit, /audit final/);
+  assert.match(finalAudit, /코드\/변수 검토/);
+  assert.match(finalAudit, /원고 내용 검토/);
+  assert.match(finalAudit, /인용\/참고문헌 검토/);
+});
+
+test("skill discovery metadata mentions variables citations and final audit", () => {
+  const skill = fs.readFileSync(
+    path.join(repoRoot, "codex_skill", "research-project-manager", "SKILL.md"),
+    "utf8",
+  );
+  const openaiYaml = fs.readFileSync(
+    path.join(repoRoot, "codex_skill", "research-project-manager", "agents", "openai.yaml"),
+    "utf8",
+  );
+
+  assert.match(skill, /description: Use when[\s\S]*variables/);
+  assert.match(skill, /description: Use when[\s\S]*citations/);
+  assert.match(skill, /description: Use when[\s\S]*final submission audit/);
+  assert.match(openaiYaml, /variables/);
+  assert.match(openaiYaml, /citations/);
+  assert.match(openaiYaml, /final audit/);
+});
+
 test("journal targets reference is an installable shared Research HQ file", async () => {
   const journalTargets = fs.readFileSync(path.join(repoRoot, "JOURNAL_TARGETS.md"), "utf8");
   const packageJson = JSON.parse(fs.readFileSync(path.join(repoRoot, "package.json"), "utf8"));
