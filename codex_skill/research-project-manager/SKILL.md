@@ -38,6 +38,7 @@ Verify paths before editing. Work with the user's current files; do not overwrit
 | `DECISIONS.md` | Important decisions, reasons, alternatives, and revisit conditions |
 | `FILES.md` | Key file locations only, not a complete file inventory |
 | `VARIABLE_AUDIT.md` | Crosswalk for actual data columns, code variable names, manuscript concepts, and review status |
+| `CITATION_AUDIT.md` | Crosswalk for in-text citations, reference list entries, and actual paper existence checks |
 | `06_manuscript/*.md` | Chapter-based manuscript drafting files using the `writings` scene format |
 | `SUBMISSION_CHECKLIST.md` | Pre-submission readiness checklist for closing the manuscript |
 | `PARKING_LOT.md` | Good but out-of-scope ideas intentionally excluded from the current manuscript |
@@ -57,6 +58,7 @@ The skill manages this Markdown project system:
 - `DECISIONS.md` for important decisions
 - `FILES.md` for key file locations
 - `VARIABLE_AUDIT.md` for data/code/manuscript variable review
+- `CITATION_AUDIT.md` for manuscript citation/reference matching and cited-paper existence review
 - `06_manuscript/` for actual manuscript paragraphs and paper outline files; chapter files follow the `writings` scene format
 - `SUBMISSION_CHECKLIST.md` for pre-submission readiness checks
 - `PARKING_LOT.md` for out-of-scope ideas and follow-up research candidates
@@ -79,6 +81,8 @@ Support these recurring operations:
 - Creating or updating an optional `ANALYSIS_DASHBOARD.md` when a project has many scripts, outputs, baselines, robustness checks, or model comparisons
 - Creating or updating `VARIABLE_AUDIT.md` to check whether actual data columns, code variable names, and manuscript concepts match
 - Reviewing analysis code at the variable and sample-definition level before trusting results
+- Creating or updating `CITATION_AUDIT.md` to check whether in-text citations match the reference list
+- Verifying cited references for actual paper existence before submission
 - Applying the finishing workflow when the user has mature analyses but needs to close manuscripts for submission
 - Tracking collaborator waits, external checkpoints, deadlines, and reminder dates
 - Keeping the system lightweight and avoiding unnecessary new files
@@ -101,6 +105,10 @@ Support these recurring operations:
 - Use `VARIABLE_AUDIT.md` when analysis code affects results, variables, sample construction, or manuscript claims.
 - In `VARIABLE_AUDIT.md`, map each important actual data column to the code variable name, manuscript or conceptual variable, measurement content, transformation/coding, use location, evidence, review status, and required fix.
 - Do not mark a result ready for manuscript use while any core variable in that result has `불일치`, `애매함`, `수정 필요`, or `확인 전` status.
+- Use `CITATION_AUDIT.md` before submission and whenever the user asks whether citations or references are correct.
+- In `CITATION_AUDIT.md`, match every in-text citation to the reference list and every reference list entry back to an in-text citation unless the user intentionally keeps an uncited background source.
+- For actual paper existence checks, do not rely on search snippets alone. Prefer DOI resolver, publisher page, Crossref, PubMed, KCI, RISS, DBpia, Scopus, or another authoritative scholarly source, and record the evidence and check date.
+- Do not mark references ready for submission while any core citation has `본문만 있음`, `목록만 있음`, `서지정보 불일치`, `확인 실패`, `DOI 불일치`, `제목/저자 불일치`, `공식 출처 없음`, `수정 필요`, or `확인 전` status.
 - When the user says analysis is easy but writing/submission closure is hard, use the finishing workflow: lock one research question, map analyses, write results, calibrate discussion, park new ideas, run the submission checklist, and submit.
 - Store actual research content in the user's project files, never inside this skill.
 - The skill should contain only operating rules and procedures, not project data.
@@ -179,8 +187,9 @@ When creating a new paper project:
 8. Update `START_HERE.md` with one immediately executable next first action.
 9. Use `06_manuscript/research_plan_bullet.md` for initial research design notes, `00_paper_outline.md` for the paper's early argument structure, and the `writings` scene files for chapter drafting.
 10. Keep `VARIABLE_AUDIT.md` available for variable crosswalk and code review once real data or analysis code exists.
-11. Do not create `ANALYSIS_DASHBOARD.md` at project creation unless the user already has multiple analysis scripts or output folders.
-12. Rebuild the project list in `PROJECT_DASHBOARD.md` using the dashboard auto-rebuild command when available.
+11. Keep `CITATION_AUDIT.md` available for citation/reference matching and cited-paper existence review once manuscript citations exist.
+12. Do not create `ANALYSIS_DASHBOARD.md` at project creation unless the user already has multiple analysis scripts or output folders.
+13. Rebuild the project list in `PROJECT_DASHBOARD.md` using the dashboard auto-rebuild command when available.
 
 If details are missing, make a conservative placeholder instead of blocking, unless the missing detail affects file location or risks overwriting existing work.
 
@@ -197,9 +206,10 @@ When the user provides a long work log, old memo, or scattered notes:
 7. Put only key paths in `FILES.md`.
 8. Put manuscript-ready paragraphs in the appropriate `06_manuscript/Abstract.md`, `Introduction.md`, `Theory.md`, `Conceptual Frameworks.md`, `Methods.md`, `Result.md`, `Discussion.md`, or `Conclusion.md` file.
 9. If notes include data columns, code variables, variable definitions, sample filters, joins, recodes, or result claims, update `VARIABLE_AUDIT.md`.
-10. If analysis scripts or result folders are numerous, create or update `ANALYSIS_DASHBOARD.md` to map analysis IDs to scripts, outputs, manuscript sections, and supported claims.
-11. Extract collaborator waits, deadlines, and reminder dates.
-12. Update the source project files, then rebuild `PROJECT_DASHBOARD.md` so stage, last work date, next first action, deadline, reminder date, and blocker are refreshed.
+10. If notes include citations, reference-list items, BibTeX/RIS exports, DOI lists, or bibliography problems, update `CITATION_AUDIT.md`.
+11. If analysis scripts or result folders are numerous, create or update `ANALYSIS_DASHBOARD.md` to map analysis IDs to scripts, outputs, manuscript sections, and supported claims.
+12. Extract collaborator waits, deadlines, and reminder dates.
+13. Update the source project files, then rebuild `PROJECT_DASHBOARD.md` so stage, last work date, next first action, deadline, reminder date, and blocker are refreshed.
 
 Do not preserve every sentence. Preserve recoverability.
 
@@ -225,9 +235,10 @@ When recording today's work:
 4. Rewrite `START_HERE.md` so the next session can start quickly.
 5. If manuscript text changed, update the relevant `06_manuscript/*.md` chapter file rather than storing the draft in logs.
 6. If analysis code, data columns, variable definitions, filters, joins, or recodes changed, update `VARIABLE_AUDIT.md`.
-7. If a new analysis script or result folder was created and `ANALYSIS_DASHBOARD.md` exists, update its analysis chain and status.
-8. Rebuild `PROJECT_DASHBOARD.md` after updating the project source files; update manual collaboration waiting sections separately when needed.
-9. Add to `DECISIONS.md` only if a meaningful research or project decision was made.
+7. If manuscript citations or reference-list entries changed, update `CITATION_AUDIT.md`.
+8. If a new analysis script or result folder was created and `ANALYSIS_DASHBOARD.md` exists, update its analysis chain and status.
+9. Rebuild `PROJECT_DASHBOARD.md` after updating the project source files; update manual collaboration waiting sections separately when needed.
+10. Add to `DECISIONS.md` only if a meaningful research or project decision was made.
 
 ## Variable and Code Review Workflow
 
@@ -241,6 +252,20 @@ When the user asks whether analysis code is correct, whether variables match, or
 6. Mark unresolved mismatches as `불일치`, `애매함`, or `수정 필요`; do not silently normalize names.
 7. Put follow-up actions in `START_HERE.md` and task status in `WBS.md`.
 8. If a variable mismatch changes a research decision, record it in `DECISIONS.md`.
+
+## Citation and Reference Review Workflow
+
+When the user asks whether citations are correct, whether cited papers exist, or whether references are ready for submission:
+
+1. Read `FILES.md` and the project `README.md` to locate manuscript files, reference-list files, and any BibTeX/RIS/Zotero/EndNote exports.
+2. Extract in-text citations from `06_manuscript/*.md` and `06_manuscript/manuscript_full.md` when present.
+3. Extract the reference list from the manuscript, bibliography file, or reference-manager export; use structured parsers when available instead of ad hoc text matching.
+4. Update `CITATION_AUDIT.md` with one row per cited work. Record in-text citation, manuscript location, reference-list entry, DOI or key, match status, required fix, and memo.
+5. Check both directions: every in-text citation must appear in the reference list, and every reference-list item must be cited in the manuscript or explicitly marked as intentionally excluded.
+6. Verify actual paper existence using DOI resolver, publisher page, Crossref, PubMed, KCI, RISS, DBpia, Scopus, or another authoritative scholarly source. Search snippets alone are not enough.
+7. Record the verification source, evidence, and check date in `CITATION_AUDIT.md`; mark unresolved cases as `확인 실패`, `DOI 불일치`, `제목/저자 불일치`, `공식 출처 없음`, or `수정 필요`.
+8. Cross-check high-risk details: author order, publication year, title, journal, volume, issue, pages/article number, DOI, and Korean/English title variants.
+9. Put follow-up fixes in `START_HERE.md`, task status in `WBS.md`, and final citation-format readiness in `SUBMISSION_CHECKLIST.md`.
 
 ## Weekly Review Workflow
 

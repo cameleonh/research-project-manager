@@ -196,6 +196,24 @@ Use $research-project-manager to review the analysis code variables before I tru
 $research-project-manager 써서 결과를 믿기 전에 분석 코드 변수를 리뷰해줘. 불일치, 애매한 변수, 누락 컬럼, 표본/필터 문제를 VARIABLE_AUDIT.md에 표시해줘.
 ```
 
+### Citation and Reference Review
+
+```text
+Use $research-project-manager to create CITATION_AUDIT.md for this manuscript. Check whether every in-text citation appears in the reference list and every reference-list item is cited in the manuscript.
+```
+
+```text
+$research-project-manager 써서 이 원고의 CITATION_AUDIT.md를 만들어줘. 본문 인용이 참고문헌 목록에 모두 있는지, 참고문헌 목록의 항목이 본문에서 모두 인용되는지 확인해줘.
+```
+
+```text
+Use $research-project-manager to verify whether the cited papers actually exist. Record DOI resolver, publisher page, Crossref, PubMed, KCI, RISS, DBpia, Scopus, or other authoritative evidence in CITATION_AUDIT.md.
+```
+
+```text
+$research-project-manager 써서 인용한 논문이 실제로 존재하는지 확인해줘. DOI resolver, 출판사 페이지, Crossref, PubMed, KCI, RISS, DBpia, Scopus 같은 근거를 CITATION_AUDIT.md에 남겨줘.
+```
+
 이미 있는 파일 관계를 정리할 때는 이렇게 말한다.
 
 ```text

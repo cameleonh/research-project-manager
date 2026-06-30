@@ -152,6 +152,34 @@ test("skill requires variable audits before trusting analysis code", () => {
   assert.match(skill, /Do not treat code organization as code review/);
 });
 
+test("citation audit template checks manuscript citations against references and existence", () => {
+  const auditPath = path.join(repoRoot, "research_project_template", "CITATION_AUDIT.md");
+  const audit = fs.readFileSync(auditPath, "utf8");
+
+  assert.match(audit, /# CITATION_AUDIT/);
+  assert.match(audit, /본문 인용 표기/);
+  assert.match(audit, /참고문헌 항목/);
+  assert.match(audit, /본문-목록 대조 상태/);
+  assert.match(audit, /실재 확인 근거/);
+  assert.match(audit, /DOI\/URL/);
+  assert.match(audit, /확인 출처/);
+  assert.match(audit, /실재 확인 상태/);
+});
+
+test("skill requires citation audits before submission", () => {
+  const skill = fs.readFileSync(
+    path.join(repoRoot, "codex_skill", "research-project-manager", "SKILL.md"),
+    "utf8",
+  );
+
+  assert.match(skill, /CITATION_AUDIT\.md/);
+  assert.match(skill, /in-text citations/);
+  assert.match(skill, /reference list/);
+  assert.match(skill, /actual paper existence/);
+  assert.match(skill, /DOI resolver/);
+  assert.match(skill, /publisher page/);
+});
+
 test("journal targets reference is an installable shared Research HQ file", async () => {
   const journalTargets = fs.readFileSync(path.join(repoRoot, "JOURNAL_TARGETS.md"), "utf8");
   const packageJson = JSON.parse(fs.readFileSync(path.join(repoRoot, "package.json"), "utf8"));

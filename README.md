@@ -69,6 +69,7 @@ The Codex skill in `codex_skill/research-project-manager/` tells Codex how to ma
 - deciding the next first action for a project
 - updating the portfolio dashboard
 - tracking collaborators, deadlines, external checkpoints, and reminder dates
+- checking manuscript citations against the reference list and verifying cited-paper existence
 - keeping the system lightweight and avoiding unnecessary new files
 
 The skill does not store actual research content. Research content stays in the user's own project folders.
@@ -86,6 +87,7 @@ The skill does not store actual research content. Research content stays in the 
 | `DECISIONS.md` | Important decisions and rationale |
 | `FILES.md` | Key file locations |
 | `VARIABLE_AUDIT.md` | Actual data column, code variable name, manuscript concept, and review status crosswalk |
+| `CITATION_AUDIT.md` | In-text citation, reference list, DOI/source, and existence-check crosswalk |
 | `06_manuscript/*.md` | Chapter-based manuscript drafting files |
 | `SUBMISSION_CHECKLIST.md` | Pre-submission readiness checklist |
 | `PARKING_LOT.md` | Ideas intentionally excluded from the current manuscript |
@@ -95,7 +97,7 @@ The skill does not store actual research content. Research content stays in the 
 
 Use `PROJECT_DASHBOARD.md` to choose which project to work on. After opening one project, read its `START_HERE.md` first, then use the `단계별 읽기 순서` table in that project's `README.md` to move to the right file for the current stage.
 
-The per-project `README.md` links each paper stage to the files usually needed at that point: `WBS.md`, `FILES.md`, `VARIABLE_AUDIT.md`, `06_manuscript/*.md`, `PARKING_LOT.md`, and `SUBMISSION_CHECKLIST.md`.
+The per-project `README.md` links each paper stage to the files usually needed at that point: `WBS.md`, `FILES.md`, `VARIABLE_AUDIT.md`, `CITATION_AUDIT.md`, `06_manuscript/*.md`, `PARKING_LOT.md`, and `SUBMISSION_CHECKLIST.md`.
 
 ## Manuscript Drafting Layout
 
