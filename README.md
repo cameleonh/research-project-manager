@@ -85,6 +85,7 @@ The skill does not store actual research content. Research content stays in the 
 | `RESEARCH_LOG.md` | Session history and daily work record |
 | `DECISIONS.md` | Important decisions and rationale |
 | `FILES.md` | Key file locations |
+| `VARIABLE_AUDIT.md` | Actual data column, code variable name, manuscript concept, and review status crosswalk |
 | `06_manuscript/*.md` | Chapter-based manuscript drafting files |
 | `SUBMISSION_CHECKLIST.md` | Pre-submission readiness checklist |
 | `PARKING_LOT.md` | Ideas intentionally excluded from the current manuscript |
@@ -94,7 +95,7 @@ The skill does not store actual research content. Research content stays in the 
 
 Use `PROJECT_DASHBOARD.md` to choose which project to work on. After opening one project, read its `START_HERE.md` first, then use the `단계별 읽기 순서` table in that project's `README.md` to move to the right file for the current stage.
 
-The per-project `README.md` links each paper stage to the files usually needed at that point: `WBS.md`, `FILES.md`, `06_manuscript/*.md`, `PARKING_LOT.md`, and `SUBMISSION_CHECKLIST.md`.
+The per-project `README.md` links each paper stage to the files usually needed at that point: `WBS.md`, `FILES.md`, `VARIABLE_AUDIT.md`, `06_manuscript/*.md`, `PARKING_LOT.md`, and `SUBMISSION_CHECKLIST.md`.
 
 ## Manuscript Drafting Layout
 

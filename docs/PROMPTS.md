@@ -178,6 +178,24 @@ Use $research-project-manager to add this new script and output folder to ANALYS
 $research-project-manager 써서 새 분석 스크립트와 결과 폴더를 ANALYSIS_DASHBOARD.md에 추가해줘. 필요하면 FILES.md와 START_HERE도 같이 갱신해줘.
 ```
 
+### Variable and Code Review
+
+```text
+Use $research-project-manager to create VARIABLE_AUDIT.md for this project. Compare actual data columns, code variable names, manuscript/conceptual variables, measurement content, transformations, and review status.
+```
+
+```text
+$research-project-manager 써서 이 프로젝트의 VARIABLE_AUDIT.md를 만들어줘. 실제 데이터 컬럼, 코드 변수명, 원고/개념상 변수명, 측정 내용, 변환/코딩, 검증 상태를 대조해줘.
+```
+
+```text
+Use $research-project-manager to review the analysis code variables before I trust the results. Mark mismatches, ambiguous variables, missing columns, and sample/filter issues in VARIABLE_AUDIT.md.
+```
+
+```text
+$research-project-manager 써서 결과를 믿기 전에 분석 코드 변수를 리뷰해줘. 불일치, 애매한 변수, 누락 컬럼, 표본/필터 문제를 VARIABLE_AUDIT.md에 표시해줘.
+```
+
 이미 있는 파일 관계를 정리할 때는 이렇게 말한다.
 
 ```text

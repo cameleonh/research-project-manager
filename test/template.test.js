@@ -125,6 +125,33 @@ test("folder guide explains manuscript source files and final assembly", () => {
   assert.match(guide, /최종 조립본/);
 });
 
+test("variable audit template maps data columns to code and manuscript variables", () => {
+  const auditPath = path.join(repoRoot, "research_project_template", "VARIABLE_AUDIT.md");
+  const audit = fs.readFileSync(auditPath, "utf8");
+
+  assert.match(audit, /# VARIABLE_AUDIT/);
+  assert.match(audit, /실제 데이터 컬럼/);
+  assert.match(audit, /코드에서 사용한 변수명/);
+  assert.match(audit, /원고\/개념상 변수명/);
+  assert.match(audit, /측정 내용/);
+  assert.match(audit, /검증 상태/);
+  assert.match(audit, /수정 필요/);
+  assert.match(audit, /코드 리뷰 메모/);
+});
+
+test("skill requires variable audits before trusting analysis code", () => {
+  const skill = fs.readFileSync(
+    path.join(repoRoot, "codex_skill", "research-project-manager", "SKILL.md"),
+    "utf8",
+  );
+
+  assert.match(skill, /VARIABLE_AUDIT\.md/);
+  assert.match(skill, /actual data column/);
+  assert.match(skill, /code variable name/);
+  assert.match(skill, /manuscript or conceptual variable/);
+  assert.match(skill, /Do not treat code organization as code review/);
+});
+
 test("journal targets reference is an installable shared Research HQ file", async () => {
   const journalTargets = fs.readFileSync(path.join(repoRoot, "JOURNAL_TARGETS.md"), "utf8");
   const packageJson = JSON.parse(fs.readFileSync(path.join(repoRoot, "package.json"), "utf8"));

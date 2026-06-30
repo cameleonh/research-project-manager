@@ -20,12 +20,13 @@
 ```text
 1. 연구질문을 한 문장으로 잠근다.
 2. 분석한다.
-3. ANALYSIS_DASHBOARD로 분석-결과-원고 위치를 잠근다.
-4. Result.md에 결과를 표/그림 중심으로 넣는다.
-5. Discussion.md에서 해석 강도를 조절한다.
-6. 새 아이디어는 PARKING_LOT로 뺀다.
-7. SUBMISSION_CHECKLIST로 투고 가능 여부를 판정한다.
-8. 투고한다.
+3. VARIABLE_AUDIT로 실제 데이터 컬럼-코드 변수명-원고 변수를 검증한다.
+4. ANALYSIS_DASHBOARD로 분석-결과-원고 위치를 잠근다.
+5. Result.md에 결과를 표/그림 중심으로 넣는다.
+6. Discussion.md에서 해석 강도를 조절한다.
+7. 새 아이디어는 PARKING_LOT로 뺀다.
+8. SUBMISSION_CHECKLIST로 투고 가능 여부를 판정한다.
+9. 투고한다.
 ```
 
 ## 단계별 기준
@@ -60,11 +61,14 @@
 
 - `04_analysis/`의 스크립트
 - `07_outputs/`의 결과 폴더
+- `VARIABLE_AUDIT.md`
 - 분석이 많으면 `ANALYSIS_DASHBOARD.md`
 
 ### 3. 분석-결과-원고 위치 잠금
 
 분석이 여러 개면 `ANALYSIS_DASHBOARD.md`를 만든다. 분석 ID마다 목적, 스크립트, 결과 폴더, 원고 위치, 지원하는 주장을 연결한다.
+
+결과를 원고에 쓰기 전에는 `VARIABLE_AUDIT.md`로 실제 데이터 컬럼, 코드 변수명, 원고/개념상 변수명, 측정 내용, 변환/코딩이 맞는지 확인한다. 변수 검증 상태가 `확인 전`, `불일치`, `애매함`, `수정 필요`이면 결과 해석을 확정하지 않는다.
 
 점검 질문:
 
@@ -136,6 +140,7 @@
 - 새 분석 없이 투고 가능한가?
 - 남은 수정이 문장, 형식, 표기 수준인가?
 - 표본 수, 변수 정의, 핵심 계수, 본문 수치가 일치하는가?
+- `VARIABLE_AUDIT.md`의 핵심 변수 검증 상태가 모두 해결되었는가?
 - 제목, 초록, 결론이 같은 주장을 하는가?
 
 결과물:
@@ -196,6 +201,7 @@
 
 - `START_HERE.md`: 지금 붙잡은 질문과 다음 첫 행동
 - `ANALYSIS_DASHBOARD.md`: 분석-결과-원고 위치 연결
+- `VARIABLE_AUDIT.md`: 실제 데이터 컬럼-코드 변수명-원고 변수명 대조
 - `06_manuscript/Result.md`: 결과장
 - `06_manuscript/Discussion.md`: 논의장
 - `PARKING_LOT.md`: 이번 논문에서 뺄 아이디어

@@ -118,3 +118,6 @@ paper_project/
 
 - `FILES.md`: 어디에 있는가
 - `ANALYSIS_DASHBOARD.md`: 왜 있고, 어디에 쓰이는가
+- `VARIABLE_AUDIT.md`: 실제 데이터 컬럼, 코드 변수명, 원고/개념상 변수명이 서로 맞는가
+
+분석 ID와 결과 파일 관계는 `ANALYSIS_DASHBOARD.md`에서 보고, 변수명과 측정 내용이 맞는지는 `VARIABLE_AUDIT.md`에서 검토한다.
